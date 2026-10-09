@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  loans    Loan[]
+}
+
+model Librarian {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  loans    Loan[]
+}
+
+model Book {
+  id       Int    @id @default(autoincrement())
+  title    String
+  author   String
+  isbn     String? @unique
+  quantity Int    @default(1)
+  loans    Loan[]
+}
+
+model Loan {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  bookId      Int
+  librarianId Int
+  loanDate    DateTime  @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+  book        Book      @relation(fields: [bookId], references: [id])
+  librarian   Librarian @relation(fields: [librarianId], references: [id])
+}
