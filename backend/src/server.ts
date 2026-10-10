@@ -1,9 +1,12 @@
 import express from "express"
 import cors from "cors"
+import bookRouter from "./routes/bookRoutes.js"
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
 
-app.listen(400, ()=> console.log("Servidor rodando!"))
+app.use(bookRouter)
+
+app.listen(4000, ()=> console.log("Servidor rodando!"))
