@@ -11,7 +11,13 @@ export function checkToken(request: Request, response: Response, next: NextFunct
     if(tipo !== "Bearer" || !token) {
       return response.status(401).json({ Mensagem: "Token ou tipo inválido" })
     }
-    Jwt.verify(token, process.env.JWT_PASSWORD!)
+    const decoded = Jwt.verify(token, process.env.JWT_PASSWORD!)
+    if (typeof decoded === "string" || typeof decoded.userId !== "number") {
+      return response.status(401).json({
+        Mensagem: "Token inválido",
+      });
+    }
+    request.userId = decoded.userId
     next()
   } catch(erro) {
     console.log(erro)

@@ -69,3 +69,32 @@ export async function userLogin(request: Request, response: Response) {
     })
   }
 }
+
+export async function getUserProfile(request: Request, response: Response) {
+  try {
+    const { userId } = request
+    if(!userId) {
+      return response.status(401).json({ Mensagem: "Id do usuário não informado" })
+    }
+    const searchUser = await prisma.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: false
+      }
+    })
+    if(!searchUser) {
+      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
+    }
+    return response.status(200).json(searchUser)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao buscar o perfil do usuário",
+      Erro: erro
+    })
+  }
+}
