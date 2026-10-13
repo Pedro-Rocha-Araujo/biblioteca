@@ -98,3 +98,47 @@ export async function getUserProfile(request: Request, response: Response) {
     })
   }
 }
+
+export async function modifyUserProfile(request: Request, response: Response) {
+  try {
+    const { userId } = request
+    const { name, email, password } = request.body
+    if(!userId) {
+      return response.status(401).json({ Mensagem: "Id do usuário não informado" })
+    } 
+    if(!name || !email || !password) {
+      return response.status(400).json({ Mensagem: "Informações obrigatórias não preenchidas" })
+    } 
+    const searchUser = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
+    if(!searchUser) {
+      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
+    }
+    const comparePassword = await bcrypt.compare(password, searchUser.password)
+    if(!comparePassword) {
+      return response.status(409).json({ Mensagem: "Senha incorreta" })
+    }
+    const updateUser = await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        name,
+        email,
+      },
+      select: {
+        name: true,
+        email: true
+      }
+    })
+    return response.status(200).json(updateUser)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao autualizar perfil",
+      Erro: erro
+    })
+  }
+}
