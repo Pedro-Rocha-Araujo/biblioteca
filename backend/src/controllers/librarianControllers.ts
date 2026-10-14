@@ -100,3 +100,40 @@ export async function librarianLogin(request: Request, response: Response) {
     })
   }
 }
+
+export async function deleteLibrarianProfile(request: Request, response: Response) {
+  try { 
+    const { librarianId } = request
+    if(!librarianId) {
+      return response.status(400).json({ Mensagem: "Id do bibliotecário não informado" })
+    }
+    const verifyLibrarian = await prisma.librarian.findUnique({
+      where: {
+        id: librarianId,
+      }
+    })
+    if(!verifyLibrarian) {
+      return response.status(404).json({ Mensagem: "Bibliotecário não encontrado"  })
+    }
+    const verifyLoanPendence = await prisma.loan.findFirst({
+      where: {
+        librarianId,
+        returnDate: null
+      }
+    })
+    if(verifyLoanPendence) {
+      return response.status(409).json({ Mensagem: "O bibliotecário possui pendências a resolver" })
+    }
+    await prisma.librarian.delete({
+      where: {
+        id: librarianId,
+      }
+    })
+    return response.status(200).json({ Mensagem: "Bibliotecário deletado com sucesso" })
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao deletar bibliotecário",
+      Erro: erro
+    })
+  }
+}
