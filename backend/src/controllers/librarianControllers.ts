@@ -101,6 +101,49 @@ export async function librarianLogin(request: Request, response: Response) {
   }
 }
 
+export async function updateLibrarianProfile(request: Request, response: Response) {
+  try {
+    const { librarianId } = request
+    const { name, email } = request.body
+    if(!librarianId) {
+      return response.status(400).json({ Mensagem: "Id do biliotecário não informado" })
+    }
+    if(!name || !email) {
+      return response.status(400).json({ Mensagem: "Informações obrigatórias não preenchidas" })
+    }
+    const verifyLibrarian = await prisma.librarian.findUnique({
+      where: {
+        id: librarianId,
+      }
+    })
+    if(!verifyLibrarian) {
+      return response.status(404).json({ Mensagem: "Bibliotecário não encontrado"  })
+    }
+    const verifyEmail = await prisma.librarian.findUnique({
+      where: {
+        email,
+      }
+    })
+    if(verifyEmail) {
+      return response.status(404).json({ Mensagem: "Este e-mail já está sendo usado"  })
+    }
+    await prisma.librarian.update({
+      where: {
+        id: librarianId
+      },
+      data: {
+        name,
+        email
+      }
+    })
+    return response.status(200).json({ Mensagem: "Perfil do bibliotecário atualizado com sucesso" })
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao atualizar perfil"
+    })
+  }
+}
+
 export async function deleteLibrarianProfile(request: Request, response: Response) {
   try { 
     const { librarianId } = request
