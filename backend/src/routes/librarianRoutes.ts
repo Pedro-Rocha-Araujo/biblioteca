@@ -1,11 +1,12 @@
 import { Router } from "express"
 import {
-  librarianRegister, librarianLogin
+  librarianRegister, librarianLogin, getLibrarianProfile
 } from "../controllers/librarianControllers.js"
 
 const librarianRouter = Router()
 
-librarianRouter.post("/librarian/register", librarianRegister)
-librarianRouter.post("/librarian/login", librarianLogin)
+librarianRouter.get("/librarians", getLibrarianProfile)
+librarianRouter.post("/librarians/register", librarianRegister)
+librarianRouter.post("/librarians/login", librarianLogin)
 
 export default librarianRouter

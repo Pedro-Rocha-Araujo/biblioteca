@@ -6,6 +6,33 @@ import "dotenv/config"
 
 const salt = 10
 
+export async function getLibrarianProfile(request: Request, response: Response) {
+  try { 
+    const { librarianId } = request
+    if(!librarianId) {
+      return response.status(400).json({ Mensagem: "Id do bibliotecário não informado" })
+    }
+    const verifyLibrarian = await prisma.librarian.findUnique({
+      where: {
+        id: librarianId
+      },
+      select: {
+        name: true,
+        email: true
+      }
+    })
+    if(!verifyLibrarian) {
+      return response.status(404).json({ Mensagem: "Bibliotecário não encontrado"  })
+    }
+    return response.status(200).json(verifyLibrarian)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao buscar o perfil do bibliotecário",
+      Erro: erro
+    })
+  }
+}
+
 export async function librarianRegister(request: Request, response: Response) {
   try {
     const { name, email, password } = request.body
