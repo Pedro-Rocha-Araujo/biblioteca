@@ -1,32 +1,21 @@
 import type { Request, Response } from "express"
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
-const salt = 10
-
 export async function userRegister(request: Request, response: Response) {
   try {
-    const { name, email, password } = request.body
-    if(!name || !email || !password) {
+    const { name, email } = request.body
+    if(!name || !email) {
       return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
     }
-    const hashedPassword = await bcrypt.hash(password, salt)
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name: name,
-        email: email,
-        password: hashedPassword
+        email: email
       }
     })
-    const token = await jwt.sign(
-      { userId: newUser.id }, 
-      process.env.JWT_PASSWORD!, 
-      { expiresIn: "1h" })
     return response.status(201).json({ 
       Mensagem: "Usuário criado com sucesso",
-      token
     })
   } catch(erro) {
     return response.status(500).json({ 
@@ -35,56 +24,15 @@ export async function userRegister(request: Request, response: Response) {
   }
 } 
 
-export async function userLogin(request: Request, response: Response) {
-  try {
-    const { email, password } = request.body
-    if(!email || !password) {
-      return response.status(400).json({ Mensagem: "Dados obrigatórios não preenchidos" })
-    }
-    const searchUser = await prisma.user.findUnique({
-      where: {
-        email
-      }
-    })
-    if(!searchUser) {
-      return response.status(401).json({ Mensagem: "Dado(s) inválido(s)" })
-    }
-    const checkPassword = await bcrypt.compare(password, searchUser.password)
-    if(!checkPassword) {
-      return response.status(401).json({ Mensagem: "Dado(s) inválido(s)" })
-    }
-    const token = await jwt.sign(
-      { userId: searchUser.id },
-      process.env.JWT_PASSWORD!,
-      { expiresIn: "1h" }
-    )
-    return response.status(200).json({
-      Mensagem: "Usuário logado com sucesso",
-      token
-    })
-  } catch(erro) {
-    return response.status(500).json({
-      Mensagem: "Erro ao logar o usuário",
-      Erro: erro
-    })
-  }
-}
-
 export async function getUserProfile(request: Request, response: Response) {
   try {
-    const { userId } = request
-    if(!userId) {
+    const userId = Number(request.params.userId)
+    if(!userId || userId < 1) {
       return response.status(401).json({ Mensagem: "Id do usuário não informado" })
     }
     const searchUser = await prisma.user.findUnique({
       where: {
         id: userId
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        password: false
       }
     })
     if(!searchUser) {
@@ -99,54 +47,10 @@ export async function getUserProfile(request: Request, response: Response) {
   }
 }
 
-export async function modifyUserProfile(request: Request, response: Response) {
-  try {
-    const { userId } = request
-    const { name, email, password } = request.body
-    if(!userId) {
-      return response.status(401).json({ Mensagem: "Id do usuário não informado" })
-    } 
-    if(!name || !email || !password) {
-      return response.status(400).json({ Mensagem: "Informações obrigatórias não preenchidas" })
-    } 
-    const searchUser = await prisma.user.findUnique({
-      where: {
-        id: userId
-      }
-    })
-    if(!searchUser) {
-      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
-    }
-    const comparePassword = await bcrypt.compare(password, searchUser.password)
-    if(!comparePassword) {
-      return response.status(409).json({ Mensagem: "Senha incorreta" })
-    }
-    const updateUser = await prisma.user.update({
-      where: {
-        id: userId
-      },
-      data: {
-        name,
-        email,
-      },
-      select: {
-        name: true,
-        email: true
-      }
-    })
-    return response.status(200).json(updateUser)
-  } catch(erro) {
-    return response.status(500).json({
-      Mensagem: "Erro ao autualizar perfil",
-      Erro: erro
-    })
-  }
-}
-
 export async function deleteUserProfile(request: Request, response: Response) {
   try {
-    const { userId } = request
-    if(!userId) {
+    const userId = Number(request.params.userId)
+    if(!userId || userId < 1) {
       return response.status(401).json({ Mensagem: "Id do usuário não informado" })
     }
     const verifyLoan = await prisma.loan.findFirst({
