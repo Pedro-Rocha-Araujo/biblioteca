@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import bookRouter from "./routes/bookRoutes.js"
 import userRouter from "./routes/userRoutes.js"
+import librarianRouter from "./routes/librarianRoutes.js"
 
 const app = express()
 
@@ -10,5 +11,6 @@ app.use(cors())
 
 app.use(bookRouter)
 app.use(userRouter)
+app.use(librarianRouter)
 
 app.listen(4000, ()=> console.log("Servidor rodando!"))
