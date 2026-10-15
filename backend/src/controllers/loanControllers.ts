@@ -69,10 +69,32 @@ export async function getUserLoans(request: Request, response: Response) {
 
 export async function getLoan(request: Request, response: Response) {
   try {
-
+    const loan_id = Number(request.params.loan_id)
+    if(!Number.isInteger(loan_id) || loan_id < 1) {
+      return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
+    }
+    const loan = await prisma.loan.findUnique({
+      where: {
+        id: loan_id
+      },
+      include: {
+        user: true,
+        book: true,
+        librarian: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      }
+    })
+    if(!loan) {
+      return response.status(404).json({ Mensagem: "Empréstimo não encontrado" })
+    }
+    return response.status(200).json(loan)
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "",
+      Mensagem: "Erro ao buscar o empréstimo",
       Erro: erro
     })
   }
@@ -80,10 +102,61 @@ export async function getLoan(request: Request, response: Response) {
 
 export async function postLoan(request: Request, response: Response) {
   try {
-
+    const { librarianId } = request
+    const { book_id, user_id } = request.body
+    const loanDate = new Date()
+    const dueDate = new Date(loanDate)
+    dueDate.setDate(dueDate.getDate() + 15)
+    if(!librarianId || !Number.isInteger(book_id) || !Number.isInteger(user_id)) {
+      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    }
+    if(librarianId < 1 || book_id < 1 || user_id < 1) {
+      return response.status(400).json({ Mensagem: "Campo(s)inválido(s)" })
+    }
+    const verifyBook = await prisma.book.findUnique({
+      where: {
+        id: book_id
+      }
+    })
+    if(!verifyBook) {
+      return response.status(404).json({ Mensagem: "Livro não encontrado" })
+    }
+    if(verifyBook.quantity < 1) {
+      return response.status(409).json({ Mensagem: "O livro em questão está esgotado!" })
+    }
+    const verifyUser = await prisma.user.findUnique({
+      where: {
+        id: user_id
+      }
+    })
+    if(!verifyUser) {
+      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
+    }
+    await prisma.$transaction(async (p)=> {
+      await p.loan.create({
+        data: {
+          userId: user_id,
+          bookId: book_id,
+          librarianId,
+          loanDate,
+          dueDate
+        }
+      });
+      await p.book.update({
+        where: {
+          id: book_id
+        },
+        data: {
+          quantity: {
+            decrement: 1
+          }
+        }
+      })
+    })
+    return response.status(201).json({ Mensagem: "Empréstimo realizado com sucesso" })
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "",
+      Mensagem: "Erro ao realizar empréstimo",
       Erro: erro
     })
   }
