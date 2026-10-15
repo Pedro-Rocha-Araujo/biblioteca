@@ -164,10 +164,45 @@ export async function postLoan(request: Request, response: Response) {
 
 export async function returnLoan(request: Request, response: Response) {
   try {
+    const loan_id = Number(request.params.loan_id)
+    const returnDate = new Date()
+    if(!Number.isInteger(loan_id) || loan_id < 1) {
+      return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
+    }
+    const verifyLoan = await prisma.loan.findUnique({
+      where: {
+        id: loan_id
+      }
+    })
+    if(!verifyLoan) {
+      return response.status(404).json({ Mensagem: "Empréstimo não encontrado" })
+    }
+    if(verifyLoan.returnDate) {
+      return response.status(409).json({ Mensagem: "O livro já foi devolvido" })
+    }
+    await prisma.$transaction(async (p)=> {
+      await p.loan.update({
+        where: {
+          id: loan_id
+        },
+        data: {
+          returnDate
+        }
+      })
+      await p.book.update({
+        where: {
+          id: verifyLoan.bookId
+        },
+        data: {
+          quantity: { increment: 1 }
+        }
+      })
 
+    })
+    return response.status(200).json({ Mensagem: "Empréstimo finalizado" })
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "",
+      Mensagem: "Erro ao finalizar o empréstimo",
       Erro: erro
     })
   }
