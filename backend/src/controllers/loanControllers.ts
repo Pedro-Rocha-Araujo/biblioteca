@@ -210,10 +210,30 @@ export async function returnLoan(request: Request, response: Response) {
 
 export async function deleteLoan(request: Request, response: Response) {
   try {
-
+    const loan_id = Number(request.params.loan_id)
+    if(!Number.isInteger(loan_id) || loan_id < 1 ) {
+      return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
+    }
+    const verifyLoan = await prisma.loan.findUnique({
+      where: {
+        id: loan_id
+      }
+    })
+    if(!verifyLoan) {
+      return response.status(404).json({ Mensagem: "Empréstimo não encontrado" })
+    }
+    if(!verifyLoan.returnDate) {
+      return response.status(409).json({ Mensagem: "O empréstimo não pode ser excluído pois está pendente" })
+    }
+    await prisma.loan.delete({
+      where: {
+        id: loan_id
+      }
+    })
+    return response.status(200).json({ Mensagem: "Empréstimo deletado com sucesso" })
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "",
+      Mensagem: "Erro ao excluir empréstimo",
       Erro: erro
     })
   }
