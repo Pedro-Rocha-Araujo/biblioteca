@@ -1,4 +1,5 @@
 import type { Request, Response } from "express"
+import { Prisma } from "../generated/prisma/client.js"
 import prisma from "../prisma.js"
 
 export async function getBooks(_request: Request, response: Response) {
@@ -15,13 +16,13 @@ export async function getBooks(_request: Request, response: Response) {
 
 export async function getBook(request: Request, response: Response) {
   try {
-    const { book_id } = request.params
-    if(!book_id || Number(book_id) < 1) {
+    const book_id = Number(request.params.book_id)
+    if(!Number.isInteger(book_id) || book_id < 1) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
     const book = await prisma.book.findUnique({
       where: {
-        id: Number(book_id)
+        id: book_id
       }
     })
     if(!book) {
@@ -38,9 +39,10 @@ export async function getBook(request: Request, response: Response) {
 
 export async function postBook(request: Request, response: Response) {
   try { 
-    const { title, author, isbn, quantity } = request.body
-    if(!title || !author || quantity < 1) {
-      return response.status(400).json({ Mensagem: "Informações não preenchidas" })
+    const { title, author, isbn } = request.body
+    const quantity = Number(request.body.quantity)
+    if(!title || !author || !Number.isInteger(quantity) || quantity < 1) {
+      return response.status(400).json({ Mensagem: "Informações não preenchidas ou inválidas" })
     }
     const newBook = await prisma.book.create({
       data: {
@@ -52,6 +54,11 @@ export async function postBook(request: Request, response: Response) {
     })
     return response.status(201).json(newBook)
   } catch(erro) {
+    if(erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if(erro.code === "P2002") {
+        return response.status(409).json({ Mensagem: "O ISBN deste livro já foi cadastrado" })
+      }
+    }
     return response.status(500).json({
       Mensagem: "Erro ao cadastrar livro",
       Erro: erro
@@ -61,17 +68,25 @@ export async function postBook(request: Request, response: Response) {
 
 export async function putBook(request: Request, response: Response) {
   try { 
-    const { book_id } = request.params
+    const book_id = Number(request.params.book_id)
     const { title, author, isbn, quantity } = request.body
-    if(!book_id) {
-      return response.status(400).json({ Mensagem: "Id do livro não informado" })
+    if(!Number.isInteger(book_id) || book_id < 1) {
+      return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
     if(!title || !author || quantity < 1) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas" })
     }
+    const verifyBook = await prisma.book.findUnique({
+      where: {
+        id: book_id
+      }
+    })
+    if(!verifyBook) {
+      return response.status(404).json({ Mensagem: "Livro não encontrado" })
+    }
     const editBook = await prisma.book.update({
       where: {
-        id: Number(book_id)
+        id: book_id
       },
       data: {
         title,
@@ -82,7 +97,7 @@ export async function putBook(request: Request, response: Response) {
     })
     return response.status(200).json(editBook)
   } catch(erro) {
-    return response.status(404).json({
+    return response.status(500).json({
       Mensagem: "Erro ao cadastrar livro",
       Erro: erro
     })
@@ -91,13 +106,30 @@ export async function putBook(request: Request, response: Response) {
 
 export async function deleteBook(request: Request, response: Response) {
   try {
-    const { book_id } = request.params
-    if(!book_id) {
-      return response.status(400).json({ Mensagem: "Id do livro não informado" })
+    const book_id = Number(request.params.book_id)
+    if(!Number.isInteger(book_id) || book_id < 1) {
+      return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
+    }
+    const verifyBook = await prisma.book.findUnique({
+      where: {
+        id: book_id
+      }
+    })
+    if(!verifyBook) {
+      return response.status(404).json({ Mensagem: "Livro não encontrado" })
+    }
+    const verifyLoan = await prisma.loan.findFirst({
+      where: {
+        bookId: book_id,
+        returnDate: null
+      }
+    })
+    if(verifyLoan) {
+      return response.status(409).json({ Mensagem: "Impossível excluir o livro por pendências" })
     }
     await prisma.book.delete({
       where: {
-        id: Number(book_id)
+        id: book_id
       }
     })
     return response.status(200).json({ Mensagem: "Livro deletado com sucesso" })
