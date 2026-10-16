@@ -1,4 +1,5 @@
 import type { Request, Response } from "express"
+import { Prisma } from "../generated/prisma/client.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
@@ -18,6 +19,11 @@ export async function userRegister(request: Request, response: Response) {
       Mensagem: "Usuário criado com sucesso",
     })
   } catch(erro) {
+    if(erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if(erro.code === "P2002") {
+        return response.status(409).json({ Mensagem: "E-mail já cadastrado" })
+      }
+    }
     return response.status(500).json({ 
       Mensagem: "Erro ao criar usuário"
      })
@@ -27,18 +33,18 @@ export async function userRegister(request: Request, response: Response) {
 export async function getUserProfile(request: Request, response: Response) {
   try {
     const userId = Number(request.params.userId)
-    if(!userId || userId < 1) {
-      return response.status(401).json({ Mensagem: "Id do usuário não informado" })
+    if(!Number.isInteger(userId) || userId < 1) {
+      return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
-    const searchUser = await prisma.user.findUnique({
+    const verifyUser = await prisma.user.findUnique({
       where: {
         id: userId
       }
     })
-    if(!searchUser) {
+    if(!verifyUser) {
       return response.status(404).json({ Mensagem: "Usuário não encontrado" })
     }
-    return response.status(200).json(searchUser)
+    return response.status(200).json(verifyUser)
   } catch(erro) {
     return response.status(500).json({
       Mensagem: "Erro ao buscar o perfil do usuário",
@@ -50,8 +56,8 @@ export async function getUserProfile(request: Request, response: Response) {
 export async function deleteUserProfile(request: Request, response: Response) {
   try {
     const userId = Number(request.params.userId)
-    if(!userId || userId < 1) {
-      return response.status(401).json({ Mensagem: "Id do usuário não informado" })
+    if(!Number.isInteger(userId) || userId < 1) {
+      return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
     const verifyLoan = await prisma.loan.findFirst({
       where: {
@@ -62,6 +68,14 @@ export async function deleteUserProfile(request: Request, response: Response) {
     if(verifyLoan) {
       return response.status(409).json({ Mensagem: "O usuário possui pendências que precisam ser resolvidas" })
     }
+    const verifyUser = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
+    if(!verifyUser) {
+      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
+    }
     await prisma.user.delete({
       where: {
         id: userId
@@ -69,6 +83,11 @@ export async function deleteUserProfile(request: Request, response: Response) {
     })
     return response.status(200).json({ Mensagem: "Usuário deletado com sucesso" })
   } catch(erro) {
+    if(erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if(erro.code === "P2003") {
+        return response.status(409).json({ Mensagem: "Registros pendentes não permitem a exclusão do usuário" })
+      }
+    }
     return response.status(500).json({
       Mensagem: "Erro ao deletar o perfil",
       Erro: erro
