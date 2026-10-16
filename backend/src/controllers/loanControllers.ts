@@ -103,7 +103,8 @@ export async function getLoan(request: Request, response: Response) {
 export async function postLoan(request: Request, response: Response) {
   try {
     const { librarianId } = request
-    const { book_id, user_id } = request.body
+    const book_id = Number(request.body.book_id)
+    const user_id = Number(request.body.user_id)
     const loanDate = new Date()
     const dueDate = new Date(loanDate)
     dueDate.setDate(dueDate.getDate() + 15)
@@ -144,7 +145,7 @@ export async function postLoan(request: Request, response: Response) {
       });
       await p.book.update({
         where: {
-          id: book_id
+          id: book_id,
         },
         data: {
           quantity: {
@@ -156,8 +157,7 @@ export async function postLoan(request: Request, response: Response) {
     return response.status(201).json({ Mensagem: "Empréstimo realizado com sucesso" })
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "Erro ao realizar empréstimo",
-      Erro: erro
+      Mensagem: "Erro ao realizar empréstimo"
     })
   }
 }
