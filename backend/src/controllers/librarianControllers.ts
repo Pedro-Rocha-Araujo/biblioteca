@@ -1,6 +1,7 @@
 import type { Request, Response } from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { Prisma } from "../generated/prisma/client.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
@@ -27,8 +28,7 @@ export async function getLibrarianProfile(request: Request, response: Response) 
     return response.status(200).json(verifyLibrarian)
   } catch(erro) {
     return response.status(500).json({
-      Mensagem: "Erro ao buscar o perfil do bibliotecário",
-      Erro: erro
+      Mensagem: "Erro ao buscar o perfil do bibliotecário"
     })
   }
 }
@@ -63,7 +63,15 @@ export async function librarianRegister(request: Request, response: Response) {
       token: token
     })
   } catch(erro) {
-    return response.status(500).json({ Mensagem: "Erro ao cadastrar o bibliotecário" })
+    if(erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if(erro.code === "P2002") {
+        return response.status(409).json({ Mensagem: "E-mail já cadastrado" })
+      }
+    }
+    return response.status(500).json({ 
+      Mensagem: "Erro ao cadastrar o bibliotecário",
+      Erro: erro
+    })
   }
 }
 
@@ -73,7 +81,7 @@ export async function librarianLogin(request: Request, response: Response) {
     if(!email || !password) {
       return response.status(400).json({ Mensagem: "Informações obrigatórias não preenchidas" })
     }
-    const verifyLibrarian = await prisma.librarian.findFirst({
+    const verifyLibrarian = await prisma.librarian.findUnique({
       where: {
         email
       }
@@ -124,8 +132,8 @@ export async function updateLibrarianProfile(request: Request, response: Respons
         email,
       }
     })
-    if(verifyEmail) {
-      return response.status(404).json({ Mensagem: "Este e-mail já está sendo usado"  })
+    if(verifyEmail && verifyEmail.id !== librarianId) {
+      return response.status(409).json({ Mensagem: "Este e-mail já está sendo usado"  })
     }
     await prisma.librarian.update({
       where: {
@@ -138,6 +146,14 @@ export async function updateLibrarianProfile(request: Request, response: Respons
     })
     return response.status(200).json({ Mensagem: "Perfil do bibliotecário atualizado com sucesso" })
   } catch(erro) {
+    if(erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if(erro.code === "P2002") {
+        return response.status(409).json({ Mensagem: "E-mail já cadastrado" })
+      }
+      if(erro.code === "P2025") {
+        return response.status(404).json({ Mensagem: "Bibliotecário não encontrado" })
+      }
+    }
     return response.status(500).json({
       Mensagem: "Erro ao atualizar perfil"
     })
@@ -174,6 +190,18 @@ export async function deleteLibrarianProfile(request: Request, response: Respons
     })
     return response.status(200).json({ Mensagem: "Bibliotecário deletado com sucesso" })
   } catch(erro) {
+     if (erro instanceof Prisma.PrismaClientKnownRequestError) {
+      if (erro.code === "P2003") {
+        return response.status(409).json({
+          Mensagem: "Impossível excluir o bibliotecário, pois ele tem empréstimos relacionados"
+        });
+      }
+      if (erro.code === "P2025") {
+        return response.status(404).json({
+          Mensagem: "Bibliotecário não encontrado"
+        });
+      }
+    }
     return response.status(500).json({
       Mensagem: "Erro ao deletar bibliotecário",
       Erro: erro
