@@ -14,6 +14,7 @@ div.auth {
   background-color: #fff;
   display: grid;
   grid-template-columns: 9fr 16fr;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.288);
 }
 
 div.div-image img {
@@ -23,19 +24,19 @@ div.div-image img {
 }
 
 div.auth-form {
-  padding: 2rem 0.5rem;
+  padding: 2rem 1rem;
 }
 
 div.auth-form h1 {
   font-size: clamp(1rem, 10vw, 2rem);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 div.auth-form form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin: 0.5rem 0;
+  gap: 1rem;
+  margin: 0.6rem 0;
 }
 
 div.auth-form input {
@@ -47,14 +48,15 @@ div.auth-form input {
 }
 
 div.auth-form input:focus {
-  border-bottom: 2px solid #33f;
+  border-bottom: 2px solid #032f3b;
 }
 
 div.auth-form button {
   font-size: clamp(0.7rem, 3.5vw, 1rem);
   padding: 0.8rem 0;
+  border-radius: 0.4rem;
   color: #fff;
-  background-color: #33f;
+  background-color: #032f3b;
 }
 
 div.auth-form p {
@@ -62,7 +64,11 @@ div.auth-form p {
 }
 
 div.auth-form a {
-  color: #33f;
+  color: #032f3b;
+}
+
+div.auth-form a:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 768px) {
@@ -85,6 +91,6 @@ div.auth-form a {
     border-bottom: 1px solid #3333;
   }
   div.auth-form input:focus {
-    border-bottom: 1px solid #33f;
+    border-bottom: 1px solid #032f3b;
   }
 }

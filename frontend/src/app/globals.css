@@ -8,17 +8,20 @@
 }
 
 body {
-  background: 
-    linear-gradient(54deg, #003bfce5 0%, #0030ccd8 100%), 
+  background:  
+    linear-gradient(33deg, #eeeeeeb4 0%, #eeeeeede 100%),
     url('/background.jpg')
   ; 
   background-size: cover; 
-  background-position: center; 
+  background-position: center center; 
   background-repeat: no-repeat; 
-
 }
 
 input, textarea, button {
   border: 0;
   outline: none;
+}
+
+a {
+  text-decoration: none;
 }
