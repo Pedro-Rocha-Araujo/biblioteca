@@ -9,12 +9,12 @@ div.auth-background {
 div.auth {
   width: 96%;
   max-width: 820px;
+  border-radius: 0.5rem;
+  overflow: hidden;
   background-color: #fff;
   display: grid;
   grid-template-columns: 9fr 16fr;
-  box-shadow: -2px 2px 4px 1px #11111167;
 }
-
 
 div.div-image img {
   width: 100%;
@@ -23,11 +23,12 @@ div.div-image img {
 }
 
 div.auth-form {
-  padding: 2rem 0.6rem;
+  padding: 2rem 0.5rem;
 }
 
 div.auth-form h1 {
   font-size: clamp(1rem, 10vw, 2rem);
+  margin-bottom: 0.5rem;
 }
 
 div.auth-form form {
@@ -65,6 +66,12 @@ div.auth-form a {
 }
 
 @media screen and (max-width: 768px) {
+  div.auth-form h1 {
+    text-align: center;
+  }
+  div.auth-form p {
+    text-align: center;
+  }
   div.auth {
     grid-template-columns: 1fr;
   }
@@ -73,7 +80,7 @@ div.auth-form a {
   }
 }
 
-@media screen and (max-width: 488px) {
+@media screen and (max-width: 480px) {
   div.auth-form input {
     border-bottom: 1px solid #3333;
   }

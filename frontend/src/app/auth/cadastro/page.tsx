@@ -14,7 +14,7 @@ export default function Cadastro() {
         </div>
 
         <div className="auth-form">
-          <h1>Cadastrar-se</h1>
+          <h1>Cadastro</h1>
           <form>
             <input 
               placeholder="Digite seu nome"
