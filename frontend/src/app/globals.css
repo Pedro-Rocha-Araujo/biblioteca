@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", "Arial", "Sans-serif";
+}
+
+body {
+  background: 
+    linear-gradient(54deg, #003bfce5 0%, #0030ccd8 100%), 
+    url('/background.jpg')
+  ; 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+
+}
+
+input, textarea, button {
+  border: 0;
+  outline: none;
+}
