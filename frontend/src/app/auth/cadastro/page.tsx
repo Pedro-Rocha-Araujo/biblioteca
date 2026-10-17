@@ -1,7 +1,23 @@
+'use client'
+
 import Link from "next/link"
 import "../auth.css"
 
 export default function Cadastro() {
+
+  function cadastrarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
+      e.preventDefault()
+      try {
+        const formData = new FormData(e.currentTarget)
+        const name = formData.get("name")
+        const email = formData.get("email")
+        const password = formData.get("password")
+        console.log(name, email, password)
+      } catch(erro) {
+        console.log(erro)
+      }
+    }
+
   return (
     <div className="auth-background">
 
@@ -15,17 +31,23 @@ export default function Cadastro() {
 
         <div className="auth-form">
           <h1>Cadastro</h1>
-          <form>
+          <form onSubmit={cadastrarBibliotecario}>
             <input 
               placeholder="Digite seu nome"
+              type="text"
+              name="name"
               required
             />
             <input 
               placeholder="Digite seu e-mail"
+              type="text"
+              name="email"
               required
             />
             <input 
               placeholder="Digite sua senha"
+              type="password"
+              name="password"
               required
             />
             <button>Cadastrar</button>
