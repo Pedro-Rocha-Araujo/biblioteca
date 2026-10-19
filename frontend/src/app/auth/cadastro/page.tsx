@@ -1,25 +1,34 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { toast } from "react-toastify"
+import { apiAuth } from "@/api"
+import Cookies from "js-cookie"
 import "../auth.css"
 
 export default function Cadastro() {
+  const router = useRouter()
 
-  function cadastrarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
-      e.preventDefault()
-      try {
-        const formData = new FormData(e.currentTarget)
-        const name = formData.get("name")
-        const email = formData.get("email")
-        const password = formData.get("password")
-        console.log(name, email, password)
-      } catch(erro) {
-        console.log(erro)
-      }
+  async function cadastrarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    try {
+      const formData = new FormData(e.currentTarget)
+      const name = formData.get("name")
+      const email = formData.get("email")
+      const password = formData.get("password")
+      const response = await apiAuth.post("/register", {
+        name, email, password
+      })
+      console.log(response.data)
+      const token = response.data.token
+      Cookies.set("token", token)
+      router.push("/private/home")
+    } catch(erro) {
+      console.log(erro)
+      toast.error("Erro!")
+    }
   }
-
-
 
   return (
     <div className="auth-background">
