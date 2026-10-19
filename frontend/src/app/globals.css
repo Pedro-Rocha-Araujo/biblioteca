@@ -24,6 +24,10 @@ input, textarea, button {
   outline: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 a {
   text-decoration: none;
 }

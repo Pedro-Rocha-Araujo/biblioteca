@@ -1,0 +1,51 @@
+main {
+  min-height: 100dvh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+main.recolhida {
+  grid-template-columns: auto 1fr;
+}
+
+main.recolhida nav.side-nav label  {
+  display: none;
+}
+
+nav.side-nav {
+  color: #fff;
+  background-color: #1c1c1c;
+  position: relative;
+}
+
+nav.recolhida label {
+  display: none;
+}
+
+nav.side-nav div.perfil {
+  /* background-color: blue; */
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #fff;
+  display: flex;
+  justify-content: center;
+}
+
+nav.side-nav ul {
+  /* background-color: green; */
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+nav.side-nav a {
+  color: #fff;
+}
+
+nav.side-nav div.nav-element {
+  background-color: red;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
