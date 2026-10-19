@@ -19,12 +19,7 @@ nav.side-nav {
   position: relative;
 }
 
-nav.recolhida label {
-  display: none;
-}
-
 nav.side-nav div.perfil {
-  /* background-color: blue; */
   padding: 2.5rem 0;
   border-bottom: 1px solid #fff;
   display: flex;
@@ -32,20 +27,20 @@ nav.side-nav div.perfil {
 }
 
 nav.side-nav ul {
-  /* background-color: green; */
-  padding-top: 1rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
 }
 
-nav.side-nav a {
-  color: #fff;
-}
-
 nav.side-nav div.nav-element {
-  background-color: red;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+}
+
+main.recolhida nav.side-nav div.nav-element {
+  padding: 2rem;
+  justify-content: center;
 }

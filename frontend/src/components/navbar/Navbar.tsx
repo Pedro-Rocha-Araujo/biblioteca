@@ -14,7 +14,7 @@ export default function Navbar({ nav, manageNav }: navProps) {
       <div className="perfil">
 
         <NavElement 
-          icon="fa-solid fa-circle-user fa-2xl"
+          icon="fa-solid fa-circle-user fa-3x"
           label="Perfil"
           link="/private/home"
         />
