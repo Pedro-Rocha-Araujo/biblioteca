@@ -17,6 +17,9 @@ export default function Cadastro() {
       const name = formData.get("name")
       const email = formData.get("email")
       const password = formData.get("password")
+      if(!name || !email || !password) {
+        toast.error("Preencha todos os campos")
+      }
       const response = await apiAuth.post("/register", {
         name, email, password
       })

@@ -1,19 +1,34 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { apiAuth } from "@/api"
+import { toast } from "react-toastify"
+import Cookies from "js-cookie"
 import "../auth.css"
 
-export default function Cadastro() {
+export default function Login() {
+  const router = useRouter()
 
-  function logarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
+  async function logarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     try {
       const formData = new FormData(e.currentTarget);
       const email = formData.get("email")
       const password = formData.get("password")
-      console.log(email, password)
+      if(!email || !password) {
+        toast.error("Preencha todos os campos")
+        return
+      }
+      const response = await apiAuth.post("/login", {
+        email, password
+      })
+      const token = response.data.token
+      Cookies.set("token", token)
+      router.push("/private/home")
     } catch(erro) {
       console.log(erro)
+      toast.error("Erro!")
     }
   }
 
