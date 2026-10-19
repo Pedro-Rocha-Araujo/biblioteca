@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link"
+import { toast } from "react-toastify"
 import "../auth.css"
 
 export default function Cadastro() {
@@ -16,7 +17,9 @@ export default function Cadastro() {
       } catch(erro) {
         console.log(erro)
       }
-    }
+  }
+
+
 
   return (
     <div className="auth-background">
@@ -30,7 +33,7 @@ export default function Cadastro() {
         </div>
 
         <div className="auth-form">
-          <h1>Cadastro</h1>
+          <h1><i className="fa-solid fa-circle-user"></i> Cadastro</h1>
           <form onSubmit={cadastrarBibliotecario}>
             <input 
               placeholder="Digite seu nome"

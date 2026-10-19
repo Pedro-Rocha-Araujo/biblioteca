@@ -29,7 +29,7 @@ export default function Cadastro() {
         </div>
 
         <div className="auth-form">
-          <h1>Login</h1>
+          <h1><i className="fa-solid fa-circle-user"></i> Login</h1>
           <form onSubmit={logarBibliotecario}>
             <input 
               placeholder="Digite seu e-mail"

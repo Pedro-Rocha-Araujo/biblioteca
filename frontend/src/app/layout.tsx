@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next"
+import { ToastContainer } from "react-toastify";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -10,7 +12,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR">
       <body>
+        <ToastContainer 
+          autoClose={1000} 
+        />
         {children}
+        <Script src="https://kit.fontawesome.com/ba7c57d421.js"></Script>
       </body>
     </html>
   );
