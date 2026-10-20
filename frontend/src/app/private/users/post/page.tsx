@@ -1,6 +1,7 @@
 'use client'
 
 import { toast } from "react-toastify"
+import axios from "axios"
 import { apiUsers } from "@/api"
 import "./post-user.css"
 
@@ -8,20 +9,36 @@ export default function PostUser() {
 
   async function postUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const name = formData.get("name")
+    const email = formData.get("email")
+    if(!name || !email) {
+      toast.error("Preencha todos os campos")
+    }
     try {
-      const formData = new FormData(e.currentTarget)
-      const name = formData.get("name")
-      const email = formData.get("email")
-      if(!name || !email) {
-        toast.error("Preencha todos os campos")
-      }
-      const response = await apiUsers.post("/",{
-          name, email
-      })
-      console.log(response)
+      await apiUsers.post("/",{ name, email })
     } catch(erro) {
-      console.log(erro)
-      toast.error("Erro")
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Não foi possível conectar ao servidor.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Recurso não encontrado.")
+            break
+          case 409:
+            toast.error(erro.response.data.Mensagem || "Esse usuário já está cadastrado.")
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
     }
   }
 
