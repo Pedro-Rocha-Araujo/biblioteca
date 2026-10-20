@@ -14,15 +14,14 @@ export default function Navbar({ nav, manageNav }: navProps) {
       <div className="perfil">
 
         <NavElement 
-          icon="fa-solid fa-circle-user fa-3x"
-          label="Perfil"
+          icon="fa-solid fa-home fa-xl"
+          label="Home"
           link="/private/home"
         />
 
       </div>
 
       <ul>
-
         <NavElement 
           icon="fa-solid fa-book fa-xl"
           label="Livros"
@@ -41,27 +40,31 @@ export default function Navbar({ nav, manageNav }: navProps) {
           link="/private/loans"
         />
 
-      </ul>
-
-      <div onClick={manageNav}>
-        { nav === true ? (
-          <NavElement 
-            icon="fa-solid fa-angles-left fa-xl"
-            label="Fechar"
+        <NavElement 
+            icon="fa-solid fa-circle-user fa-xl"
+            label="Perfil"
+            link="/private/home"
           />
-        ) : (
-          <NavElement 
-            icon="fa-solid fa-angles-right fa-xl"
-            label="Abrir"
-          />
-        ) }
 
-      </div>
+        <div className="manage-nav" onClick={manageNav}>
+          { nav === true ? (
+            <NavElement 
+              icon="fa-solid fa-angles-left fa-xl"
+              label="Fechar"
+            />
+          ) : (
+            <NavElement 
+              icon="fa-solid fa-angles-right fa-xl"
+              label="Abrir"
+            />
+          ) }
+        </div>
         <NavElement 
           icon="fa-solid fa-right-from-bracket fa-xl"
           label="Sair"
-          link="/private/loans"
         />
+      </ul>
+
 
     </nav>
   )
