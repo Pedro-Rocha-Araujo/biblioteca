@@ -7,7 +7,7 @@ import { checkToken } from "../middlewares/userMiddlewares.js"
 const userRouter = Router()
 
 userRouter.get("/users", checkToken, getUserProfile)
-userRouter.post("/users/register", userRegister)
+userRouter.post("/users", checkToken, userRegister)
 userRouter.delete("/users", checkToken, deleteUserProfile)
 
 export default userRouter
