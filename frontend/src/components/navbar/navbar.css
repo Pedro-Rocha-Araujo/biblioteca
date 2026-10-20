@@ -9,6 +9,10 @@ main.recolhida {
   grid-template-columns: auto 1fr;
 }
 
+main nav.side-nav label {
+  cursor: pointer;
+}
+
 main.recolhida nav.side-nav label  {
   display: none;
 }

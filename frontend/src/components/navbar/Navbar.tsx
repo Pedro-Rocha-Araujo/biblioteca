@@ -31,7 +31,7 @@ export default function Navbar({ nav, manageNav }: navProps) {
         <NavElement 
           icon="fa-solid fa-user fa-xl"
           label="Usuários"
-          link="/private/books"
+          link="/private/users"
         />
 
         <NavElement 
@@ -43,7 +43,7 @@ export default function Navbar({ nav, manageNav }: navProps) {
         <NavElement 
             icon="fa-solid fa-circle-user fa-xl"
             label="Perfil"
-            link="/private/home"
+            link="/private/profile"
           />
 
         <div className="manage-nav" onClick={manageNav}>

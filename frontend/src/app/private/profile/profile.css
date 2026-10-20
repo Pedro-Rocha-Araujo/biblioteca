@@ -1,0 +1,28 @@
+section.profile {
+  padding: 1rem;
+}
+
+section.profile form.update-user-profile {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 480px;
+}
+
+section.profile form.update-user-profile input {
+  padding: 0.8rem 0.5rem;
+}
+
+section.profile form.update-user-profile button {
+  padding: 1rem 0;
+  color: #fff;
+  background-color: #1c1c1c;
+}
+
+@media screen and (max-width: 768px) {
+  section.profile form.update-user-profile {
+
+    max-width: none;
+  }
+}

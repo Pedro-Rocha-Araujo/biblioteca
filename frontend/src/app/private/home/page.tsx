@@ -1,6 +1,9 @@
+import "./home.css"
 
 export default function Home() {
   return (
-    <h1>Home!</h1>
+    <section className="home">
+      <h1> <i className="fa-solid fa-home"></i> Home!</h1>
+    </section>
   );
 }

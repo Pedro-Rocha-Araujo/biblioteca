@@ -1,0 +1,17 @@
+section.users {
+  padding: 1rem;
+}
+
+nav.navegacao {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+nav.navegacao button {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  padding: 2rem 0;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.2s;
+}
