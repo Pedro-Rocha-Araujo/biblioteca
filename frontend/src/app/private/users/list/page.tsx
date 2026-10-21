@@ -1,15 +1,19 @@
 'use client'
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { UserInterface } from "@/interfaces/usersInterface"
 import { apiUsers } from "@/api"
 import Cookies from "js-cookie"
 import "./list.css"
 
 export default function ListUsers() {
+  const router = useRouter()
+
   const [users, setUsers] = useState<UserInterface[]>([])
   const [listagem, setListagem] = useState<UserInterface[]>([])
   const [pesquisa, setpesquisa] = useState<string>("")
+  
   const token = Cookies.get("token")
 
   useEffect(()=> {
@@ -54,7 +58,7 @@ export default function ListUsers() {
         { users.length > 0 ? (
           listagem.map((user)=> {
             return (
-              <div key={user.id} className="user">
+              <div onClick={()=> router.push("/private/users/list/"+user.id)} key={user.id} className="user">
                 <h3>{user.name}</h3>
                 <i className="fa-solid fa-eye fa-lg"></i>
               </div>

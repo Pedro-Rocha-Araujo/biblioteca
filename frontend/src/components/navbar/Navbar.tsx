@@ -1,7 +1,9 @@
 'use client'
 
 import "./navbar.css"
+import { useRouter } from "next/navigation"
 import NavElement from "./NavElement"
+import Cookies from "js-cookie"
 
 interface navProps {
   nav: boolean,
@@ -9,6 +11,13 @@ interface navProps {
 }
 
 export default function Navbar({ nav, manageNav }: navProps) {
+  const router = useRouter()
+
+  function sair() {
+    Cookies.remove("token")
+    router.push("/auth/login")
+  }
+
   return (
     <nav className="side-nav">
       <div className="perfil">
@@ -59,10 +68,12 @@ export default function Navbar({ nav, manageNav }: navProps) {
             />
           ) }
         </div>
-        <NavElement 
-          icon="fa-solid fa-right-from-bracket fa-xl"
-          label="Sair"
-        />
+        <div onClick={sair} className="sair">
+          <NavElement 
+            icon="fa-solid fa-right-from-bracket fa-xl"
+            label="Sair"
+          />
+        </div>
       </ul>
 
 
