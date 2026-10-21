@@ -15,16 +15,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   }
 
   return (
-    <html lang="pt-BR">
-      <body>
-        <main className={nav===true?"":"recolhida"}>
-          <Navbar 
-            nav={nav}
-            manageNav={manageNav}
-          />
-          {children}
-        </main>
-      </body>
-    </html>
+    <main className={nav===true?"":"recolhida"}>
+      <Navbar 
+        nav={nav}
+        manageNav={manageNav}
+      />
+      {children}
+    </main>
   );
 }

@@ -10,7 +10,7 @@ export default function Books() {
     <section className="users">
       <h1> <i className="fa-solid fa-user"></i> Usuários</h1>
       <nav className="navegacao">
-        <button className="green">
+        <button onClick={()=>router.push("/private/users/list")} className="green">
           Usuários cadastrados
         </button>
 
