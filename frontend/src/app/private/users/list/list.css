@@ -32,7 +32,7 @@ section.list div.users {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 section.list div.user {

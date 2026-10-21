@@ -3,6 +3,18 @@ import { Prisma } from "../generated/prisma/client.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
+export async function getUsers(_request: Request, response: Response) {
+  try {
+    const users = await prisma.user.findMany()
+    return response.status(200).json(users)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao buscar o perfil do usuário",
+      Erro: erro
+    })
+  }
+}
+
 export async function userRegister(request: Request, response: Response) {
   try {
     const { name, email } = request.body
