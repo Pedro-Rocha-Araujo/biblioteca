@@ -34,7 +34,7 @@ export default function ListUsers() {
 
   useEffect(()=> {
     setListagem(users.filter((user)=> {
-      return user.name.includes(pesquisa)
+      return user.name.toLowerCase().includes(pesquisa.toLowerCase())
     }))
   }, [pesquisa])
 
