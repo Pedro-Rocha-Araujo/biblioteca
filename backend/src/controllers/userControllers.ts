@@ -44,7 +44,7 @@ export async function userRegister(request: Request, response: Response) {
 
 export async function getUserProfile(request: Request, response: Response) {
   try {
-    const userId = Number(request.params.userId)
+    const userId = Number(request.params.user_id)
     if(!Number.isInteger(userId) || userId < 1) {
       return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
@@ -60,6 +60,50 @@ export async function getUserProfile(request: Request, response: Response) {
   } catch(erro) {
     return response.status(500).json({
       Mensagem: "Erro ao buscar o perfil do usuário",
+      Erro: erro
+    })
+  }
+}
+
+export async function editUserProfile(request: Request, response: Response) {
+  try {
+    const { name, email } = request.body
+    const userId = Number(request.params.user_id)
+    if(!name || !email) {
+      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    }
+    if(!Number.isInteger(userId) || userId < 1) {
+      return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
+    }
+    const verifyUser = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
+    if(!verifyUser) {
+      return response.status(404).json({ Mensagem: "Usuário não encontrado" })
+    }
+    const verifyEmail = await prisma.user.findUnique({
+      where: {
+        email: email
+      }
+    })
+    if(verifyEmail && verifyEmail.id !== userId) {
+      return response.status(409).json({ Mensagem: "O email já está sendo usado" })
+    }
+    await prisma.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        name: name,
+        email: email
+      }
+    })
+    return response.status(200).json({ Mensagem: "Usuário editado com sucesso" })
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao editar o perfil do usuário",
       Erro: erro
     })
   }
