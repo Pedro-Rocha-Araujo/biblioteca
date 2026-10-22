@@ -57,10 +57,16 @@ section.list div.user h3 {
 
 @media screen and (max-width: 1280px) {
   section.list div.users {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   section.list div.heading div.pesquisa {
     max-width: 220px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  section.list div.users {
+    grid-template-columns: 1fr;
   }
 }
 
