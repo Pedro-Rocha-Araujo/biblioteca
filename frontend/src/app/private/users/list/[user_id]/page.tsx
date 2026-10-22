@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { UserInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiUsers } from "@/api"
@@ -10,7 +10,9 @@ import { toast } from "react-toastify"
 import "./user-detail.css"
 
 export default function UserDetails() {
+  const router = useRouter()
   const params = useParams()
+
   const [user, setUser] = useState<UserInterface>()
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
@@ -73,6 +75,38 @@ export default function UserDetails() {
     }
   }
 
+  async function deleteUserProfile() {
+    if(!user_id) {
+      toast.error("Usuário não encontrado")
+    }
+    try {
+      await apiUsers.delete(`/${user_id}`)
+      router.push("/private/users/list")
+    } catch(erro) {
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Não foi possível conectar ao servidor.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Usuário não encontrado.")
+            break
+          case 409:
+            toast.error(erro.response.data.Mensagem)
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
+    }
+  }
+
   return (
     <section className="user-details">
       <h1>Detalhes do Usuário</h1>
@@ -93,7 +127,7 @@ export default function UserDetails() {
           required
         />
         <button type="submit">Salvar</button>
-        <button type="button">Excluir usuário</button>
+        <button onClick={deleteUserProfile} type="button">Excluir usuário</button>
       </form>
 
       <h2> <i className="fa-regular fa-calendar"></i> Histórico de empréstimos</h2>

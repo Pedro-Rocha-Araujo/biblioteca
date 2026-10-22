@@ -111,7 +111,7 @@ export async function editUserProfile(request: Request, response: Response) {
 
 export async function deleteUserProfile(request: Request, response: Response) {
   try {
-    const userId = Number(request.params.userId)
+    const userId = Number(request.params.user_id)
     if(!Number.isInteger(userId) || userId < 1) {
       return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }

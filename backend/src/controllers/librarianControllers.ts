@@ -56,7 +56,7 @@ export async function librarianRegister(request: Request, response: Response) {
     const token = jwt.sign(
       { librarianId: newLibrarian.id },
       process.env.JWT_PASSWORD!,
-      { expiresIn: "1h" }
+      { expiresIn: "12h" }
     )
     return response.status(201).json({
       Mensagem: "Bibliotecário cadastrado com sucesso",
@@ -96,7 +96,7 @@ export async function librarianLogin(request: Request, response: Response) {
     const token = await jwt.sign(
       { librarianId: verifyLibrarian.id },
       process.env.JWT_PASSWORD!,
-      { expiresIn: "1h" }
+      { expiresIn: "12h" }
     )
     return response.status(200).json({
       Mensagem: "Login feito com sucesso",
