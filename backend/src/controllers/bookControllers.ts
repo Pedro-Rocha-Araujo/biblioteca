@@ -80,10 +80,10 @@ export async function putBook(request: Request, response: Response) {
   try { 
     const book_id = Number(request.params.book_id)
     const { title, author, isbn, quantity } = request.body
-    if(!Number.isInteger(book_id) || book_id < 1) {
+    if(!Number.isInteger(book_id)) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
-    if(!title || !author || quantity < 1) {
+    if(!title || !author) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas" })
     }
     const verifyBook = await prisma.book.findUnique({

@@ -47,9 +47,10 @@ export default function UserDetails() {
     setQuantity(quantity + 1)
   }
 
-  async function editUserProfile(e: React.FormEvent) {
+  async function editBook(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const formData = new FormData();
+    const formData = new FormData(e.currentTarget);
+    const isbn = formData.get("isbn")
     const title = formData.get("title")
     const author = formData.get("author")
     if(!title || !author) {
@@ -57,7 +58,7 @@ export default function UserDetails() {
     }
     try {
       await apiBooks.put(`/${book_id}`, {
-        title, author
+        isbn, title, author, quantity
       })
       toast.success("Livro atualizado")
     } catch(erro) {
@@ -121,14 +122,14 @@ export default function UserDetails() {
     <section className="book-details">
 
       <h1>Detalhes do Livro</h1>
-      <form onSubmit={editUserProfile} className="form-post-book">
+      <form onSubmit={editBook} className="form-post-book">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
         <input 
           placeholder="Digite o ISBN do livro"
           type="text"
           name="isbn"
           defaultValue={book?.isbn}
-          required
+          
         />
         <input 
           placeholder="Digite o título do livro"
