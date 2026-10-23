@@ -9,7 +9,11 @@ export const apiUsers = axios.create({
   baseURL: "http://localhost:4000/users",
 })
 
-const apis = [apiAuth, apiUsers]
+export const apiBooks = axios.create({
+  baseURL: "http://localhost:4000/books",
+})
+
+const apis = [apiAuth, apiUsers, apiBooks]
 
 apis.forEach((api)=> {
   api.interceptors.request.use((config)=> {

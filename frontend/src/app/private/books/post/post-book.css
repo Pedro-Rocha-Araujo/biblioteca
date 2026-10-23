@@ -1,0 +1,28 @@
+section.post-book {
+  padding: 1rem;
+}
+
+section.post-book form.form-post-book {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 480px;
+}
+
+section.post-book form.form-post-book input {
+  padding: 0.8rem 0.5rem;
+}
+
+section.post-book form.form-post-book button {
+  padding: 1rem 0;
+  color: #fff;
+  background-color: #1c1c1c;
+}
+
+@media screen and (max-width: 768px) {
+  section.post-book form.form-post-book {
+
+    max-width: none;
+  }
+}

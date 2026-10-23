@@ -44,6 +44,16 @@ export async function postBook(request: Request, response: Response) {
     if(!title || !author || !Number.isInteger(quantity) || quantity < 1) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas ou inválidas" })
     }
+    if(isbn || isbn !== null) {
+      const searchBook = await prisma.book.findUnique({
+        where: {
+          isbn
+        }
+      })
+      if(searchBook) {
+        return response.status(409).json({ Mensagem: "ISBN já cadastrado" })
+      }
+    }
     const newBook = await prisma.book.create({
       data: {
         title,
