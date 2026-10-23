@@ -1,11 +1,13 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { apiBooks } from "@/api"
 import "./post-book.css"
 
 export default function PostBook() {
+  const router = useRouter()
 
   async function postBook(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -15,16 +17,12 @@ export default function PostBook() {
     const author = formData.get("author")
     const quantity = formData.get("quantity")
     if(!title || !author || !quantity) {
-      console.log(title, author, quantity)
       toast.error("Preencha todos os campos")
+      return
     }
     try {
       await apiBooks.post("/",{ isbn, title, author, quantity })
-      toast.success("Livro cadastrado!")
-      formData.delete("isbn")
-      formData.delete("title")
-      formData.delete("author")
-      formData.delete("quantity")
+      router.push("/private/books/list")
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {

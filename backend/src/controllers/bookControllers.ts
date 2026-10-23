@@ -39,7 +39,11 @@ export async function getBook(request: Request, response: Response) {
 
 export async function postBook(request: Request, response: Response) {
   try { 
-    const { title, author, isbn } = request.body
+    const { title, author, prev_isbn } = request.body
+    let isbn = prev_isbn
+    if(!isbn) {
+      isbn = null
+    }
     const quantity = Number(request.body.quantity)
     if(!title || !author || !Number.isInteger(quantity) || quantity < 1) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas ou inválidas" })
@@ -79,7 +83,11 @@ export async function postBook(request: Request, response: Response) {
 export async function putBook(request: Request, response: Response) {
   try { 
     const book_id = Number(request.params.book_id)
-    const { title, author, isbn, quantity } = request.body
+    const { title, author, prev_isbn, quantity } = request.body
+    let isbn = prev_isbn
+    if(!isbn) {
+      isbn = null
+    }
     if(!Number.isInteger(book_id)) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }

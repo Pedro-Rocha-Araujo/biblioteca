@@ -15,7 +15,7 @@ export default function UserDetails() {
 
   const [book, setBook] = useState<BookInterface>()
   const [quantity, setQuantity] = useState<number>(0)
-
+  
   const token = Cookies.get("token")
   const book_id = params.book_id
 
