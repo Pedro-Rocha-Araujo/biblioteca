@@ -4,7 +4,7 @@ import { checkToken } from "../middlewares/userMiddlewares.js"
 
 const bookRouter = Router()
 
-bookRouter.get("/books", getBooks)
+bookRouter.get("/books", checkToken, getBooks)
 bookRouter.get("/books/:book_id", checkToken, getBook)
 bookRouter.post("/books", checkToken, postBook)
 bookRouter.put("/books/:book_id", checkToken, putBook)

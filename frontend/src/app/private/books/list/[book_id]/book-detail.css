@@ -1,0 +1,54 @@
+section.book-details {
+  padding: 1rem;
+}
+
+section.book-details h2 {
+  margin: 1rem 0;
+}
+
+section.book-details  form.form-post-book {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 480px;
+}
+
+section.book-details form.form-post-book label {
+  margin: 0.5rem 0 0 0;
+}
+
+section.book-details form.form-post-book input {
+  padding: 0.8rem 0.5rem;
+}
+
+section.book-details form.form-post-book button {
+  padding: 1rem 0;
+  color: #fff;
+  background-color: #22f;
+}
+
+section.book-details form.form-post-book button[type="button"] {
+  background-color: #f33;
+}
+
+section.book-details div.quantity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+section.book-details div.quantity button[type="button"] {
+  background-color: #1c1c1c;
+  height: 1.8rem;
+  width: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  section.book-details  form.form-post-book {
+    max-width: none;
+  }
+}

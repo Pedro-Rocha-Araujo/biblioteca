@@ -11,7 +11,7 @@ export default function Books() {
       <h1> <i className="fa-solid fa-book"></i> Livros</h1>
       <nav className="navegacao">
 
-        <button className="green">
+        <button onClick={()=>router.push("/private/books/list")} className="green">
           Livros cadastrados
         </button>
 

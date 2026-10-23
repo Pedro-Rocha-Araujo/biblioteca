@@ -1,0 +1,84 @@
+section.list {
+  padding: 1rem;
+}
+
+section.list div.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+section.list div.heading div.pesquisa {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+section.list div.heading div.pesquisa input {
+  border: 1px solid #1c1c1c3a;
+  height: 2.5rem;
+  padding: 0 2rem 0 1rem;
+  border-radius: 2rem;
+  width: 100%;
+}
+
+section.list div.heading div.pesquisa i {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.8rem;
+}
+
+section.list div.books {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+section.list div.book {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  transition: all 0.15s;
+}
+
+section.list div.book:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+section.list div.book h3 {
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+}
+
+@media screen and (max-width: 1280px) {
+  section.list div.books {
+    grid-template-columns: 1fr 1fr;
+  }
+  section.list div.heading div.pesquisa {
+    max-width: 220px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  section.list div.books {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section.list div.heading {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  section.list div.heading div.pesquisa {
+    max-width: none;
+  }
+  section.list div.heading div.pesquisa input {
+    width: 100%;
+  }
+}

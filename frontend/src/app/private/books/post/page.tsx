@@ -28,7 +28,7 @@ export default function PostBook() {
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
-          toast.error("Não foi possível conectar ao servidor.")
+          toast.error("Servidor Indisponível.")
           return
         }
         switch (erro.response?.status) {

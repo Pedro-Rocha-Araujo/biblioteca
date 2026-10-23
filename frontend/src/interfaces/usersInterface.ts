@@ -3,3 +3,11 @@ export interface UserInterface {
   name: string,
   email: string
 }
+
+export interface BookInterface {
+  id: number,
+  isbn: string,
+  title: string,
+  author: string,
+  quantity: number
+}
