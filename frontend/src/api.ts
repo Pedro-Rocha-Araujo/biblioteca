@@ -17,7 +17,11 @@ export const apiBooks = axios.create({
   baseURL: "http://localhost:4000/books",
 })
 
-const apis = [apiAuth, apiUsers, apiLibrarians, apiBooks]
+export const apiLoans = axios.create({
+  baseURL: "http://localhost:4000/loans",
+})
+
+const apis = [apiAuth, apiUsers, apiLibrarians, apiBooks, apiLoans]
 
 apis.forEach((api)=> {
   api.interceptors.request.use((config)=> {

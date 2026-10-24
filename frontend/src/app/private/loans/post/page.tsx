@@ -1,62 +1,63 @@
 'use client'
 
+import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
-import { apiUsers } from "@/api"
+import { apiUsers, apiBooks } from "@/api"
+import { UserInterface, BookInterface } from "@/interfaces/usersInterface"
 import "./post-loan.css"
 
-export default function PostUser() {
+export default function PostLoan() {
+  const [users, setUsers] = useState()
+  const [books, setBooks] = useState<BookInterface[]>([])
 
-  async function postLoan(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const name = formData.get("name")
-    const email = formData.get("email")
-    if(!name || !email) {
-      toast.error("Preencha todos os campos")
-    }
-    try {
-      await apiUsers.post("/",{ name, email })
-    } catch(erro) {
-      if(axios.isAxiosError(erro)) {
-        if (!erro.response) {
-          toast.error("Não foi possível conectar ao servidor.")
-          return
-        }
-        switch (erro.response?.status) {
-          case 401:
-            toast.error("Faça o login novamente.")
-            break
-          case 404:
-            toast.error("Recurso não encontrado.")
-            break
-          case 409:
-            toast.error(erro.response.data.Mensagem || "Esse usuário já está cadastrado.")
-            break
-          default:
-            toast.error("Erro! Tente novamente.")
-        }
-      } else {
-        toast.error("Erro inesperado")
+  useEffect(()=> {
+    async function getInfos() {
+      try {
+        const getUsers = await apiUsers.get("/")
+        const getBooks = await apiBooks.get("/")
+        setUsers(getUsers.data)
+        setBooks(getBooks.data)
+      } catch(erro) {
+        console.log(erro)
       }
     }
-  }
+    getInfos()
+  }, [])
 
   return (
-    <section className="post-user">
-      <h1> <i className="fa-solid fa-circle-plus"></i> Cadastrar Usuário</h1>
+    <section className="post-loan">
+      <h1> <i className="fa-solid fa-circle-plus"></i> Novo Empréstimo</h1>
 
-      <form onSubmit={postLoan} className="form-post-user">
-        <input 
-          placeholder="Digite o nome do usuário"
-          type="text"
-          name="name"
-        />
-        <input 
-          placeholder="Digite o e-mail do usuário"
-          type="email"
-          name="email"
-        />
+      <form className="form-post-loan">
+
+        <h2> <i className="fa-solid fa-book"></i> Selecione o Livro</h2>
+        <div className="pesquisa">
+          <input 
+            placeholder="Pesquisar Livro"
+            type="text"
+          />
+          <i className="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div className="books">
+          { books.length > 0 ? (
+            books.map((book)=> {
+              return (
+                <div key={book.id} className="book">
+                  <h3>{book.title}</h3>
+                  <span></span>
+                </div>
+              )
+            })
+          ) : (
+            <span className="erro">Nenhum livro cadastrado ainda</span>
+          ) }
+        </div>
+
+        <div className="users">
+
+        </div>
+
         <button>Cadastrar</button>
       </form>
     </section>
