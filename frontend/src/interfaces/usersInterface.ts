@@ -11,3 +11,9 @@ export interface BookInterface {
   author: string,
   quantity: number
 }
+
+export interface LibrarianInterface {
+  id: number,
+  name: string,
+  email: string,
+}
