@@ -5,6 +5,8 @@ import { toast } from "react-toastify"
 import axios from "axios"
 import { apiUsers, apiBooks } from "@/api"
 import { UserInterface, BookInterface } from "@/interfaces/usersInterface"
+import ListBooks from "./list/Books"
+import ListUsers from "./list/Users"
 import "./post-loan.css"
 
 export default function PostLoan() {
@@ -39,20 +41,9 @@ export default function PostLoan() {
           />
           <i className="fa-solid fa-magnifying-glass"></i>
         </div>
-        <div className="books">
-          { books.length > 0 ? (
-            books.map((book)=> {
-              return (
-                <div key={book.id} className="book">
-                  <h3>{book.title}</h3>
-                  <span></span>
-                </div>
-              )
-            })
-          ) : (
-            <span className="erro">Nenhum livro cadastrado ainda</span>
-          ) }
-        </div>
+        <ListBooks 
+          books={books}
+        />
 
         <h2> <i className="fa-solid fa-user"></i> Selecione o Usuário</h2>
         <div className="pesquisa">
@@ -62,19 +53,9 @@ export default function PostLoan() {
           />
           <i className="fa-solid fa-magnifying-glass"></i>
         </div>
-        <div className="users">
-          { users.length > 0 ? (
-            users.map((user)=> {
-              return (
-                <div key={user.id} className="user">
-                  <h3>{user.email}</h3>
-                </div>
-              )
-            })
-          ) : (
-            <span className="erro">Nenhum usuário cadastrado ainda</span>
-          ) }
-        </div>
+        <ListUsers 
+          users={users}
+        />
 
         <button>Cadastrar</button>
       </form>
