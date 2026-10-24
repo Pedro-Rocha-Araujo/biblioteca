@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { apiLibrarians } from "@/api"
+import axios from "axios"
 import { LibrarianInterface } from "@/interfaces/usersInterface"
 import Cookies from "js-cookie"
 import { toast } from "react-toastify"
@@ -42,7 +43,27 @@ export default function Profile() {
       })
       toast.success("Perfil atualizado")
     } catch(erro) {
-      console.log(erro)
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Não foi possível conectar ao servidor.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Perfil não encontrado.")
+            break
+          case 409:
+            toast.error(erro.response.data.Mensagem)
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
     }
   }
 
