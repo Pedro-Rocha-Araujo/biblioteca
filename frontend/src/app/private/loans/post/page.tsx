@@ -8,7 +8,7 @@ import { UserInterface, BookInterface } from "@/interfaces/usersInterface"
 import "./post-loan.css"
 
 export default function PostLoan() {
-  const [users, setUsers] = useState()
+  const [users, setUsers] = useState<UserInterface[]>([])
   const [books, setBooks] = useState<BookInterface[]>([])
 
   useEffect(()=> {
@@ -54,8 +54,26 @@ export default function PostLoan() {
           ) }
         </div>
 
+        <h2> <i className="fa-solid fa-user"></i> Selecione o Usuário</h2>
+        <div className="pesquisa">
+          <input 
+            placeholder="Pesquisar Usuário"
+            type="text"
+          />
+          <i className="fa-solid fa-magnifying-glass"></i>
+        </div>
         <div className="users">
-
+          { users.length > 0 ? (
+            users.map((user)=> {
+              return (
+                <div key={user.id} className="user">
+                  <h3>{user.email}</h3>
+                </div>
+              )
+            })
+          ) : (
+            <span className="erro">Nenhum usuário cadastrado ainda</span>
+          ) }
         </div>
 
         <button>Cadastrar</button>
