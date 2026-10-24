@@ -1,0 +1,100 @@
+section.loan {
+  padding: 1rem;
+}
+
+section.loan div.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+section.loan div.heading div.pesquisa {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+section.loan div.heading div.pesquisa input {
+  border: 1px solid #1c1c1c3a;
+  height: 2.5rem;
+  padding: 0 2rem 0 1rem;
+  border-radius: 2rem;
+  width: 100%;
+}
+
+section.loan div.heading div.pesquisa i {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.8rem;
+}
+
+section.loan div.loans {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+section.loan div.loan {
+  background-color: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  transition: all 0.15s;
+}
+
+section.loan div.loan:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+section.loan div.loan div.infos {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+section.loan div.loan h3 {
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+  font-weight: 600;
+}
+
+section.loan div.loan i {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+}
+
+@media screen and (max-width: 1280px) {
+  section.loan div.loans {
+    grid-template-columns: 1fr 1fr;
+  }
+  section.loan div.heading div.pesquisa {
+    max-width: 220px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  section.loan div.loans {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section.loan div.heading {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  section.loan div.heading div.pesquisa {
+    max-width: none;
+  }
+  section.loan div.heading div.pesquisa input {
+    width: 100%;
+  }
+}

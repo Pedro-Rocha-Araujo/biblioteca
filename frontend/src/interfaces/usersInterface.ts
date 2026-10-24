@@ -17,3 +17,14 @@ export interface LibrarianInterface {
   name: string,
   email: string,
 }
+
+export interface LoanInterface {
+  id: number,
+  book: BookInterface,
+  librarian: LibrarianInterface,
+  user: UserInterface,
+  loanDate: Date,
+  dueDate: Date
+  returnDate: Date,
+
+}
