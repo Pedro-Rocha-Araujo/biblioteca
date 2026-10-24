@@ -13,6 +13,12 @@ export default function PostLoan() {
   const [users, setUsers] = useState<UserInterface[]>([])
   const [books, setBooks] = useState<BookInterface[]>([])
 
+  const [usersList, setUsersList] = useState<UserInterface[]>([])
+  const [booksList, setBooksList] = useState<BookInterface[]>([])
+
+  const [userSearch, setUserSearch] = useState<string>("")
+  const [bookSearch, setBookSearch] = useState<string>("")
+
   useEffect(()=> {
     async function getInfos() {
       try {
@@ -20,12 +26,26 @@ export default function PostLoan() {
         const getBooks = await apiBooks.get("/")
         setUsers(getUsers.data)
         setBooks(getBooks.data)
+        setUsersList(getUsers.data)
+        setBooksList(getBooks.data)
       } catch(erro) {
         console.log(erro)
       }
     }
     getInfos()
   }, [])
+
+  useEffect(()=> {
+    setBooksList(books.filter((book)=> {
+      return book.title.toLocaleLowerCase().includes(bookSearch.toLocaleLowerCase())
+    }))
+  }, [bookSearch]) 
+
+  useEffect(()=> {
+    setUsersList(users.filter((user)=> {
+      return user.email.toLocaleLowerCase().includes(userSearch.toLocaleLowerCase())
+    }))
+  }, [userSearch]) 
 
   return (
     <section className="post-loan">
@@ -36,25 +56,29 @@ export default function PostLoan() {
         <h2> <i className="fa-solid fa-book"></i> Selecione o Livro</h2>
         <div className="pesquisa">
           <input 
-            placeholder="Pesquisar Livro"
+            placeholder="Pesquisar Nome do Livro"
+            value={bookSearch}
+            onChange={(e)=>setBookSearch(e.target.value)}
             type="text"
           />
           <i className="fa-solid fa-magnifying-glass"></i>
         </div>
         <ListBooks 
-          books={books}
+          books={booksList}
         />
 
         <h2> <i className="fa-solid fa-user"></i> Selecione o Usuário</h2>
         <div className="pesquisa">
           <input 
-            placeholder="Pesquisar Usuário"
+            placeholder="Pesquisar Usuário pelo E-mail"
             type="text"
+            value={userSearch}
+            onChange={(e)=>setUserSearch(e.target.value)}
           />
           <i className="fa-solid fa-magnifying-glass"></i>
         </div>
         <ListUsers 
-          users={users}
+          users={usersList}
         />
 
         <button>Cadastrar</button>

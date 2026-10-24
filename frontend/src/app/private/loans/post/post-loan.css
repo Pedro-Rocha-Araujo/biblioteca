@@ -7,7 +7,7 @@ section.post-loan form.form-post-loan {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 480px;
+  max-width: 820px;
 }
 
 section.post-loan div.pesquisa {
@@ -61,7 +61,7 @@ section.post-loan div.book:hover {
   cursor: pointer;
 }
 
-section.post-loan div.book h3 {
+section.post-loan div.book h3, section.post-loan div.user h3 {
   font-size: clamp(0.7rem, 3vw, 1.1rem);
 }
 
