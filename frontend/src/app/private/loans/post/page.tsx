@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
+import { apiLoans } from "@/api"
 import { apiUsers, apiBooks } from "@/api"
 import { UserInterface, BookInterface } from "@/interfaces/usersInterface"
 import ListBooks from "./list/Books"
@@ -59,11 +60,34 @@ export default function PostLoan() {
     setUserSelected(id)
   }
 
+  async function cadastrarEmprestimo(e:React.FormEvent) {
+    e.preventDefault()
+    if(!bookSelected || !userSelected) {
+      toast.error("Preencha todos os campos")
+      return
+    }
+    try {
+      await apiLoans.post("/",
+        { 
+          book_id: bookSelected,
+          user_id: userSelected
+        }
+      )
+      setBookSearch("")
+      setUserSearch("")
+      setBookSelected(null)
+      setUserSelected(null)
+      toast.success("Empréstimo cadastrado")
+    } catch(erro) {
+      console.log(erro)
+    }
+  }
+
   return (
     <section className="post-loan">
       <h1> <i className="fa-solid fa-circle-plus"></i> Novo Empréstimo</h1>
 
-      <form className="form-post-loan">
+      <form onSubmit={cadastrarEmprestimo} className="form-post-loan">
 
         <h2> <i className="fa-solid fa-book"></i> Selecione o Livro</h2>
         <div className="pesquisa">

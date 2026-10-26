@@ -4,12 +4,10 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { LoanInterface } from "@/interfaces/usersInterface"
 import { apiLoans } from "@/api"
-import Cookies from "js-cookie"
 import "./list.css"
 
 export default function ListLoans() {
   const router = useRouter()
-  const token = Cookies.get("token")
 
   const [loans, setLoans] = useState<LoanInterface[]>([])
 
@@ -24,6 +22,24 @@ export default function ListLoans() {
     }
     getLoans()
   }, [])
+
+  function formatDate(date: String | Date) {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      timeZone: "UTC"
+    })
+  }
+
+  function getRemainingDays(dueDate: string | Date): number {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+
+    const difference = due.getTime() - today.getTime();
+
+    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+  }
 
   return (
     <section className="loan">
@@ -44,14 +60,14 @@ export default function ListLoans() {
         { loans.length > 0 ? (
           loans.map((loan)=> {
             return (
-              <div className="loan">
-                <h3><strong>Usuário:</strong> Pedro Rocha</h3>
-                <span><strong>Bibliotecário:</strong> João da silva</span>
-                <span><strong>Livro:</strong> O príncipe</span>
-                <span><strong>Data:</strong> 10/10/1010</span>
+              <div key={loan.id} className="loan">
+                <h3><strong>Usuário:</strong> {loan.user.name}</h3>
+                <span><strong>Bibliotecário:</strong> {loan.librarian.name}</span>
+                <span><strong>Livro:</strong> {loan.book.title}</span>
+                <span><strong>Data:</strong> {formatDate(loan.loanDate)}</span>
                 <div className="infos">
-                  <span><strong>Prazo:</strong> 15/10/1010</span>
-                  <span><strong>Dias restantes:</strong> 5</span>
+                  <span><strong>Prazo:</strong> {formatDate(loan.dueDate)}</span>
+                  <span><strong>Dias restantes:</strong> {getRemainingDays(loan.dueDate)}</span>
                 </div>
                 <i className="fa-solid fa-eye fa-lg"></i>
               </div>
