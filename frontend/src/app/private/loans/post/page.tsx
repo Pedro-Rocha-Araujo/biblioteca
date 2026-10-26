@@ -19,6 +19,9 @@ export default function PostLoan() {
   const [userSearch, setUserSearch] = useState<string>("")
   const [bookSearch, setBookSearch] = useState<string>("")
 
+  const [bookSelected, setBookSelected] = useState<number | null>(null)
+  const [userSelected, setUserSelected] = useState<number | null>(null)
+
   useEffect(()=> {
     async function getInfos() {
       try {
@@ -35,17 +38,26 @@ export default function PostLoan() {
     getInfos()
   }, [])
 
+
   useEffect(()=> {
     setBooksList(books.filter((book)=> {
       return book.title.toLocaleLowerCase().includes(bookSearch.toLocaleLowerCase())
     }))
   }, [bookSearch]) 
-
+  
   useEffect(()=> {
     setUsersList(users.filter((user)=> {
       return user.email.toLocaleLowerCase().includes(userSearch.toLocaleLowerCase())
     }))
   }, [userSearch]) 
+
+
+  function manageBookSelected(id:number) {
+    setBookSelected(id)
+  }
+  function manageUserSelected(id:number) {
+    setUserSelected(id)
+  }
 
   return (
     <section className="post-loan">
@@ -65,6 +77,8 @@ export default function PostLoan() {
         </div>
         <ListBooks 
           books={booksList}
+          bookSelected={bookSelected}
+          setBookSelected={manageBookSelected}
         />
 
         <h2> <i className="fa-solid fa-user"></i> Selecione o Usuário</h2>
@@ -79,6 +93,8 @@ export default function PostLoan() {
         </div>
         <ListUsers 
           users={usersList}
+          userSelected={userSelected}
+          setUserSelected={manageUserSelected}
         />
 
         <button>Cadastrar</button>

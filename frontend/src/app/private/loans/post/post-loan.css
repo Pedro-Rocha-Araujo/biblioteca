@@ -74,10 +74,6 @@ section.post-loan div.users {
   padding: 0.2em 0 0.5rem 0rem;
 }
 
-div.users::-webkit-scrollbar {
-  display: none;
-}
-
 section.post-loan div.user {
   background-color: #fff;
   display: flex;
@@ -88,8 +84,16 @@ section.post-loan div.user {
   border: 1px solid #1c1c1c7a;
 }
 
-section.post-loan div.book:hover {
+div.users::-webkit-scrollbar {
+  display: none;
+}
+
+section.post-loan div.users div.user:hover {
   cursor: pointer;
+}
+
+#selected {
+  background-color: #1c1c1c31;
 }
 
 @media screen and (max-width: 768px) {

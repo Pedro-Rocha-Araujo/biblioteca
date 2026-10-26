@@ -1,16 +1,23 @@
 import { UserInterface } from "@/interfaces/usersInterface"
 
 interface ListUsersInterface {
-  users: UserInterface[]
+  users: UserInterface[],
+  userSelected: number | null,
+  setUserSelected: (id:number)=> void
 }
 
-export default function ListUsers({ users }: ListUsersInterface) {
+export default function ListUsers({ users, userSelected, setUserSelected }: ListUsersInterface) {
   return (
     <div className="users">
       { users.length > 0 ? (
         users.map((user)=> {
           return (
-            <div key={user.id} className="user">
+            <div 
+              onClick={()=>setUserSelected(user.id)}
+              key={user.id} 
+              className="user"
+              id={user.id===userSelected?"selected":""}
+            >
               <h3>{user.email}</h3>
             </div>
           )
