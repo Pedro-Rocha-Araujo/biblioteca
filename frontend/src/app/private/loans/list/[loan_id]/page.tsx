@@ -4,47 +4,73 @@ import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { LoanInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
-import { apiUsers } from "@/api"
+import { apiLoans } from "@/api"
 import { toast } from "react-toastify" 
-import "./user-detail.css"
+import "./loan-detail.css"
 
-export default function UserDetails() {
+export default function LoanDetails() {
   const router = useRouter()
   const params = useParams()
 
-  const loan_id = params.user_id
+  const loan_id = params.loan_id
+
+  const [loan, setLoan] = useState<LoanInterface>()
+  
+  useEffect(()=> {
+    async function getLoans() {
+      try {
+        const response = await apiLoans(`/${loan_id}`)
+        setLoan(response.data[0])
+      } catch(erro) {
+        console.log(erro)
+      }
+    }
+    getLoans()
+  }, [loan_id])
+
+  function formatDate(date: string | Date) {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      timeZone: "UTC"
+    })
+  }
+
+  function getRemainingDays(dueDate: string | Date): number {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+
+    const difference = due.getTime() - today.getTime();
+
+    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+  }
 
   return (
-    <section className="user-details">
-      <h1>Detalhes do Usuário</h1>
-      <form className="form-post-user">
-        <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
-        <input 
-          placeholder="Digite o nome do usuário"
-          type="text"
-          required
-        />
-        <input 
-          placeholder="Digite o e-mail do usuário"
-          type="email"
-          required
-        />
-        <button type="submit">Salvar</button>
-        <button type="button">Excluir usuário</button>
+    <section className="loan-details">
+      <h1>Detalhes do Empréstimo</h1>
+
+      { loan ? (
+        <div className="loan">
+          <h3><strong>Usuário:</strong> {loan?.user.name}</h3>
+          <span><strong>Bibliotecário:</strong> {loan?.librarian.name}</span>
+          <span><strong>Livro:</strong> {loan?.book.title}</span>
+          <span><strong>Data:</strong> {formatDate(loan?.loanDate)}</span>
+          <div className="infos">
+            <span><strong>Prazo:</strong> {formatDate(loan?.dueDate)}</span>
+            <span><strong>Dias restantes:</strong> {getRemainingDays(loan?.dueDate)}</span>
+          </div>
+        </div>
+      ) : (
+        <span className="erro">Empréstimo não encontrado</span>
+      ) }
+
+      <form className="form-post-loan">
+        <h2> <i className="fa-regular fa-calendar"></i> Gerenciar Empréstimo</h2>
+        <button className="green" type="button">Realizar devolução</button>
+        <button type="button">Excluir Empréstimo</button>
       </form>
 
-      <h2> <i className="fa-regular fa-calendar"></i> Histórico de empréstimos</h2>
-      <div className="loans">
-
-        <div className="loan">
-          <h3> <i className="fa-solid fa-book"></i> Livro: Nome do Livro</h3>
-          <div className="infos">
-            <span><strong>Empréstimo:</strong> 23/02/2005</span>
-            <span><strong>Retorno:</strong> 23/02/2005</span>
-          </div>
-        </div>  
-
-      </div>
     </section>
   )
 }

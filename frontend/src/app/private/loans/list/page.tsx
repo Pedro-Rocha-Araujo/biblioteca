@@ -23,7 +23,7 @@ export default function ListLoans() {
     getLoans()
   }, [])
 
-  function formatDate(date: String | Date) {
+  function formatDate(date: string | Date) {
     return new Date(date).toLocaleDateString("pt-BR", {
       timeZone: "UTC"
     })
@@ -60,7 +60,7 @@ export default function ListLoans() {
         { loans.length > 0 ? (
           loans.map((loan)=> {
             return (
-              <div key={loan.id} className="loan">
+              <div key={loan.id} onClick={()=>router.push(`/private/loans/list/${loan.id}`)} className="loan">
                 <h3><strong>Usuário:</strong> {loan.user.name}</h3>
                 <span><strong>Bibliotecário:</strong> {loan.librarian.name}</span>
                 <span><strong>Livro:</strong> {loan.book.title}</span>

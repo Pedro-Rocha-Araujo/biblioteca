@@ -2,15 +2,37 @@ section.loan-details {
   padding: 1rem;
 }
 
+section.loan-details div.loan {
+  background-color: #fff;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  transition: all 0.15s;
+}
+
+section.loan-details div.loan div.infos {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+section.loan-details div.loan h3 {
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+  font-weight: 600;
+}
+
 section.loan-details  form.form-post-loan {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   max-width: 480px;
-}
-
-section.loan-details form.form-post-loan input {
-  padding: 0.8rem 0.5rem;
+  margin: 1rem 0;
 }
 
 section.loan-details form.form-post-loan button {
@@ -23,34 +45,10 @@ section.loan-details form.form-post-loan button[type="button"] {
   background-color: #f33;
 }
 
-
-
-section.loan-details h2 {
-  margin: 1rem 0;
-}
-
-section.loan-details div.loans {
-  max-width: 1280px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.5rem;
-}
-
-section.loan-details div.loan {
-  background-color: #fff;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  box-shadow: -2px 2px 2px 1px #1c1c1c52;
-}
-
-section.loan-details div.loan h3 {
-  margin-bottom: 0.5rem;
-}
-
-section.loan-details div.loan div.infos {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+section.loan-details form.form-post-loan button.green {
+  padding: 1rem 0;
+  color: #fff;
+  background-color: #22f;
 }
 
 @media screen and (max-width: 1280px) {
@@ -67,6 +65,9 @@ section.loan-details div.loan div.infos {
 
 @media screen and (max-width: 768px) {
   section.loan-details  form.form-post-loan {
+    max-width: none;
+  }
+  section.loan-details div.loan {
     max-width: none;
   }
 }
