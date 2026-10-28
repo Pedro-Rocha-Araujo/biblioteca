@@ -79,7 +79,27 @@ export default function PostLoan() {
       setUserSelected(null)
       toast.success("Empréstimo cadastrado")
     } catch(erro) {
-      console.log(erro)
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Servidor Indisponível.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Recurso não encontrado.")
+            break
+          case 409:
+            toast.error(erro.response.data.Mensagem)
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
     }
   }
 

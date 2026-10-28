@@ -2,32 +2,6 @@ section.loan {
   padding: 1rem;
 }
 
-section.loan div.heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-section.loan div.heading div.pesquisa {
-  position: relative;
-  width: 100%;
-  max-width: 320px;
-}
-
-section.loan div.heading div.pesquisa input {
-  border: 1px solid #1c1c1c3a;
-  height: 2.5rem;
-  padding: 0 2rem 0 1rem;
-  border-radius: 2rem;
-  width: 100%;
-}
-
-section.loan div.heading div.pesquisa i {
-  position: absolute;
-  right: 0.7rem;
-  top: 0.8rem;
-}
-
 section.loan div.loans {
   margin-top: 1rem;
   display: grid;

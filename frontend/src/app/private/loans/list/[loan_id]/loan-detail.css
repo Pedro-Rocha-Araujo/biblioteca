@@ -2,6 +2,10 @@ section.loan-details {
   padding: 1rem;
 }
 
+section.loan-details h2 {
+  margin: 1rem 0;
+}
+
 section.loan-details div.loan {
   background-color: #fff;
   max-width: 480px;
@@ -64,6 +68,9 @@ section.loan-details form.form-post-loan button.green {
 }
 
 @media screen and (max-width: 768px) {
+  section.loan-details h1, section.loan-details h2 {
+    text-align: center;
+  }
   section.loan-details  form.form-post-loan {
     max-width: none;
   }

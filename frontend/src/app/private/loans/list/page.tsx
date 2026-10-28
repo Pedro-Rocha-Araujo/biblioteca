@@ -43,17 +43,7 @@ export default function ListLoans() {
 
   return (
     <section className="loan">
-
-      <div className="heading">
-        <h1> <i className="fa-solid fa-handshake"></i> Empréstimos</h1>
-        <div className="pesquisa">
-          <input 
-            placeholder="Pesquisar"
-            type="text"
-          />
-          <i className="fa-solid fa-magnifying-glass"></i>
-        </div>
-      </div>
+      <h1> <i className="fa-solid fa-handshake"></i> Empréstimos</h1>
       
       <div className="loans">
 

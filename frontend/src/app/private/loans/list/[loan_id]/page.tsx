@@ -16,11 +16,13 @@ export default function LoanDetails() {
 
   const [loan, setLoan] = useState<LoanInterface>()
   
+  
+  
   useEffect(()=> {
     async function getLoans() {
       try {
-        const response = await apiLoans(`/${loan_id}`)
-        setLoan(response.data[0])
+        const response = await apiLoans(`/loan/${loan_id}`)
+        setLoan(response.data)
       } catch(erro) {
         console.log(erro)
       }
@@ -46,6 +48,64 @@ export default function LoanDetails() {
     return Math.ceil(difference / (1000 * 60 * 60 * 24));
   }
 
+  async function returnLoan() {
+    try {
+      await apiLoans.patch(`/${loan_id}`)
+      router.push("/private/loans/list")
+    } catch(erro) {
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Servidor Indisponível.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Recurso não encontrado.")
+            break
+          case 409:
+            toast.error(erro.response.data.Mensagem)
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
+    }
+  }
+
+  async function deleteLoan() {
+    try {
+      await apiLoans.delete(`/${loan_id}`)
+      router.push("/private/loans/list")
+    } catch(erro) {
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Servidor Indisponível.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 401:
+            toast.error("Faça o login novamente.")
+            break
+          case 404:
+            toast.error("Recurso não encontrado.")
+            break
+          case 409:
+            toast.error("Empréstimo pendente")
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
+    }
+  }
+
   return (
     <section className="loan-details">
       <h1>Detalhes do Empréstimo</h1>
@@ -67,8 +127,14 @@ export default function LoanDetails() {
 
       <form className="form-post-loan">
         <h2> <i className="fa-regular fa-calendar"></i> Gerenciar Empréstimo</h2>
-        <button className="green" type="button">Realizar devolução</button>
-        <button type="button">Excluir Empréstimo</button>
+        { !loan?.returnDate && (
+          <button onClick={returnLoan} className="green" type="button">
+            Realizar devolução
+          </button>
+        ) }
+        <button onClick={deleteLoan} type="button">
+          Excluir Empréstimo
+        </button>
       </form>
 
     </section>
