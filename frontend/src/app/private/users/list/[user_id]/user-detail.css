@@ -38,19 +38,21 @@ section.user-details div.loans {
 
 section.user-details div.loan {
   background-color: #fff;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  box-shadow: -2px 2px 2px 1px #1c1c1c52;
-}
-
-section.user-details div.loan h3 {
-  margin-bottom: 0.5rem;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  transition: all 0.15s;
 }
 
 section.user-details div.loan div.infos {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1280px) {
@@ -67,6 +69,9 @@ section.user-details div.loan div.infos {
 
 @media screen and (max-width: 768px) {
   section.user-details  form.form-post-user {
+    max-width: none;
+  }
+  section.user-details div.loan {
     max-width: none;
   }
 }

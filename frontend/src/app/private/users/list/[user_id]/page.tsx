@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { UserInterface } from "@/interfaces/usersInterface"
+import { LoanInterface, UserInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
-import { apiUsers } from "@/api"
+import { apiLoans, apiUsers } from "@/api"
 import Cookies from "js-cookie"
 import { toast } from "react-toastify" 
 import "./user-detail.css"
@@ -16,6 +16,7 @@ export default function UserDetails() {
   const [user, setUser] = useState<UserInterface>()
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
+  const [userLoans, setUserLoans] = useState<LoanInterface[]>([])
   const token = Cookies.get("token")
   const user_id = params.user_id
 
@@ -37,8 +38,35 @@ export default function UserDetails() {
         console.log(erro)
       }
     }
+    async function getUserLoans() {
+      try {
+        const response = await apiLoans.get(`/${user_id}`)
+        setUserLoans(response.data)
+      } catch(erro) {
+        console.log(erro)
+      }
+    }
     getUser()
+    getUserLoans()
   }, [user_id, token])
+
+  function formatDate(date: string | Date) {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      timeZone: "UTC"
+    })
+  }
+
+  function getRemainingDays(dueDate: string | Date): number {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+
+    const difference = due.getTime() - today.getTime();
+
+    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+  }
 
   async function editUserProfile(e: React.FormEvent) {
     e.preventDefault()
@@ -96,7 +124,7 @@ export default function UserDetails() {
             toast.error("Usuário não encontrado.")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("O usuário possui pendências")
             break
           default:
             toast.error("Erro! Tente novamente.")
@@ -132,14 +160,28 @@ export default function UserDetails() {
 
       <h2> <i className="fa-regular fa-calendar"></i> Histórico de empréstimos</h2>
       <div className="loans">
-
-        <div className="loan">
-          <h3> <i className="fa-solid fa-book"></i> Livro: Nome do Livro</h3>
-          <div className="infos">
-            <span><strong>Empréstimo:</strong> 23/02/2005</span>
-            <span><strong>Retorno:</strong> 23/02/2005</span>
-          </div>
-        </div>  
+        { userLoans.length > 0 ? (
+          userLoans.map((loan)=> {
+            return (
+              <div key={loan.id} className="loan">
+                <h3><strong>Usuário:</strong> {loan?.user.name}</h3>
+                <span><strong>Bibliotecário:</strong> {loan?.librarian.name}</span>
+                <span><strong>Livro:</strong> {loan?.book.title}</span>
+                <span><strong>Data:</strong> {formatDate(loan?.loanDate)}</span>
+                <div className="infos">
+                  <span><strong>Prazo:</strong> {formatDate(loan?.dueDate)}</span>
+                  { loan.returnDate ? (
+                    <span><strong>Retorno:</strong> {formatDate(loan?.returnDate)}</span>
+                  ) : (
+                    <span><strong>Dias restantes:</strong> {getRemainingDays(loan?.dueDate)}</span>
+                  ) }
+                </div>
+              </div>
+            )
+          })
+        ) : (
+          <span className="erro">O usuário não possui empéstimos</span>
+        ) }
 
       </div>
     </section>
