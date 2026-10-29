@@ -1,14 +1,13 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { BookInterface } from "@/interfaces/usersInterface"
 import { apiBooks } from "@/api"
 import Cookies from "js-cookie"
+import BookCard from "@/components/bookCard/BookCard"
 import "./list.css"
 
 export default function ListUsers() {
-  const router = useRouter()
 
   const [books, setBooks] = useState<BookInterface[]>([])
   const [listagem, setListagem] = useState<BookInterface[]>([])
@@ -58,10 +57,10 @@ export default function ListUsers() {
         { books.length > 0 ? (
           listagem.map((book)=> {
             return (
-              <div onClick={()=> router.push("/private/books/list/"+book.id)} key={book.id} className="book">
-                <h3>{book.title}</h3>
-                <i className="fa-solid fa-eye fa-lg"></i>
-              </div>
+              <BookCard 
+                key={book.id}
+                book={book}
+              />
             )
           })
         ) : (
