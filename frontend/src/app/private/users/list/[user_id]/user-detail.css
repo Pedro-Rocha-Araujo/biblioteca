@@ -23,8 +23,6 @@ section.user-details form.form-post-user button[type="button"] {
   background-color: #f33;
 }
 
-
-
 section.user-details h2 {
   margin: 1rem 0;
 }
@@ -34,25 +32,6 @@ section.user-details div.loans {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
-}
-
-section.user-details div.loan {
-  background-color: #fff;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 0.5rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: -2px 2px 2px 1px #1c1c1c85;
-  transition: all 0.15s;
-}
-
-section.user-details div.loan div.infos {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 }
 
 @media screen and (max-width: 1280px) {

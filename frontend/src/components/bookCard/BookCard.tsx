@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation" 
 import { BookInterface } from "@/interfaces/usersInterface" 
+import "./book-card.css"
 
 interface BookCardProps {
   book: BookInterface

@@ -36,26 +36,6 @@ section.list div.books {
   
 }
 
-section.list div.book {
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  border-radius: 2rem;
-  box-shadow: -2px 2px 2px 1px #1c1c1c85;
-  transition: all 0.15s;
-}
-
-section.list div.book:hover {
-  cursor: pointer;
-  transform: scale(1.01);
-}
-
-section.list div.book h3 {
-  font-size: clamp(0.7rem, 3vw, 1.1rem);
-}
-
 @media screen and (max-width: 1280px) {
   section.list div.books {
     grid-template-columns: 1fr 1fr;

@@ -7,6 +7,7 @@ import axios from "axios"
 import { apiLoans, apiUsers } from "@/api"
 import Cookies from "js-cookie"
 import { toast } from "react-toastify" 
+import LoanCard from "@/components/loanCard/LoanCard"
 import "./user-detail.css"
 
 export default function UserDetails() {
@@ -163,20 +164,10 @@ export default function UserDetails() {
         { userLoans.length > 0 ? (
           userLoans.map((loan)=> {
             return (
-              <div key={loan.id} className="loan">
-                <h3><strong>Usuário:</strong> {loan?.user.name}</h3>
-                <span><strong>Bibliotecário:</strong> {loan?.librarian.name}</span>
-                <span><strong>Livro:</strong> {loan?.book.title}</span>
-                <span><strong>Data:</strong> {formatDate(loan?.loanDate)}</span>
-                <div className="infos">
-                  <span><strong>Prazo:</strong> {formatDate(loan?.dueDate)}</span>
-                  { loan.returnDate ? (
-                    <span><strong>Retorno:</strong> {formatDate(loan?.returnDate)}</span>
-                  ) : (
-                    <span><strong>Dias restantes:</strong> {getRemainingDays(loan?.dueDate)}</span>
-                  ) }
-                </div>
-              </div>
+              <LoanCard 
+                key={loan.id}
+                loan={loan}
+              />
             )
           })
         ) : (

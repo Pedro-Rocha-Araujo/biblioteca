@@ -1,0 +1,19 @@
+div.book {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  transition: all 0.15s;
+}
+
+div.book:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+}
+
+div.book h3 {
+  font-size: clamp(0.7rem, 3vw, 1.1rem);
+}
