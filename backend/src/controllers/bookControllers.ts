@@ -1,5 +1,6 @@
 import type { Request, Response } from "express"
 import { Prisma } from "../generated/prisma/client.js"
+import { bookSchema } from "../schemas/bookSchema.js"
 import prisma from "../prisma.js"
 
 export async function getBooks(_request: Request, response: Response) {
@@ -39,16 +40,16 @@ export async function getBook(request: Request, response: Response) {
 
 export async function postBook(request: Request, response: Response) {
   try { 
-    const { title, author, prev_isbn } = request.body
-    let isbn = prev_isbn
-    if(!isbn) {
-      isbn = null
+    const result = bookSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ 
+        Mensagem: "Dado(s) inválido(s)",
+        Erro: result.error.issues
+      })
     }
-    const quantity = Number(request.body.quantity)
-    if(!title || !author || !Number.isInteger(quantity) || quantity < 1) {
-      return response.status(400).json({ Mensagem: "Informações não preenchidas ou inválidas" })
-    }
-    if(isbn || isbn !== null) {
+    const { title, author, isbn, quantity } = result.data
+
+    if(isbn !== null) {
       const searchBook = await prisma.book.findUnique({
         where: {
           isbn
