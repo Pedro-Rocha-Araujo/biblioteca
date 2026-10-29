@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { toast } from "react-toastify"
+import axios from "axios"
 import { apiAuth } from "@/api"
 import Cookies from "js-cookie"
 import "../auth.css"
@@ -28,8 +29,24 @@ export default function Cadastro() {
       Cookies.set("token", token)
       router.push("/private/home")
     } catch(erro) {
-      console.log(erro)
-      toast.error("Erro!")
+      if(axios.isAxiosError(erro)) {
+        if (!erro.response) {
+          toast.error("Servidor Indisponível.")
+          return
+        }
+        switch (erro.response?.status) {
+          case 409:
+            toast.error("E-mail já cadastrado.")
+            break
+          case 404:
+            toast.error("Recurso não encontrado.")
+            break
+          default:
+            toast.error("Erro! Tente novamente.")
+        }
+      } else {
+        toast.error("Erro inesperado")
+      }
     }
   }
 
