@@ -1,5 +1,6 @@
 import type { Request, Response } from "express"
 import { Prisma } from "../generated/prisma/client.js"
+import { userSchema } from "../schemas/userSchema.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
@@ -17,10 +18,14 @@ export async function getUsers(_request: Request, response: Response) {
 
 export async function userRegister(request: Request, response: Response) {
   try {
-    const { name, email } = request.body
-    if(!name || !email) {
-      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    const result = userSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ 
+        Mensagem: "Campos obrigatórios não preenchidos",
+        Erros: result.error.issues 
+      })
     }
+    const { name, email } = result.data
     await prisma.user.create({
       data: {
         name: name,
@@ -67,11 +72,15 @@ export async function getUserProfile(request: Request, response: Response) {
 
 export async function editUserProfile(request: Request, response: Response) {
   try {
-    const { name, email } = request.body
     const userId = Number(request.params.user_id)
-    if(!name || !email) {
-      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    const result = userSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ 
+        Mensagem: "Campos obrigatórios não preenchidos",
+        Erros: result.error.issues
+      })
     }
+    const { name, email } = result.data
     if(!Number.isInteger(userId) || userId < 1) {
       return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
