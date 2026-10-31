@@ -2,6 +2,7 @@ import type { Request, Response } from "express"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { Prisma } from "../generated/prisma/client.js"
+import { librarianSchema, librarianLoginSchema } from "../schemas/librarianSchema.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
@@ -35,10 +36,14 @@ export async function getLibrarianProfile(request: Request, response: Response) 
 
 export async function librarianRegister(request: Request, response: Response) {
   try {
-    const { name, email, password } = request.body
-    if(!name || !email || !password) {
-      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    const result = librarianSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ 
+        Mensagem: "Campo(s) inválido(s)",
+        Erros: result.error.issues
+      })
     }
+    const { name, email, password } = result.data
     const verifyLibrarian = await prisma.librarian.findUnique({
       where: { email }
     });
@@ -77,10 +82,14 @@ export async function librarianRegister(request: Request, response: Response) {
 
 export async function librarianLogin(request: Request, response: Response) {
   try {
-    const { email, password } = request.body
-    if(!email || !password) {
-      return response.status(400).json({ Mensagem: "Informações obrigatórias não preenchidas" })
+    const result = librarianLoginSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ 
+        Mensagem: "Dado(s) inválido(s)",
+        Erros: result.error.issues
+      })
     }
+    const { email, password } = result.data
     const verifyLibrarian = await prisma.librarian.findUnique({
       where: {
         email

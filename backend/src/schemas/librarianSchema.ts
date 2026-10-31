@@ -5,3 +5,8 @@ export const librarianSchema = z.object({
   email: z.email("Informe um e-mail válido").trim(),
   password: z.string().trim().min(3, "A senha precisa ter no mínimo 3 caracteres"),
 })
+
+export const librarianLoginSchema = z.object({
+  email: z.email("Informe um e-mail válido").trim(),
+  password: z.string().trim().min(3, "A senha precisa ter no mínimo 3 caracteres")
+})
