@@ -41,7 +41,15 @@ a {
 }
 
 .yellow {
-  background-color: #ffba19;
+  background-color: #eba400;
+}
+
+.red {
+  background-color: #ff3333;
+}
+
+.blue {
+  background-color: #3333ff;
 }
 
 .green:hover {
@@ -49,20 +57,27 @@ a {
 }
 
 .yellow:hover {
-  background-color: #ffc43c;
+  background-color: #ffbe26;
+}
+
+.red:hover {
+  background-color: #ff5050;
+}
+
+.blue:hover {
+  background-color: #4545ff;
 }
 
 .erro {
   color: #fff;
   background-color: #f33;
   text-align: center;
-  padding: 0.8rem 0.5rem;
+  padding: 1rem 0.5rem;
   border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 480px;
-  margin: 1rem 0;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

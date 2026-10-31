@@ -2,13 +2,14 @@ section.home {
   padding: 1rem;
 }
 
-nav.navegacao {
+section.home div.buttons {
   margin-top: 1rem;
   display: grid;
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
-nav.navegacao button {
+section.home button {
   font-size: clamp(1rem, 3vw, 1.4rem);
   padding: 2rem 0;
   font-weight: 600;
