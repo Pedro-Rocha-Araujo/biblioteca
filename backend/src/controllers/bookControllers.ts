@@ -5,11 +5,34 @@ import prisma from "../prisma.js"
 
 export async function getBooks(_request: Request, response: Response) {
   try {
-    const books = await prisma.book.findMany()
+    const books = await prisma.book.findMany({
+      orderBy: {
+        title: "asc"
+      }
+    })
     return response.status(200).json(books)
   } catch(erro) {
     return response.status(500).json({
       Mensagem: "Erro ao buscar os livros",
+      Erro: erro
+    })
+  }
+}
+
+export async function getOutOfPrintBooks(_request: Request, response: Response) {
+  try {
+    const books = await prisma.book.findMany({
+      where: {
+        quantity: 0
+      },
+      orderBy: {
+        title: "asc"
+      }
+    })
+    return response.status(200).json(books)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao buscar os livros esgotados.",
       Erro: erro
     })
   }
