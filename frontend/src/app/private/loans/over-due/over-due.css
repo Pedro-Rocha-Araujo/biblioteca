@@ -1,0 +1,38 @@
+section.loan {
+  padding: 1rem;
+}
+
+section.loan div.loans {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media screen and (max-width: 1280px) {
+  section.loan div.loans {
+    grid-template-columns: 1fr 1fr;
+  }
+  section.loan div.heading div.pesquisa {
+    max-width: 220px;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  section.loan div.loans {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section.loan div.heading {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  section.loan div.heading div.pesquisa {
+    max-width: none;
+  }
+  section.loan div.heading div.pesquisa input {
+    width: 100%;
+  }
+}

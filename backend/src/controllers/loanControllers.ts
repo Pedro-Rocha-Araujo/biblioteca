@@ -27,6 +27,36 @@ export async function getLoans(_request: Request, response: Response) {
   }
 }
 
+export async function getOverDueLoans(_request: Request, response: Response) {
+  try {
+    const today = new Date()
+    const loans = await prisma.loan.findMany({
+      where: {
+        returnDate: null,
+        dueDate: {
+          lt: today
+        }
+      },
+      include: {
+        book: true,
+        user: true,
+        librarian: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      }
+    })
+    return response.status(200).json(loans)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao cuscar os empréstimos vencidos",
+      Erro: erro
+    })
+  }
+}
+
 export async function getUserLoans(request: Request, response: Response) {
   try {
     const user_id = Number(request.params.user_id)
