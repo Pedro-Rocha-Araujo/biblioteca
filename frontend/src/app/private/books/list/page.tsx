@@ -7,7 +7,7 @@ import Cookies from "js-cookie"
 import BookCard from "@/components/bookCard/BookCard"
 import "./list.css"
 
-export default function ListUsers() {
+export default function ListBooks() {
 
   const [books, setBooks] = useState<BookInterface[]>([])
   const [listagem, setListagem] = useState<BookInterface[]>([])
@@ -33,7 +33,7 @@ export default function ListUsers() {
 
   useEffect(()=> {
     setListagem(books.filter((user)=> {
-     return user.title.toLowerCase().includes(pesquisa.toLowerCase())
+     return user.title.toLowerCase().includes(pesquisa!.toLowerCase())
     }))
   }, [pesquisa])
 
