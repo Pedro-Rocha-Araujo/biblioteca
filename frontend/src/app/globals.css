@@ -41,11 +41,11 @@ a {
 }
 
 .yellow {
-  background-color: #eba400;
+  background-color: #f7af09;
 }
 
 .red {
-  background-color: #ff3333;
+  background-color: #ff2a2a;
 }
 
 .blue {
@@ -53,11 +53,11 @@ a {
 }
 
 .green:hover {
-  background-color: #2dbe4c;
+  background-color: #1fb640;
 }
 
 .yellow:hover {
-  background-color: #ffbe26;
+  background-color: #fdc02e;
 }
 
 .red:hover {
@@ -78,6 +78,11 @@ a {
   justify-content: center;
   align-items: center;
   max-width: 480px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

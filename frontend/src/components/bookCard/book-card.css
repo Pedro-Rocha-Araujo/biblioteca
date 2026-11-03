@@ -5,7 +5,7 @@ div.book {
   justify-content: space-between;
   padding: 1rem 2rem;
   border-radius: 2rem;
-  box-shadow: -2px 2px 2px 1px #1c1c1c85;
+  border: 1px solid #1c1c1c85;
   transition: all 0.15s;
 }
 
@@ -15,5 +15,7 @@ div.book:hover {
 }
 
 div.book h3 {
-  font-size: clamp(0.7rem, 3vw, 1.1rem);
+  font-size: clamp(0.7rem, 4vw, 1.1rem);
+  width: 100%;
+  white-space: nowrap;
 }

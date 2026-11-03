@@ -8,14 +8,14 @@ export default function Books() {
 
   return (
     <section className="books">
-      <h1> <i className="fa-solid fa-book"></i> Livros</h1>
+      <h1><i className="fa-solid fa-book"></i> Livros</h1>
       <nav className="navegacao">
 
         <button onClick={()=>router.push("/private/books/list")} className="green">
           Livros cadastrados
         </button>
 
-        <button onClick={()=>router.push("/private/books/post")} className="yellow">
+        <button onClick={()=>router.push("/private/books/post")} className="blue">
           Cadastrar Livro
         </button>
 

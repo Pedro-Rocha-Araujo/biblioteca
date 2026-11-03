@@ -54,9 +54,17 @@ export default function PostLoan() {
 
 
   function manageBookSelected(id:number) {
+    if(bookSelected === id) {
+      setBookSelected(null)
+      return
+    }
     setBookSelected(id)
   }
   function manageUserSelected(id:number) {
+    if(userSelected === id) {
+      setUserSelected(null)
+      return
+    }
     setUserSelected(id)
   }
 

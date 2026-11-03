@@ -51,8 +51,14 @@ section.list div.user:hover {
   transform: scale(1.01);
 }
 
+section.list div.user i {
+  margin-left: 5px;
+  background-color: red;
+}
+
 section.list div.user h3 {
   font-size: clamp(0.7rem, 3vw, 1.1rem);
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 1280px) {
