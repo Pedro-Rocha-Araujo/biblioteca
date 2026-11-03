@@ -22,7 +22,7 @@ export default function Home() {
           Realizar empréstimo
         </button>
         
-        <button className="blue">
+        <button onClick={()=>router.push("/private/users/ranking")} className="blue">
           Ranking de leitores
         </button>
       </div>

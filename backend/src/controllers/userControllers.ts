@@ -16,6 +16,45 @@ export async function getUsers(_request: Request, response: Response) {
   }
 }
 
+export async function getRankingUsers(_request: Request, response: Response) {
+  try {
+    const users = await prisma.loan.groupBy({
+      by: ["userId"],
+      _count: {
+        userId: true
+      },
+      orderBy: {
+        _count: {
+          userId: "desc"
+        }
+      }
+    })
+    const result = await Promise.all(
+      users.map(async(u)=> {
+        const user = await prisma.user.findUnique({
+          where: {
+            id: u.userId
+          },
+          select: {
+            name:true
+          }
+        })
+
+        return {
+          name: user?.name,
+          totalLoans: u._count.userId
+        }
+      })
+    )
+    return response.status(200).json(result)
+  } catch(erro) {
+    return response.status(500).json({
+      Mensagem: "Erro ao buscar o perfil do usuário",
+      Erro: erro
+    })
+  }
+}
+
 export async function userRegister(request: Request, response: Response) {
   try {
     const result = userSchema.safeParse(request.body)

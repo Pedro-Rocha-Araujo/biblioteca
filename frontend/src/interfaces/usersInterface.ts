@@ -1,7 +1,8 @@
 export interface UserInterface {
   id: number,
   name: string,
-  email: string
+  email: string,
+  totalLoans: number
 }
 
 export interface BookInterface {

@@ -15,7 +15,7 @@ export default function Loans() {
           Empréstimos em aberto
         </button>
 
-        <button onClick={()=>router.push("/private/loans/post")} className="yellow">
+        <button onClick={()=>router.push("/private/loans/post")} className="blue">
           Cadastrar empréstimo
         </button>
 

@@ -14,7 +14,7 @@ export default function Books() {
           Usuários cadastrados
         </button>
 
-        <button onClick={()=>router.push("/private/users/post")} className="yellow">
+        <button onClick={()=>router.push("/private/users/post")} className="blue">
           Cadastrar Usuário
         </button>
       </nav>
