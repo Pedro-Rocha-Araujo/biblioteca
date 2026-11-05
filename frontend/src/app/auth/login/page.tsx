@@ -34,11 +34,11 @@ export default function Login() {
           return
         }
         switch (erro.response?.status) {
-          case 401:
+          case 400:
             toast.error("Dado(s) inválido(s).")
             break
-          case 404:
-            toast.error("Recurso não encontrado.")
+          case 401:
+            toast.error("Email e(ou) senha icorreto(s).")
             break
           default:
             toast.error("Erro! Tente novamente.")

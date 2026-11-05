@@ -35,11 +35,11 @@ export default function Cadastro() {
           return
         }
         switch (erro.response?.status) {
+          case 400:
+            toast.error("Dado(s) inválido(s).")
+            break
           case 409:
             toast.error("E-mail já cadastrado.")
-            break
-          case 404:
-            toast.error("Recurso não encontrado.")
             break
           default:
             toast.error("Erro! Tente novamente.")
