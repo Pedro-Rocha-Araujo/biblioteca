@@ -45,21 +45,24 @@ export default function Profile() {
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
-          toast.error("Não foi possível conectar ao servidor.")
+          toast.error("Servidor indisponível")
           return
         }
         switch (erro.response?.status) {
+          case 400:
+            toast.error("Dado(s) inválido(s)")
+            break
           case 401:
-            toast.error("Faça o login novamente.")
+            toast.error("Faça o login novamente")
             break
           case 404:
-            toast.error("Perfil não encontrado.")
+            toast.error("Perfil não encontrado")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("E-maiil já utilizado")
             break
           default:
-            toast.error("Erro! Tente novamente.")
+            toast.error("Erro! Tente novamente")
         }
       } else {
         toast.error("Erro inesperado")
