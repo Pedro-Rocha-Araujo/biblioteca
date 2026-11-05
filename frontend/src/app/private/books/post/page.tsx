@@ -33,11 +33,11 @@ export default function PostBook() {
           case 401:
             toast.error("Faça o login novamente.")
             break
-          case 404:
-            toast.error("Recurso não encontrado.")
+          case 400:
+            toast.error("Dado(s) inválido(s).")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem || "Esse livro já possui cadastro")
+            toast.error("Livro já cadastrado")
             break
           default:
             toast.error("Erro! Tente novamente.")

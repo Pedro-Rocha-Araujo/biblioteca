@@ -104,10 +104,10 @@ export default function UserDetails() {
             toast.error("Faça o login novamente.")
             break
           case 404:
-            toast.error("Usuário não encontrado.")
+            toast.error("Livro não encontrado.")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("O livro possui pendências")
             break
           default:
             toast.error("Erro! Tente novamente.")
