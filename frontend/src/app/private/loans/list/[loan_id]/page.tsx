@@ -6,6 +6,7 @@ import { LoanInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiLoans } from "@/api"
 import { toast } from "react-toastify" 
+import LoanCard from "@/components/loanCard/LoanCard"
 import "./loan-detail.css"
 
 export default function LoanDetails() {
@@ -15,8 +16,6 @@ export default function LoanDetails() {
   const loan_id = params.loan_id
 
   const [loan, setLoan] = useState<LoanInterface>()
-  
-  
   
   useEffect(()=> {
     async function getLoans() {
@@ -29,24 +28,6 @@ export default function LoanDetails() {
     }
     getLoans()
   }, [loan_id])
-
-  function formatDate(date: string | Date) {
-    return new Date(date).toLocaleDateString("pt-BR", {
-      timeZone: "UTC"
-    })
-  }
-
-  function getRemainingDays(dueDate: string | Date): number {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
-
-    const difference = due.getTime() - today.getTime();
-
-    return Math.ceil(difference / (1000 * 60 * 60 * 24));
-  }
 
   async function returnLoan() {
     try {
@@ -63,10 +44,10 @@ export default function LoanDetails() {
             toast.error("Faça o login novamente.")
             break
           case 404:
-            toast.error("Recurso não encontrado.")
+            toast.error("Empréstimo não encontrado.")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("Empéstimo já retornado")
             break
           default:
             toast.error("Erro! Tente novamente.")
@@ -84,21 +65,21 @@ export default function LoanDetails() {
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
-          toast.error("Servidor Indisponível.")
+          toast.error("Servidor Indisponível")
           return
         }
         switch (erro.response?.status) {
           case 401:
-            toast.error("Faça o login novamente.")
+            toast.error("Faça o login novamente")
             break
           case 404:
-            toast.error("Recurso não encontrado.")
+            toast.error("Empréstimo não encontrado")
             break
           case 409:
             toast.error("Empréstimo pendente")
             break
           default:
-            toast.error("Erro! Tente novamente.")
+            toast.error("Erro! Tente novamente")
         }
       } else {
         toast.error("Erro inesperado")
@@ -111,16 +92,10 @@ export default function LoanDetails() {
       <h1>Detalhes do Empréstimo</h1>
 
       { loan ? (
-        <div className="loan">
-          <h3><strong>Usuário:</strong> {loan?.user.name}</h3>
-          <span><strong>Bibliotecário:</strong> {loan?.librarian.name}</span>
-          <span><strong>Livro:</strong> {loan?.book.title}</span>
-          <span><strong>Data:</strong> {formatDate(loan?.loanDate)}</span>
-          <div className="infos">
-            <span><strong>Prazo:</strong> {formatDate(loan?.dueDate)}</span>
-            <span><strong>Dias restantes:</strong> {getRemainingDays(loan?.dueDate)}</span>
-          </div>
-        </div>
+        <LoanCard 
+          key={loan.id}
+          loan={loan}
+        />
       ) : (
         <span className="erro">Empréstimo não encontrado</span>
       ) }

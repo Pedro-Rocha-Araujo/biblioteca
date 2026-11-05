@@ -89,21 +89,24 @@ export default function PostLoan() {
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
-          toast.error("Servidor Indisponível.")
+          toast.error("Servidor Indisponível")
           return
         }
         switch (erro.response?.status) {
+          case 400:
+            toast.error("Campo(s) inválido(s)")
+            break
           case 401:
-            toast.error("Faça o login novamente.")
+            toast.error("Faça o login novamente")
             break
           case 404:
-            toast.error("Recurso não encontrado.")
+            toast.error("Seleções não encontradas")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("Livro esgotado")
             break
           default:
-            toast.error("Erro! Tente novamente.")
+            toast.error("Erro! Tente novamente")
         }
       } else {
         toast.error("Erro inesperado")
