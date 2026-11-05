@@ -51,24 +51,6 @@ export default function UserDetails() {
     getUserLoans()
   }, [user_id, token])
 
-  function formatDate(date: string | Date) {
-    return new Date(date).toLocaleDateString("pt-BR", {
-      timeZone: "UTC"
-    })
-  }
-
-  function getRemainingDays(dueDate: string | Date): number {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
-
-    const difference = due.getTime() - today.getTime();
-
-    return Math.ceil(difference / (1000 * 60 * 60 * 24));
-  }
-
   async function editUserProfile(e: React.FormEvent) {
     e.preventDefault()
     if(!name || !email || !user) {
@@ -82,21 +64,24 @@ export default function UserDetails() {
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
-          toast.error("Não foi possível conectar ao servidor.")
+          toast.error("Servidor indisponível")
           return
         }
         switch (erro.response?.status) {
+          case 400:
+            toast.error("Dado(s) inválido(s)")
+            break
           case 401:
-            toast.error("Faça o login novamente.")
+            toast.error("Faça o login novamente")
             break
           case 404:
-            toast.error("Usuário não encontrado.")
+            toast.error("Usuário não encontrado")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem)
+            toast.error("E-mail já usado")
             break
           default:
-            toast.error("Erro! Tente novamente.")
+            toast.error("Erro! Tente novamente")
         }
       } else {
         toast.error("Erro inesperado")

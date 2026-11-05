@@ -24,14 +24,17 @@ export default function PostUser() {
           return
         }
         switch (erro.response?.status) {
+          case 400:
+            toast.error("Dado(s) inválido(s).")
+            break
           case 401:
             toast.error("Faça o login novamente.")
             break
           case 404:
-            toast.error("Recurso não encontrado.")
+            toast.error("Usuário não encontrado")
             break
           case 409:
-            toast.error(erro.response.data.Mensagem || "Esse usuário já está cadastrado.")
+            toast.error("E-mail já cadastrado")
             break
           default:
             toast.error("Erro! Tente novamente.")
