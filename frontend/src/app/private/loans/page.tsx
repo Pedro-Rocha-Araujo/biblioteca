@@ -2,15 +2,18 @@
 
 import { useRouter } from "next/navigation"
 import "@/app/nav-buttons.css"
+import Header from "@/components/header/Header"
 
 export default function Loans() {
   const router = useRouter()
   
   return (
     <section className="navegacao">
-      <header>
-        <h1> <i className="fa-solid fa-handshake"></i> Empréstimos</h1>
-      </header>
+      <Header 
+        title="Empréstimos"
+        icon="fa-solid fa-handshake"
+      />
+      
       <nav className="navegacao">
 
         <button onClick={()=>router.push("/private/loans/list")} className="green">

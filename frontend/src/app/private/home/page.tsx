@@ -1,15 +1,20 @@
 'use client'
 
-import { useRouter } from "next/navigation"; 
-import "./home.css"
+import { useRouter } from "next/navigation"
+import Header from "@/components/header/Header"
+import "@/app/nav-buttons.css"
 
 export default function Home() {
   const router = useRouter()
 
   return (
-    <section className="home">
-      <h1> <i className="fa-solid fa-home"></i> Home!</h1>
-      <div className="buttons">
+    <section className="navegacao">
+      <Header 
+        title="Home"
+        icon="fa-solid fa-home"
+      />
+
+      <nav className="navegacao home">
         <button onClick={()=>router.push("/private/books/out-of-print")} className="red">
           Livros em falta
         </button>
@@ -25,7 +30,7 @@ export default function Home() {
         <button onClick={()=>router.push("/private/users/ranking")} className="blue">
           Ranking de leitores
         </button>
-      </div>
+      </nav>
     </section>
   );
 }

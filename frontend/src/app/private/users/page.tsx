@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import Header from "@/components/header/Header"
 import "@/app/nav-buttons.css"
 
 export default function Books() {
@@ -8,9 +9,11 @@ export default function Books() {
 
   return (
     <section className="navegacao">
-      <header>
-        <h1> <i className="fa-solid fa-user"></i> Usuários</h1>
-      </header>
+      <Header 
+        title="Usuários"
+        icon="fa-solid fa-user"
+      />
+
       <nav className="navegacao">
         <button onClick={()=>router.push("/private/users/list")} className="green">
           <i className="fa-solid fa-list fa-xl"></i> Usuários cadastrados

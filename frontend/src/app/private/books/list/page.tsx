@@ -41,7 +41,7 @@ export default function ListBooks() {
     <section className="list">
 
       <div className="heading">
-        <h1> <i className="fa-solid fa-address-book"></i> Livros</h1>
+          <h1> <i className="fa-solid fa-address-book"></i> Livros</h1>
         <div className="pesquisa">
           <input 
             placeholder="Pesquisar"
