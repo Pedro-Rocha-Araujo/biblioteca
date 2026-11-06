@@ -37,35 +37,35 @@ a {
 }
 
 .green {
-  background-color: #30a54a;
+  background-color: #589086;
 }
 
 .yellow {
-  background-color: #f7af09;
+  background-color: #c68d21;
 }
 
 .red {
-  background-color: #ff2a2a;
+  background-color: #e04343;
 }
 
 .blue {
-  background-color: #3333ff;
+  background-color: #3333b4;
 }
 
 .green:hover {
-  background-color: #1fb640;
+  background-color: #70aca1;
 }
 
 .yellow:hover {
-  background-color: #fdc02e;
+  background-color: #d89d2e;
 }
 
 .red:hover {
-  background-color: #ff5050;
+  background-color: #df5656;
 }
 
 .blue:hover {
-  background-color: #4545ff;
+  background-color: #3d3dcc;
 }
 
 .erro {

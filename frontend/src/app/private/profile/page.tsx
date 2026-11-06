@@ -72,7 +72,9 @@ export default function Profile() {
 
   return (
     <section className="profile">
-      <h1> <i className="fa-solid fa-circle-user"></i> Perfil</h1>
+      <header>
+        <h1> <i className="fa-solid fa-circle-user"></i> Perfil</h1>
+      </header>
 
       <form onSubmit={editLibrarianProfile} className="update-user-profile">
         <input 

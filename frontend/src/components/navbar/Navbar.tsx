@@ -38,7 +38,7 @@ export default function Navbar({ nav, manageNav }: navProps) {
         />
 
         <NavElement 
-          icon="fa-solid fa-user fa-xl"
+          icon="fa-solid fa-user-group fa-xl"
           label="Usuários"
           link="/private/users"
         />
