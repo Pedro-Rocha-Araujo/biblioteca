@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
 import axios from "axios"
 import { apiAuth } from "@/api"
@@ -9,6 +10,8 @@ import Cookies from "js-cookie"
 import "../auth.css"
 
 export default function Login() {
+  const [visible, setVisible] = useState<boolean>(false)
+
   const router = useRouter()
 
   async function logarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
@@ -69,12 +72,18 @@ export default function Login() {
               name="email"
               required
             />
-            <input 
-              placeholder="Digite sua senha"
-              type="password"
-              name="password"
-              required
-            />
+            <div className="input">
+              <input 
+                placeholder="Digite sua senha"
+                type={visible?"text":"password"}
+                name="password"
+                required
+              />
+              <i 
+                onClick={()=>setVisible(!visible)} 
+                className={visible?"fa-regular fa-eye-slash fa-lg":"fa-regular fa-eye fa-lg"}
+              ></i>
+            </div>
             <button>Entrar</button>
           </form>
           <p>Não possui uma conta? <Link href={`/auth/cadastro`}>Cadastrar</Link>.</p>

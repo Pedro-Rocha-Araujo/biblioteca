@@ -41,7 +41,7 @@ a {
 }
 
 .yellow {
-  background-color: #c68d21;
+  background-color: #e0a028;
 }
 
 .red {
@@ -57,7 +57,7 @@ a {
 }
 
 .yellow:hover {
-  background-color: #d89d2e;
+  background-color: rgb(231, 174, 68);
 }
 
 .red:hover {
