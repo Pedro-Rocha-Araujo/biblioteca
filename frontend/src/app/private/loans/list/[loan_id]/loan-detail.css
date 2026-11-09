@@ -20,6 +20,11 @@ section.loan-details div.loan {
   transition: all 0.15s;
 }
 
+section.loan-details div.loan:hover {
+  cursor: auto;
+  transform: scale(1);
+}
+
 section.loan-details div.loan div.infos {
   width: 100%;
   display: flex;

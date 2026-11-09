@@ -39,7 +39,7 @@ section.post-loan div.books {
   grid-template-columns: 1fr;
   gap: 0.5rem;
   overflow: auto;
-  height: 4rem;
+  max-height: 8rem;
   padding: 0.2em 0 0.5rem 0rem;
 }
 
@@ -70,7 +70,7 @@ section.post-loan div.users {
   grid-template-columns: 1fr;
   gap: 0.5rem;
   overflow: auto;
-  height: 4rem;
+  max-height: 8rem;
   padding: 0.2em 0 0.5rem 0rem;
 }
 
