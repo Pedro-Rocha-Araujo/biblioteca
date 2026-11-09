@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
 import { toast } from "react-toastify"
 import axios from "axios"
@@ -9,6 +10,8 @@ import Cookies from "js-cookie"
 import "../auth.css"
 
 export default function Cadastro() {
+  const [visible, setVisible] = useState<boolean>(false)
+
   const router = useRouter()
 
   async function cadastrarBibliotecario(e:React.FormEvent<HTMLFormElement>) {
@@ -76,12 +79,18 @@ export default function Cadastro() {
               name="email"
               required
             />
-            <input 
-              placeholder="Digite sua senha"
-              type="password"
-              name="password"
-              required
-            />
+            <div className="input">
+              <input 
+                placeholder="Digite sua senha"
+                type={visible?"text":"password"}
+                name="password"
+                required
+              />
+              <i 
+                onClick={()=>setVisible(!visible)} 
+                className={visible?"fa-regular fa-eye-slash fa-lg":"fa-regular fa-eye fa-lg"}
+              ></i>
+            </div>
             <button>Cadastrar</button>
           </form>
           <p>Já possui uma conta? <Link href={`/auth/login`}>Entrar</Link>.</p>

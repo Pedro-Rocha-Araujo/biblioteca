@@ -28,8 +28,8 @@ div.auth-form {
 }
 
 div.auth-form h1 {
-  font-size: clamp(1rem, 10vw, 2.2rem);
-  margin-bottom: 1rem;
+  font-size: clamp(1rem, 10vw, 2.3rem);
+  margin-bottom: 0.6rem;
 }
 
 div.auth-form form {
@@ -76,7 +76,7 @@ div.auth-form button {
 }
 
 div.auth-form p {
-  font-size: clamp(0.7rem, 3.5vw, 1rem);
+  font-size: clamp(0.7rem, 3.5vw, 1.05rem);
 }
 
 div.auth-form a {
