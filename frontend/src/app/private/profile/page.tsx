@@ -77,20 +77,26 @@ export default function Profile() {
       </header>
 
       <form onSubmit={editLibrarianProfile} className="update-user-profile">
-        <input 
-          placeholder="Digite seu nome"
-          defaultValue={librarian?.name}
-          name="name"
-          type="text"
-          required
-        />
-        <input 
-          placeholder="Digite seu e-mail"
-          defaultValue={librarian?.email}
-          name="email"
-          type="email"
-          required
-        />
+        <div className="input">
+          <label htmlFor="nome">Nome:</label>
+          <input 
+            defaultValue={librarian?.name}
+            name="name"
+            type="text"
+            id="nome"
+            required
+          />
+        </div>
+        <div className="input">
+          <label htmlFor="email">Email:</label>
+          <input 
+            defaultValue={librarian?.email}
+            name="email"
+            type="email"
+            id="email"
+            required
+          />
+        </div>
         <button>Salvar alterações</button>
       </form>
     </section>

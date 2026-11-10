@@ -2,6 +2,10 @@ section.post-book {
   padding: 1rem;
 }
 
+section.post-book h1 {
+  font-size: clamp(1rem, 9vw, 2.6rem);
+}
+
 section.post-book form.form-post-book {
   margin-top: 1rem;
   display: grid;
@@ -21,7 +25,8 @@ form.form-post-book div.input label {
 }
 
 section.post-book form.form-post-book input {
-  padding: 0.9rem 0.5rem;
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
+  padding: 0.8rem 0.5rem;
   border: 1px solid #1c1c1c73;
 }
 
