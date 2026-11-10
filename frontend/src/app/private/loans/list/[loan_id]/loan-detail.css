@@ -45,6 +45,7 @@ section.loan-details  form.form-post-loan {
 }
 
 section.loan-details form.form-post-loan button {
+  font-size: clamp(0.8rem, 3vw, 1rem);
   padding: 1rem 0;
   color: #fff;
   background-color: #22f;

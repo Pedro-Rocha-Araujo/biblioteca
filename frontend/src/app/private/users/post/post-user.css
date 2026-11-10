@@ -2,12 +2,25 @@ section.post-user {
   padding: 1rem;
 }
 
+section.post-user h1 {
+  font-size: clamp(1rem, 9vw, 2.6rem);
+}
+
 section.post-user form.form-post-user {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   max-width: 768px;
+}
+
+form.form-post-user div.input {
+  display: grid;
+  gap: 0.3rem;
+}
+
+form.form-post-user div.input label {
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
 }
 
 section.post-user form.form-post-user input {
@@ -20,5 +33,5 @@ section.post-user form.form-post-user button {
   font-size: clamp(0.8rem, 3vw, 1.1rem);
   padding: 1.1rem 0;
   color: #fff;
-  background-color: #1c1c1c;
+  background-color: #1b252e;
 }

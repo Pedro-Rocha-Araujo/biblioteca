@@ -2,6 +2,10 @@ section.book-details {
   padding: 1rem;
 }
 
+section.book-details h1 {
+  font-size: clamp(1rem, 9vw, 2.6rem);
+}
+
 section.book-details h2 {
   margin: 1rem 0;
 }
@@ -10,7 +14,16 @@ section.book-details  form.form-post-book {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 480px;
+  max-width: 768px;
+}
+
+section.book-details  form.form-post-book label {
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
+}
+
+form.form-post-book div.input {
+  display: grid;
+  gap: 0.3rem;
 }
 
 section.book-details form.form-post-book label {
@@ -18,10 +31,13 @@ section.book-details form.form-post-book label {
 }
 
 section.book-details form.form-post-book input {
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
   padding: 0.8rem 0.5rem;
+  border: 1px solid #1c1c1c73;
 }
 
 section.book-details form.form-post-book button {
+  font-size: clamp(0.8rem, 3vw, 1.1rem);
   padding: 1rem 0;
   color: #fff;
   background-color: #22f;

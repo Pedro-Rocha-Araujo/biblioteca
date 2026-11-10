@@ -126,22 +126,32 @@ export default function UserDetails() {
       <h1>Detalhes do Usuário</h1>
       <form onSubmit={editUserProfile} className="form-post-user">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
-        <input 
-          placeholder="Digite o nome do usuário"
-          type="text"
-          value={name}
-          onChange={(e)=>setName(e.target.value)}
-          required
-        />
-        <input 
-          placeholder="Digite o e-mail do usuário"
-          type="email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-          required
-        />
+
+        <div className="input">
+          <label htmlFor="nome">Nome do Usuário:</label>
+          <input 
+            type="text"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
+            id="nome"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="email">E-mail do Usuário</label>
+          <input 
+            type="email"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            id="email"
+            required
+          />
+        </div>
+        
         <button type="submit">Salvar</button>
         <button onClick={deleteUserProfile} type="button">Excluir usuário</button>
+
       </form>
 
       <h2> <i className="fa-regular fa-calendar"></i> Histórico de empréstimos</h2>

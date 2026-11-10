@@ -124,33 +124,46 @@ export default function UserDetails() {
       <h1>Detalhes do Livro</h1>
       <form onSubmit={editBook} className="form-post-book">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
-        <input 
-          placeholder="Digite o ISBN do livro"
-          type="text"
-          name="isbn"
-          defaultValue={book?.isbn}
-          
-        />
-        <input 
-          placeholder="Digite o título do livro"
-          type="text"
-          name="title"
-          defaultValue={book?.title}
-          required
-        />
-        <input 
-          placeholder="Digite o autor do livro"
-          type="text"
-          name="author"
-          defaultValue={book?.author}
-          required
-        />
+
+        <div className="input">
+          <label htmlFor="isbn">ISBN do Livro:</label>
+          <input 
+            type="text"
+            name="isbn"
+            id="isbn"
+            defaultValue={book?.isbn}
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="titulo">Título do Livro:</label>
+          <input 
+            type="text"
+            name="title"
+            defaultValue={book?.title}
+            id="titulo"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="autor">Autor do Livro:</label>
+          <input 
+            type="text"
+            name="author"
+            defaultValue={book?.author}
+            id="autor"
+            required
+          />
+        </div>
+
         <label>Quantidade</label>
         <div className="quantity">
           <button onClick={()=>handleQuantity(false)} type="button">-</button>
           <span>{quantity}</span>
           <button onClick={()=>handleQuantity(true)} type="button">+</button>
         </div>
+
         <button type="submit">Salvar</button>
         <button onClick={deleteBook} type="button">Excluir Livro</button>
       </form>

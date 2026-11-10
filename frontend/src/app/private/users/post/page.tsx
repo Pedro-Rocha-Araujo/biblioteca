@@ -50,17 +50,29 @@ export default function PostUser() {
       <h1> <i className="fa-solid fa-circle-plus"></i> Cadastrar Usuário</h1>
 
       <form onSubmit={postUser} className="form-post-user">
-        <input 
-          placeholder="Digite o nome do usuário"
-          type="text"
-          name="name"
-        />
-        <input 
-          placeholder="Digite o e-mail do usuário"
-          type="email"
-          name="email"
-        />
+
+        <div className="input">
+          <label htmlFor="nome">Nome do Usuário:</label>
+          <input 
+            type="text"
+            name="name"
+            id="nome"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="email">Email do Usuário:</label>
+          <input 
+            type="email"
+            name="email"
+            id="email"
+            required
+          />
+        </div>
+
         <button>Cadastrar</button>
+
       </form>
     </section>
   )
