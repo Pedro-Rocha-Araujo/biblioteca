@@ -53,30 +53,48 @@ export default function PostBook() {
       <h1> <i className="fa-solid fa-circle-plus"></i> Cadastrar Livro</h1>
 
       <form onSubmit={postBook} className="form-post-book">
-        <input 
-          placeholder="Digite o isbn (Opicional)"
-          type="text"
-          name="isbn"
-        />
-        <input 
-          placeholder="Digite o nome do livro"
-          type="text"
-          name="title"
-          required
-        />
-        <input 
-          placeholder="Digite o nome do autor"
-          type="text"
-          name="author"
-          required
-        />
-        <input 
-          placeholder="Digite a quantidade"
-          type="number"
-          name="quantity"
-          required
-        />
+        
+        <div className="input">
+          <label htmlFor="isbn">ISBN do Livro:</label>
+          <input 
+            type="text"
+            name="isbn"
+            id="isbn"
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="titulo">Título do Livro:</label>
+          <input 
+            type="text"
+            name="title"
+            id="titulo"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="autor">Autor do Livro:</label>
+          <input 
+            type="text"
+            name="author"
+            id="autor"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="quantidade">Quantidade:</label>
+          <input 
+            type="number"
+            name="quantity"
+            id="quantidade"
+            required
+          />
+        </div>
+
         <button>Cadastrar</button>
+
       </form>
     </section>
   )

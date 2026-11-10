@@ -29,6 +29,7 @@ section.post-loan div.pesquisa i {
 }
 
 section.post-loan form.form-post-loan button {
+  font-size: clamp(0.8rem, 3vw, 1.1rem);
   padding: 1rem 0;
   color: #fff;
   background-color: #1c1c1c;

@@ -4,10 +4,20 @@ section.post-book {
 
 section.post-book form.form-post-book {
   margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 0.5rem;
   max-width: 768px;
+}
+
+form.form-post-book div.input {
+  display: grid;
+  gap: 0.3rem;
+}
+
+form.form-post-book div.input label {
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
+  display: grid;
+  gap: 0.3rem;
 }
 
 section.post-book form.form-post-book input {
@@ -16,6 +26,7 @@ section.post-book form.form-post-book input {
 }
 
 section.post-book form.form-post-book button {
+  font-size: clamp(0.8rem, 3vw, 1.1rem);
   padding: 1.1rem 0;
   color: #fff;
   background-color: #1c1c1c;
