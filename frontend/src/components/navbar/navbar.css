@@ -58,6 +58,8 @@ main.recolhida nav.side-nav div.nav-element {
   }
   main nav.side-nav label.livraria  {
     display: block;
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    font-weight: bold;
   }
   nav.side-nav div.perfil {
     margin-top: 1rem;

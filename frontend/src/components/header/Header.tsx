@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation"
 import "./header.css"
 
 interface HeaderProps {
@@ -6,9 +7,10 @@ interface HeaderProps {
 }
 
 export default function Header({ title, icon }: HeaderProps) {
+  const router = useRouter() 
   return (
     <header className="navegacao">
-      <h1><i className={icon}></i> {title}</h1>
+      <h1 onClick={()=>router.push("/private/home")}><i className={icon}></i> {title}</h1>
     </header>
   )
 }

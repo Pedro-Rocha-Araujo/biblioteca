@@ -1,7 +1,8 @@
 header.navegacao {
   background-color: #1b252e;
   padding: 2rem;
-
+  display: flex;
+  align-items: center;
 }
 
 header.navegacao h1 {
@@ -9,8 +10,14 @@ header.navegacao h1 {
   font-size: clamp(1.2rem, 8vw, 3rem);
 }
 
+header.navegacao h1:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   header.navegacao {
     padding: 1.5rem;
+    justify-content: center;
   }
+
 }
