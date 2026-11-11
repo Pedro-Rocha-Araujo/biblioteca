@@ -1,9 +1,15 @@
 header.navegacao {
   background-color: #fff;
   padding: 2rem;
-  box-shadow: 0px 2px 5px 1px #1c1c1ca8;
+  box-shadow: 0px 2px 5px 1px #1c1c1c6c;
 }
 
 header.navegacao h1 {
-  font-size: clamp(1.2rem, 10vw, 3rem);
+  font-size: clamp(1.2rem, 8vw, 3rem);
+}
+
+@media screen and (max-width: 768px) {
+  header.navegacao {
+    padding: 1.5rem;
+  }
 }

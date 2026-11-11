@@ -51,7 +51,7 @@ main.recolhida nav.side-nav div.nav-element {
     flex-direction: column;
   }
   main nav.side-nav  {
-    background-color: #0f0f0f;
+    background-color: #1c1c1c;
   }
   main nav.side-nav label  {
     display: none;
@@ -62,7 +62,7 @@ main.recolhida nav.side-nav div.nav-element {
     justify-content: center;
   }
   nav.side-nav ul {
-    background-color: #1c1c1c;
+    background-color: #1b252e;
     flex-direction: row;
     justify-content: center;
   }
