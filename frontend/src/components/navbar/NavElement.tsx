@@ -11,7 +11,7 @@ export default function NavElement({ icon, label, link }: NavElementProps) {
   return (
     <div onClick={()=>link&&router.push(link)} className="nav-element">
       <i className={icon}></i>
-      <label>{label}</label>
+      <label className={label==="Livraria"?"livraria":""}>{label}</label>
     </div>
   )
 }

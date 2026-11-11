@@ -23,8 +23,8 @@ export default function Navbar({ nav, manageNav }: navProps) {
       <div className="perfil">
 
         <NavElement 
-          icon="fa-solid fa-home fa-xl"
-          label="Home"
+          icon="fa-solid fa-book-open fa-2xl"
+          label="Livraria"
           link="/private/home"
         />
 

@@ -56,13 +56,17 @@ main.recolhida nav.side-nav div.nav-element {
   main nav.side-nav label  {
     display: none;
   }
+  main nav.side-nav label.livraria  {
+    display: block;
+  }
   nav.side-nav div.perfil {
     margin-top: 1rem;
     display: flex;
     justify-content: center;
   }
   nav.side-nav ul {
-    background-color: #1b252e;
+    background-color: #1c1c1c;
+    margin: 0;
     flex-direction: row;
     justify-content: center;
   }

@@ -16,19 +16,19 @@ export default function Home() {
 
       <nav className="navegacao home">
         <button onClick={()=>router.push("/private/books/out-of-print")} className="red">
-          Livros em falta
+          <i className="fa-solid fa-arrow-trend-down"></i> Livros sem Estoque
         </button>
         
         <button onClick={()=>router.push("/private/loans/over-due")} className="yellow">
-          Empréstimos vencidos
+          <i className="fa-solid fa-ban"></i> Empréstimos Vencidos
         </button>
         
         <button onClick={()=>router.push("/private/loans/post")} className="green">
-          Realizar empréstimo
+          <i className="fa-solid fa-handshake"></i> Realizar Empréstimo
         </button>
         
         <button onClick={()=>router.push("/private/users/ranking")} className="blue">
-          Ranking de leitores
+          <i className="fa-solid fa-trophy"></i> Ranking de Leitores
         </button>
       </nav>
     </section>
