@@ -17,11 +17,11 @@ export default function Loans() {
       <nav className="navegacao">
 
         <button onClick={()=>router.push("/private/loans/list")} className="green">
-          <i className="fa-solid fa-list fa-xl"></i> Empréstimos em aberto
+          <i className="fa-solid fa-list"></i> Empréstimos em aberto
         </button>
 
         <button onClick={()=>router.push("/private/loans/post")} className="yellow">
-          <i className="fa-solid fa-circle-plus fa-xl"></i> Cadastrar empréstimo
+          <i className="fa-solid fa-circle-plus"></i> Cadastrar empréstimo
         </button>
 
       </nav>

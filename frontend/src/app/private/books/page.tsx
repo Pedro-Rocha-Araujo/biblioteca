@@ -17,11 +17,11 @@ export default function Books() {
       <nav className="navegacao">
 
         <button onClick={()=>router.push("/private/books/list")} className="green">
-          <i className="fa-solid fa-list fa-xl"></i> Livros cadastrados
+          <i className="fa-solid fa-list"></i> Livros cadastrados
         </button>
 
         <button onClick={()=>router.push("/private/books/post")} className="yellow">
-          <i className="fa-solid fa-circle-plus fa-xl"></i> Cadastrar Livro
+          <i className="fa-solid fa-circle-plus"></i> Cadastrar Livro
         </button>
 
       </nav>

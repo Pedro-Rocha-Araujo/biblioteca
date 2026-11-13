@@ -9,7 +9,7 @@
 
 body {
   background:  
-    linear-gradient(33deg, #eeeeeeb4 0%, #eeeeeede 100%),
+    linear-gradient(33deg, #bacee4de 0%, #eee0f0de 100%),
     url('/background.jpg')
   ; 
   background-size: cover; 
@@ -36,23 +36,7 @@ a {
   text-decoration: none;
 }
 
-.green {
-  background-color: #589086;
-}
-
-.yellow {
-  background-color: #e0a028;
-}
-
-.red {
-  background-color: #e04343;
-}
-
-.blue {
-  background-color: #3333b4;
-}
-
-.green:hover {
+/* .green:hover {
   background-color: #66a095;
 }
 
@@ -66,7 +50,7 @@ a {
 
 .blue:hover {
   background-color: #3d3dcc;
-}
+} */
 
 .erro {
   color: #fff;

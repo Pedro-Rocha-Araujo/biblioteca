@@ -27,7 +27,7 @@ model Book {
   id       Int    @id @default(autoincrement())
   title    String
   author   String
-  genre    String
+  genre    String @default("Outro")
   isbn     String? @unique
   quantity Int    @default(1)
   loans    Loan[]
