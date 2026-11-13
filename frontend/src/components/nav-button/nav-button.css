@@ -5,7 +5,7 @@ button.navegacao {
   grid-template-rows: auto 1fr;
   gap: 0.5rem;
   justify-items: start;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   font-weight: 600;
   transition: all 0.2s;
 }
@@ -63,4 +63,27 @@ button#blue {
 
 button#blue div {
   background-color: #3333b4;
+}
+
+@media screen and (max-width: 1120px) {
+  button.navegacao {
+    justify-items: center;
+    padding: 1.5rem 1.5rem 2rem 1.5rem;
+  }
+  button#green {
+    border-left: none;
+    border-top: 0.5rem solid #589086;
+  }
+  button#yellow {
+    border-left: none;
+    border-top: 0.5rem solid #e0a028;
+  }
+  button#red {
+    border-left: none;
+    border-top: 0.5rem solid #e04343;
+  }
+  button#blue {
+    border-left: none;
+    border-top: 0.5rem solid #3333b4;
+  }
 }

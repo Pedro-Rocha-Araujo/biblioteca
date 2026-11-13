@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import NavButton from "@/components/nav-button/NavButton"
 import "@/app/nav-buttons.css"
 import Header from "@/components/header/Header"
 
@@ -16,13 +17,19 @@ export default function Loans() {
       
       <nav className="navegacao">
 
-        <button onClick={()=>router.push("/private/loans/list")} className="green">
-          <i className="fa-solid fa-list"></i> Empréstimos em aberto
-        </button>
+        <NavButton 
+          color="green"
+          icon="fa-solid fa-list"
+          text="Empréstimos em aberto"
+          path="/private/loans/list"
+        />
 
-        <button onClick={()=>router.push("/private/loans/post")} className="yellow">
-          <i className="fa-solid fa-circle-plus"></i> Cadastrar empréstimo
-        </button>
+        <NavButton 
+          color="yellow"
+          icon="fa-solid fa-circle-plus"
+          text="Cadastrar empréstimo"
+          path="/private/loans/post"
+        />
 
       </nav>
     </section>

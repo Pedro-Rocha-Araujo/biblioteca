@@ -18,15 +18,19 @@ export default function LoanCard({ loan }: LoanCardProps) {
   }
 
   function getRemainingDays(dueDate: string | Date): number {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
-    const due = new Date(dueDate);
-    due.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate)
+    due.setHours(0, 0, 0, 0)
 
-    const difference = due.getTime() - today.getTime();
+    const difference = due.getTime() - today.getTime()
 
-    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+    const result = Math.ceil(difference / (1000 * 60 * 60 * 24))
+    if(result > 0) {
+      return result
+    }
+    return result*-1;
   }
 
   return (
@@ -40,7 +44,7 @@ export default function LoanCard({ loan }: LoanCardProps) {
         { loan.returnDate ? (
           <span><strong>Retorno:</strong> {formatDate(loan?.returnDate)}</span>
         ) : (
-          <span><strong>Dias restantes:</strong> {getRemainingDays(loan?.dueDate)}</span>
+          <span><strong>{getRemainingDays(loan?.dueDate)<0?"Vencido há":"Dias restantes"}:</strong> {getRemainingDays(loan?.dueDate)}</span>
         ) }
       </div>
       <i className="fa-solid fa-eye fa-lg"></i>

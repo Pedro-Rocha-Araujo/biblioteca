@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import NavButton from "@/components/nav-button/NavButton"
 import Header from "@/components/header/Header"
 import "@/app/nav-buttons.css"
 
@@ -15,13 +16,21 @@ export default function Books() {
       />
 
       <nav className="navegacao">
-        <button onClick={()=>router.push("/private/users/list")} className="green">
-          <i className="fa-solid fa-list"></i> Usuários cadastrados
-        </button>
 
-        <button onClick={()=>router.push("/private/users/post")} className="yellow">
-          <i className="fa-solid fa-circle-plus"></i> Cadastrar Usuário
-        </button>
+        <NavButton 
+          color="green"
+          icon="fa-solid fa-list"
+          text="Usuários cadastrados"
+          path="/private/users/list"
+        />
+
+        <NavButton 
+          color="yellow"
+          icon="fa-solid fa-circle-plus"
+          text="Cadastrar Usuário"
+          path="/private/users/post"
+        />
+        
       </nav>
     </section>
   )
