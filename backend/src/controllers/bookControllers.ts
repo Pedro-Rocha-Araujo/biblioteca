@@ -70,7 +70,7 @@ export async function postBook(request: Request, response: Response) {
         Erro: result.error.issues
       })
     }
-    const { title, author, isbn, quantity } = result.data
+    const { title, author, isbn, quantity, genre } = result.data
 
     if(isbn !== null) {
       const searchBook = await prisma.book.findUnique({
@@ -87,7 +87,8 @@ export async function postBook(request: Request, response: Response) {
         title,
         author,
         isbn,
-        quantity
+        quantity,
+        genre
       }
     })
     return response.status(201).json(newBook)
@@ -107,7 +108,7 @@ export async function postBook(request: Request, response: Response) {
 export async function putBook(request: Request, response: Response) {
   try { 
     const book_id = Number(request.params.book_id)
-    const { title, author, prev_isbn, quantity } = request.body
+    const { title, author, prev_isbn, quantity, genre } = request.body
     let isbn = prev_isbn
     if(!isbn) {
       isbn = null
@@ -115,7 +116,7 @@ export async function putBook(request: Request, response: Response) {
     if(!Number.isInteger(book_id)) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
-    if(!title || !author) {
+    if(!title || !author || genre) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas" })
     }
     const verifyBook = await prisma.book.findUnique({
@@ -134,7 +135,8 @@ export async function putBook(request: Request, response: Response) {
         title,
         author,
         isbn,
-        quantity
+        quantity,
+        genre
       }
     })
     return response.status(200).json(editBook)
