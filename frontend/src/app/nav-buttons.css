@@ -16,3 +16,9 @@ nav.navegacao {
     grid-template-columns: 1fr;
   }
 }
+
+@media screen and (max-width: 480px) {
+  nav.navegacao {
+    gap: 0.5rem;
+  }
+}

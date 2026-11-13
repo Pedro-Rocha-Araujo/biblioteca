@@ -3,7 +3,7 @@
 ## 🔍 Sobre
 O presente projeto, é uma solução web pensada em facilitar a gestão de livros e empréstimos de uma biblioteca. O projeto possui uma interface responsiva para dispositivos móveis e um sistema que permite o cadastro e login dos bibliotecários.
 
-<img width="1920" height="911" alt="librarian" src="https://github.com/user-attachments/assets/182d8de3-9586-449f-9cc0-04069ed927eb" />
+<img width="1920" height="911" alt="thumbnail" src="https://github.com/user-attachments/assets/ff562647-4af7-421b-b720-2b57d91399d8" />
 
 ## 🔧 Tecnologias usadas
 * Javascript • TypeScript

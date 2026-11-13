@@ -68,7 +68,7 @@ button#blue div {
 @media screen and (max-width: 1120px) {
   button.navegacao {
     justify-items: center;
-    padding: 1.5rem 1.5rem 2rem 1.5rem;
+    padding: 1rem 1rem 1.5rem 1rem;
   }
   button#green {
     border-left: none;
