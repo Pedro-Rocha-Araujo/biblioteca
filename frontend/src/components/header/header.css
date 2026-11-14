@@ -1,5 +1,6 @@
 header.navegacao {
   background-color: #1b252e;
+  border-left: 1px solid #fff;
   padding: 2rem;
   display: flex;
   align-items: center;

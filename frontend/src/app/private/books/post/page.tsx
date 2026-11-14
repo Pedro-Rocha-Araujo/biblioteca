@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import axios from "axios"
@@ -7,8 +8,9 @@ import { apiBooks } from "@/api"
 import "./post-book.css"
 
 export default function PostBook() {
+  const [genre, setGenre] = useState<string | null>(null)
   const router = useRouter()
-
+  console.log(genre)
   async function postBook(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -16,12 +18,12 @@ export default function PostBook() {
     const title = formData.get("title")
     const author = formData.get("author")
     const quantity = formData.get("quantity")
-    if(!title || !author || !quantity) {
+    if(!title || !author || !quantity || !genre) {
       toast.error("Preencha todos os campos")
       return
     }
     try {
-      await apiBooks.post("/",{ isbn, title, author, quantity })
+      await apiBooks.post("/",{ isbn, title, author, quantity, genre })
       router.push("/private/books/list")
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
@@ -81,6 +83,18 @@ export default function PostBook() {
             id="autor"
             required
           />
+        </div>
+
+        <div className="input">
+          <label htmlFor="genero">Gênero:</label>
+          <select id="genero" defaultValue="" onChange={(e)=>setGenre(e.target.value)} >
+            <option value="" disabled>Selecione o Gênero</option>
+            <option value="Drama">Drama</option>
+            <option value="Terror">Terror</option>
+            <option value="Romance">Romance</option>
+            <option value="Ficção">Ficção</option>
+            <option value="Outro">Outro</option>
+          </select>
         </div>
 
         <div className="input">

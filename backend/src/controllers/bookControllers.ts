@@ -71,7 +71,6 @@ export async function postBook(request: Request, response: Response) {
       })
     }
     const { title, author, isbn, quantity, genre } = result.data
-
     if(isbn !== null) {
       const searchBook = await prisma.book.findUnique({
         where: {
@@ -98,6 +97,7 @@ export async function postBook(request: Request, response: Response) {
         return response.status(409).json({ Mensagem: "O ISBN deste livro já foi cadastrado" })
       }
     }
+    console.log(erro)
     return response.status(500).json({
       Mensagem: "Erro ao cadastrar livro",
       Erro: erro

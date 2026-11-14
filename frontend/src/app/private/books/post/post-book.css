@@ -30,6 +30,13 @@ section.post-book form.form-post-book input {
   border: 1px solid #1c1c1c73;
 }
 
+section.post-book form.form-post-book select {
+  font-size: clamp(0.8rem, 3vw, 1.05rem);
+  outline: none;
+  padding: 0.8rem 0.2rem;
+  border: 1px solid #1c1c1c73;
+}
+
 section.post-book form.form-post-book button {
   font-size: clamp(0.8rem, 3vw, 1.1rem);
   padding: 1.1rem 0;

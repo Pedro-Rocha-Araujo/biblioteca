@@ -9,7 +9,7 @@
 
 body {
   background:  
-    linear-gradient(33deg, #bacee4de 0%, #eee0f0de 100%),
+    linear-gradient(33deg, #bbcbddde 0%, #eee0f0de 100%),
     url('/background.jpg')
   ; 
   background-size: cover; 
