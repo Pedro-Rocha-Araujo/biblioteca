@@ -97,7 +97,6 @@ export async function postBook(request: Request, response: Response) {
         return response.status(409).json({ Mensagem: "O ISBN deste livro já foi cadastrado" })
       }
     }
-    console.log(erro)
     return response.status(500).json({
       Mensagem: "Erro ao cadastrar livro",
       Erro: erro
@@ -116,7 +115,7 @@ export async function putBook(request: Request, response: Response) {
     if(!Number.isInteger(book_id)) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
-    if(!title || !author || genre) {
+    if(!title || !author || !genre) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas" })
     }
     const verifyBook = await prisma.book.findUnique({

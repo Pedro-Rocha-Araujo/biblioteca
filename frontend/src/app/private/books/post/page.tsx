@@ -10,7 +10,7 @@ import "./post-book.css"
 export default function PostBook() {
   const [genre, setGenre] = useState<string | null>(null)
   const router = useRouter()
-  console.log(genre)
+
   async function postBook(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)

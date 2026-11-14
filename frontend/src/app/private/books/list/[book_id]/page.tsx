@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation"
 import { BookInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiBooks } from "@/api"
-import Cookies from "js-cookie"
 import { toast } from "react-toastify" 
 import "./book-detail.css"
 
@@ -14,26 +13,24 @@ export default function UserDetails() {
   const params = useParams()
 
   const [book, setBook] = useState<BookInterface>()
+  const [genre, setGenre] = useState<string>()
   const [quantity, setQuantity] = useState<number>(0)
-  
-  const token = Cookies.get("token")
+
   const book_id = params.book_id
 
   useEffect(()=> {
     async function getUser() {
-      if(!token) {
-        return
-      }
       try {
         const response = await apiBooks.get(`/${book_id}`)
         setBook(response.data)
         setQuantity(response.data.quantity)
+        setGenre(response.data.genre)
       } catch(erro) {
         console.log(erro)
       }
     }
     getUser()
-  }, [book_id, token])
+  }, [book_id])
 
   function handleQuantity(q:boolean) {
     if(q === false) {
@@ -53,12 +50,12 @@ export default function UserDetails() {
     const isbn = formData.get("isbn")
     const title = formData.get("title")
     const author = formData.get("author")
-    if(!title || !author) {
+    if(!title || !author || !genre) {
       return toast.error("Preencha todos os campos")
     }
     try {
       await apiBooks.put(`/${book_id}`, {
-        isbn, title, author, quantity
+        isbn, title, author, quantity, genre
       })
       toast.success("Livro atualizado")
     } catch(erro) {
@@ -155,6 +152,18 @@ export default function UserDetails() {
             id="autor"
             required
           />
+        </div>
+
+        <div className="input">
+          <label htmlFor="genero">Gênero:</label>
+          <select id="genero" value={genre} onChange={(e)=>setGenre(e.target.value)} >
+            <option value="" disabled>Selecione o Gênero</option>
+            <option value="Drama">Drama</option>
+            <option value="Terror">Terror</option>
+            <option value="Romance">Romance</option>
+            <option value="Ficção">Ficção</option>
+            <option value="Outro">Outro</option>
+          </select>
         </div>
 
         <label>Quantidade</label>
