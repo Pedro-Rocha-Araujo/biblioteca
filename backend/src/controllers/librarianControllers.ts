@@ -68,6 +68,7 @@ export async function librarianRegister(request: Request, response: Response) {
       token: token
     })
   } catch(erro) {
+    console.log(erro)
     if(erro instanceof Prisma.PrismaClientKnownRequestError) {
       if(erro.code === "P2002") {
         return response.status(409).json({ Mensagem: "E-mail já cadastrado" })

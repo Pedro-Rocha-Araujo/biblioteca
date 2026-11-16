@@ -1,6 +1,7 @@
 import type { Request, Response } from "express"
 import { Prisma } from "../generated/prisma/client.js"
 import { bookSchema } from "../schemas/bookSchema.js"
+import { uuidSchema } from "../schemas/uuidSchema.js"
 import prisma from "../prisma.js"
 
 export async function getBooks(_request: Request, response: Response) {
@@ -40,13 +41,14 @@ export async function getOutOfPrintBooks(_request: Request, response: Response) 
 
 export async function getBook(request: Request, response: Response) {
   try {
-    const book_id = Number(request.params.book_id)
-    if(!Number.isInteger(book_id) || book_id < 1) {
+    const { book_id } = request.params
+    const result = uuidSchema.safeParse(book_id)
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }
     const book = await prisma.book.findUnique({
       where: {
-        id: book_id
+        id: result.data
       }
     })
     if(!book) {
@@ -106,34 +108,43 @@ export async function postBook(request: Request, response: Response) {
 
 export async function putBook(request: Request, response: Response) {
   try { 
-    const book_id = Number(request.params.book_id)
-    const { title, author, prev_isbn, quantity, genre } = request.body
-    let isbn = prev_isbn
-    if(!isbn) {
-      isbn = null
-    }
-    if(!Number.isInteger(book_id)) {
+    const { book_id } = request.params
+    const result = uuidSchema.safeParse(book_id)
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
+    }
+    const { title, author, isbn, quantity, genre } = request.body
+    let prev_isbn = isbn
+    if(!prev_isbn) {
+      prev_isbn = null
     }
     if(!title || !author || !genre) {
       return response.status(400).json({ Mensagem: "Informações não preenchidas" })
     }
     const verifyBook = await prisma.book.findUnique({
       where: {
-        id: book_id
+        id: result.data
       }
     })
     if(!verifyBook) {
       return response.status(404).json({ Mensagem: "Livro não encontrado" })
     }
+    const verifyIsbn = prev_isbn ? await prisma.book.findUnique({
+      where: {
+        isbn: prev_isbn
+      }
+    }): null
+    if(verifyIsbn && verifyIsbn.id !== result.data) {
+      return response.status(409).json({ Mensagem: "Isbn já cadastrado" })
+    }
     const editBook = await prisma.book.update({
       where: {
-        id: book_id
+        id: result.data
       },
       data: {
         title,
         author,
-        isbn,
+        isbn: prev_isbn,
         quantity,
         genre
       }
@@ -149,14 +160,14 @@ export async function putBook(request: Request, response: Response) {
 
 export async function deleteBook(request: Request, response: Response) {
   try {
-    const book_id = Number(request.params.book_id)
-
-    if(!Number.isInteger(book_id) || book_id < 1) {
-      return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
+    const { book_id } = request.params
+    const result = uuidSchema.safeParse(book_id)
+    if(!result.success) {
+      return response.status(400).json({ Mensagem: "Id do livro não informado" })
     }
     const verifyBook = await prisma.book.findUnique({
       where: {
-        id: book_id
+        id: result.data
       }
     })
     if(!verifyBook) {
@@ -164,7 +175,7 @@ export async function deleteBook(request: Request, response: Response) {
     }
     const verifyLoan = await prisma.loan.findFirst({
       where: {
-        bookId: book_id,
+        bookId: result.data,
         returnDate: null
       }
     })
@@ -173,7 +184,7 @@ export async function deleteBook(request: Request, response: Response) {
     }
     await prisma.book.delete({
       where: {
-        id: book_id
+        id: result.data
       }
     })
     return response.status(200).json({ Mensagem: "Livro deletado com sucesso" })

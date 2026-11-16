@@ -12,7 +12,7 @@ export function checkToken(request: Request, response: Response, next: NextFunct
       return response.status(401).json({ Mensagem: "Token ou tipo inválido" })
     }
     const decoded = Jwt.verify(token, process.env.JWT_PASSWORD!)
-    if (typeof decoded === "string" || typeof decoded.librarianId !== "number") {
+    if (typeof decoded === "string" || typeof decoded.librarianId !== "string") {
       return response.status(401).json({
         Mensagem: "Token inválido",
       });

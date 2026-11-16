@@ -93,6 +93,8 @@ export default function PostBook() {
             <option value="Terror">Terror</option>
             <option value="Romance">Romance</option>
             <option value="Ficção">Ficção</option>
+            <option value="Politica">Política</option>
+            <option value="Educativo">Educativo</option>
             <option value="Outro">Outro</option>
           </select>
         </div>

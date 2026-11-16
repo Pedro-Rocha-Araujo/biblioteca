@@ -47,6 +47,7 @@ export default function UserDetails() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget);
     const isbn = formData.get("isbn")
+    console.log(isbn)
     const title = formData.get("title")
     const author = formData.get("author")
     if(!title || !author || !genre) {

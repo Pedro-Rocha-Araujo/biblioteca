@@ -27,7 +27,6 @@ export default function Cadastro() {
       const response = await apiAuth.post("/register", {
         name, email, password
       })
-      console.log(response.data)
       const token = response.data.token
       Cookies.set("token", token)
       router.push("/private/home")

@@ -42,9 +42,9 @@ model Book {
 
 model Loan {
   id          String      @id @default(uuid()) @db.Uuid
-  userId      String
-  bookId      String
-  librarianId String
+  userId      String  @db.Uuid     
+  bookId      String  @db.Uuid
+  librarianId String  @db.Uuid
   loanDate    DateTime    @default(now())
   dueDate     DateTime
   returnDate  DateTime?

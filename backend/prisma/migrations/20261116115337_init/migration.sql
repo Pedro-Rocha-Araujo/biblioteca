@@ -1,16 +1,19 @@
+-- CreateEnum
+CREATE TYPE "LoanStatus" AS ENUM ('ON_TIME', 'RETURNED', 'OVERDUE');
+
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "phone" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Librarian" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -20,9 +23,10 @@ CREATE TABLE "Librarian" (
 
 -- CreateTable
 CREATE TABLE "Book" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL,
     "title" TEXT NOT NULL,
     "author" TEXT NOT NULL,
+    "genre" TEXT NOT NULL DEFAULT 'Outro',
     "isbn" TEXT,
     "quantity" INTEGER NOT NULL DEFAULT 1,
 
@@ -31,13 +35,14 @@ CREATE TABLE "Book" (
 
 -- CreateTable
 CREATE TABLE "Loan" (
-    "id" SERIAL NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "bookId" INTEGER NOT NULL,
-    "librarianId" INTEGER NOT NULL,
+    "id" UUID NOT NULL,
+    "userId" UUID NOT NULL,
+    "bookId" UUID NOT NULL,
+    "librarianId" UUID NOT NULL,
     "loanDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dueDate" TIMESTAMP(3) NOT NULL,
     "returnDate" TIMESTAMP(3),
+    "status" "LoanStatus" NOT NULL DEFAULT 'ON_TIME',
 
     CONSTRAINT "Loan_pkey" PRIMARY KEY ("id")
 );
