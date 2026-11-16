@@ -44,7 +44,7 @@ export default function LoanCard({ loan }: LoanCardProps) {
         { loan.returnDate ? (
           <span><strong>Retorno:</strong> {formatDate(loan?.returnDate)}</span>
         ) : (
-          <span><strong>{getRemainingDays(loan?.dueDate)<0?"Vencido há":"Dias restantes"}:</strong> {getRemainingDays(loan?.dueDate)}</span>
+          <span><strong>{getRemainingDays(loan?.dueDate)>0?"Vencido há":"Dias restantes"}:</strong> {getRemainingDays(loan?.dueDate)} dias</span>
         ) }
       </div>
       <i className="fa-solid fa-eye fa-lg"></i>

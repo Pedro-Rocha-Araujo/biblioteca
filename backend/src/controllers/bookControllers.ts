@@ -150,6 +150,7 @@ export async function putBook(request: Request, response: Response) {
 export async function deleteBook(request: Request, response: Response) {
   try {
     const book_id = Number(request.params.book_id)
+
     if(!Number.isInteger(book_id) || book_id < 1) {
       return response.status(400).json({ Mensagem: "Id do livro não informado ou inválido" })
     }

@@ -7,40 +7,48 @@ datasource db {
   provider = "postgresql"
 }
 
+enum LoanStatus {
+  ON_TIME
+  RETURNED
+  OVERDUE
+}
+
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String  @id @default(uuid()) @db.Uuid
   name     String
-  email    String @unique
+  email    String  @unique
+  phone    String?
   loans    Loan[]
 }
 
 model Librarian {
-  id       Int    @id @default(autoincrement())
+  id       String  @id @default(uuid()) @db.Uuid
   name     String
-  email    String @unique
+  email    String  @unique
   password String
   loans    Loan[]
 }
 
 model Book {
-  id       Int    @id @default(autoincrement())
+  id       String  @id @default(uuid()) @db.Uuid
   title    String
   author   String
-  genre    String @default("Outro")
+  genre    String  @default("Outro")
   isbn     String? @unique
-  quantity Int    @default(1)
+  quantity Int     @default(1)
   loans    Loan[]
 }
 
 model Loan {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  bookId      Int
-  librarianId Int
-  loanDate    DateTime  @default(now())
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String
+  bookId      String
+  librarianId String
+  loanDate    DateTime    @default(now())
   dueDate     DateTime
   returnDate  DateTime?
+  status      LoanStatus  @default(ON_TIME)
 
   user        User      @relation(fields: [userId], references: [id])
   book        Book      @relation(fields: [bookId], references: [id])

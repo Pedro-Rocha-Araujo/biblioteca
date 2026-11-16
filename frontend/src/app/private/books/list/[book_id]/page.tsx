@@ -17,7 +17,6 @@ export default function UserDetails() {
   const [quantity, setQuantity] = useState<number>(0)
 
   const book_id = params.book_id
-
   useEffect(()=> {
     async function getUser() {
       try {
