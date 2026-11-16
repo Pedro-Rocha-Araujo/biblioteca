@@ -1,6 +1,7 @@
 import type { Request, Response } from "express"
 import { Prisma } from "../generated/prisma/client.js"
 import { userSchema } from "../schemas/userSchema.js"
+import { uuidSchema } from "../schemas/uuidSchema.js"
 import prisma from "../prisma.js"
 import "dotenv/config"
 
@@ -64,11 +65,12 @@ export async function userRegister(request: Request, response: Response) {
         Erros: result.error.issues 
       })
     }
-    const { name, email } = result.data
+    const { name, email, phone } = result.data
     await prisma.user.create({
       data: {
-        name: name,
-        email: email
+        name,
+        email,
+        phone
       }
     })
     return response.status(201).json({ 
@@ -88,13 +90,14 @@ export async function userRegister(request: Request, response: Response) {
 
 export async function getUserProfile(request: Request, response: Response) {
   try {
-    const userId = Number(request.params.user_id)
-    if(!Number.isInteger(userId) || userId < 1) {
-      return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
+    const { user_id } = request.params
+    const result = uuidSchema.safeParse(user_id)
+    if(!result.success) {
+      return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
     const verifyUser = await prisma.user.findUnique({
       where: {
-        id: userId
+        id: result.data
       }
     })
     if(!verifyUser) {
@@ -111,21 +114,20 @@ export async function getUserProfile(request: Request, response: Response) {
 
 export async function editUserProfile(request: Request, response: Response) {
   try {
-    const userId = Number(request.params.user_id)
-    const result = userSchema.safeParse(request.body)
-    if(!result.success) {
-      return response.status(400).json({ 
-        Mensagem: "Campos obrigatórios não preenchidos",
-        Erros: result.error.issues
-      })
-    }
-    const { name, email } = result.data
-    if(!Number.isInteger(userId) || userId < 1) {
+    const { user_id } = request.params
+    const result_id = uuidSchema.safeParse(user_id)
+    if(!result_id.success) {
       return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
+    const result = userSchema.safeParse(request.body)
+    if(!result.success) {
+      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
+    }
+    const { name, email, phone } = result.data
+
     const verifyUser = await prisma.user.findUnique({
       where: {
-        id: userId
+        id: result_id.data
       }
     })
     if(!verifyUser) {
@@ -136,16 +138,17 @@ export async function editUserProfile(request: Request, response: Response) {
         email: email
       }
     })
-    if(verifyEmail && verifyEmail.id !== userId) {
+    if(verifyEmail && verifyEmail.id !== result_id.data) {
       return response.status(409).json({ Mensagem: "O email já está sendo usado" })
     }
     await prisma.user.update({
       where: {
-        id: userId
+        id: result_id.data
       },
       data: {
-        name: name,
-        email: email
+        name,
+        email,
+        phone
       }
     })
     return response.status(200).json({ Mensagem: "Usuário editado com sucesso" })
@@ -159,13 +162,14 @@ export async function editUserProfile(request: Request, response: Response) {
 
 export async function deleteUserProfile(request: Request, response: Response) {
   try {
-    const userId = Number(request.params.user_id)
-    if(!Number.isInteger(userId) || userId < 1) {
-      return response.status(401).json({ Mensagem: "Id do usuário não informado ou inválido" })
+    const { user_id } = request.params
+    const result = uuidSchema.safeParse(user_id)
+    if(!result.success) {
+      return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
     const verifyLoan = await prisma.loan.findFirst({
       where: {
-        userId,
+        userId: result.data,
         returnDate: null
       }
     })
@@ -174,7 +178,7 @@ export async function deleteUserProfile(request: Request, response: Response) {
     }
     const verifyUser = await prisma.user.findUnique({
       where: {
-        id: userId
+        id: result.data
       }
     })
     if(!verifyUser) {
@@ -182,7 +186,7 @@ export async function deleteUserProfile(request: Request, response: Response) {
     }
     await prisma.user.delete({
       where: {
-        id: userId
+        id: result.data
       }
     })
     return response.status(200).json({ Mensagem: "Usuário deletado com sucesso" })

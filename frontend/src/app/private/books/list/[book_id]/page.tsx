@@ -47,7 +47,6 @@ export default function UserDetails() {
     e.preventDefault()
     const formData = new FormData(e.currentTarget);
     const isbn = formData.get("isbn")
-    console.log(isbn)
     const title = formData.get("title")
     const author = formData.get("author")
     if(!title || !author || !genre) {
@@ -162,6 +161,8 @@ export default function UserDetails() {
             <option value="Terror">Terror</option>
             <option value="Romance">Romance</option>
             <option value="Ficção">Ficção</option>
+            <option value="Politica">Política</option>
+            <option value="Educativo">Educativo</option>
             <option value="Outro">Outro</option>
           </select>
         </div>

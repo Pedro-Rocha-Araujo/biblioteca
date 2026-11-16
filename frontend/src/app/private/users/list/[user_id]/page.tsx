@@ -2,39 +2,33 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { LoanInterface, UserInterface } from "@/interfaces/usersInterface"
+import { LoanInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiLoans, apiUsers } from "@/api"
-import Cookies from "js-cookie"
 import { toast } from "react-toastify" 
 import LoanCard from "@/components/loanCard/LoanCard"
+import { usePhoneMask } from "@/masks" 
 import "./user-detail.css"
 
 export default function UserDetails() {
   const router = useRouter()
   const params = useParams()
+  const phoneMask = usePhoneMask()
 
-  const [user, setUser] = useState<UserInterface>()
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
+  const [phone, setPhone] = useState<string>("")
   const [userLoans, setUserLoans] = useState<LoanInterface[]>([])
-  const token = Cookies.get("token")
+
   const user_id = params.user_id
 
   useEffect(()=> {
     async function getUser() {
-      if(!token) {
-        return
-      }
       try {
-        const response = await apiUsers.get(`/${user_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        setUser(response.data)
+        const response = await apiUsers.get(`/${user_id}`)
         setName(response.data.name)
         setEmail(response.data.email)
+        setPhone(response.data.phone)
       } catch(erro) {
         console.log(erro)
       }
@@ -49,16 +43,16 @@ export default function UserDetails() {
     }
     getUser()
     getUserLoans()
-  }, [user_id, token])
+  }, [user_id])
 
   async function editUserProfile(e: React.FormEvent) {
     e.preventDefault()
-    if(!name || !email || !user) {
+    if(!name || !email || !phone) {
       return toast.error("Preencha todos os campos")
     }
     try {
       await apiUsers.put(`/${user_id}`, {
-        name, email
+        name, email, phone
       })
       toast.success("Perfil atualizado")
     } catch(erro) {
@@ -145,6 +139,18 @@ export default function UserDetails() {
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
             id="email"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="email">Telefone do Usuário</label>
+          <input 
+            type="text"
+            value={phone}
+            ref={phoneMask}
+            onChange={(e)=>setPhone(e.target.value)}
+            id="telefone"
             required
           />
         </div>

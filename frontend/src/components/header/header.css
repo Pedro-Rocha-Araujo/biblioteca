@@ -1,6 +1,6 @@
 header.navegacao {
   background-color: #1b252e;
-  border-left: 1px solid #fff;
+  border-left: 1px solid #000000;
   padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@ header.navegacao h1:hover {
 
 @media screen and (max-width: 768px) {
   header.navegacao {
-    padding: 1.5rem 0;
+    padding: 1.5rem;
     justify-content: center;
   }
   header.navegacao {

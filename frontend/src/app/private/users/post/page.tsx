@@ -1,22 +1,29 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { apiUsers } from "@/api"
+import { usePhoneMask } from "@/masks"
 import "./post-user.css"
 
 export default function PostUser() {
+  const router = useRouter()
+
+  const phoneMask = usePhoneMask()
 
   async function postUser(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const name = formData.get("name")
     const email = formData.get("email")
-    if(!name || !email) {
+    const phone = formData.get("phone")
+    if(!name || !email || !phone) {
       toast.error("Preencha todos os campos")
     }
     try {
-      await apiUsers.post("/",{ name, email })
+      await apiUsers.post("/",{ name, email, phone })
+      router.push("/private/users/list")
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
@@ -67,6 +74,17 @@ export default function PostUser() {
             type="email"
             name="email"
             id="email"
+            required
+          />
+        </div>
+
+        <div className="input">
+          <label htmlFor="telefone">Telefone do Usuário:</label>
+          <input 
+            type="text"
+            name="phone"
+            ref={phoneMask}
+            id="telefone"
             required
           />
         </div>

@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-input/mask": "^2.0.4",
     "axios": "^1.20.0",
     "dotenv": "^18.0.9",
     "jose": "^6.2.15",
@@ -17,6 +18,7 @@
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-input-mask": "^2.0.4",
     "react-toastify": "^11.1.0"
   },
   "devDependencies": {
