@@ -34,7 +34,10 @@ export default function LoanCard({ loan }: LoanCardProps) {
   }
 
   return (
-    <div key={loan.id} onClick={()=>router.push(`/private/loans/list/${loan.id}`)} className="loan">
+    <div 
+      key={loan.id} onClick={()=>router.push(`/private/loans/list/${loan.id}`)} className="loan"
+      id={loan.status==="ON_TIME"?"green":loan.status==="OVERDUE"?"red: ":"blue"}
+    >
       <h3><strong>Usuário:</strong> {loan.user.name}</h3>
       <span><strong>Bibliotecário:</strong> {loan.librarian.name}</span>
       <span><strong>Livro:</strong> {loan.book.title}</span>
@@ -44,7 +47,10 @@ export default function LoanCard({ loan }: LoanCardProps) {
         { loan.returnDate ? (
           <span><strong>Retorno:</strong> {formatDate(loan?.returnDate)}</span>
         ) : (
-          <span><strong>{getRemainingDays(loan?.dueDate)>0?"Vencido há":"Dias restantes"}:</strong> {getRemainingDays(loan?.dueDate)} dias</span>
+          <span>
+            <strong>{loan.status==="ON_TIME"?"Restam: ":loan.status==="OVERDUE"?"Vencido há: ":""}</strong> 
+            {getRemainingDays(loan?.dueDate)} dias
+          </span>
         ) }
       </div>
       <i className="fa-solid fa-eye fa-lg"></i>

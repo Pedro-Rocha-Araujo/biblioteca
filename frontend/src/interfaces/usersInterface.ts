@@ -25,8 +25,8 @@ export interface LoanInterface {
   book: BookInterface,
   librarian: LibrarianInterface,
   user: UserInterface,
+  status: "ON_TIME" | "RETURNED" | "OVERDUE",
   loanDate: Date,
   dueDate: Date
   returnDate: Date,
-
 }

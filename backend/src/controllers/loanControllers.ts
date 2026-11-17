@@ -149,6 +149,14 @@ export async function postLoan(request: Request, response: Response) {
     const dueDate = new Date(loanDate)
     dueDate.setDate(dueDate.getDate() + 15)
 
+    const verifyLibrarian = await prisma.librarian.findUnique({
+      where: {
+        id: result_librarian.data
+      }
+    })
+    if(!verifyLibrarian) {
+      return response.status(404).json({ Mensagem: "Bibliotecário não encontrado" })
+    }
     const verifyBook = await prisma.book.findUnique({
       where: {
         id: result_book.data
@@ -222,7 +230,8 @@ export async function returnLoan(request: Request, response: Response) {
           id: result.data
         },
         data: {
-          returnDate
+          returnDate,
+          status: "RETURNED"
         }
       })
       await p.book.update({

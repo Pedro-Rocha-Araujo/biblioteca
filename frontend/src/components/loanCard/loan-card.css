@@ -8,12 +8,22 @@
   padding: 1rem;
   border-radius: 1rem;
   box-shadow: -2px 2px 2px 1px #1c1c1c85;
-  transition: all 0.15s;
+}
+
+div.loans div#green {
+  border-left: 0.3rem solid #589086;
+}
+
+div.loans div#blue {
+  border-left: 0.3rem solid #3333b4;
+}
+
+div.loans div#red {
+  border-left: 0.3rem solid #e04343;
 }
 
 div.loan:hover {
   cursor: pointer;
-  transform: scale(1.01);
 }
 
 div.loan div.infos {
