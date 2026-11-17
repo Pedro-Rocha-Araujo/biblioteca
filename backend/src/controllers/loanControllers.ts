@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { uuidSchema } from "../schemas/uuidSchema.js"
 import prisma from "../prisma.js"
 
 export async function getLoans(_request: Request, response: Response) {
@@ -59,13 +60,14 @@ export async function getOverDueLoans(_request: Request, response: Response) {
 
 export async function getUserLoans(request: Request, response: Response) {
   try {
-    const user_id = Number(request.params.user_id)
-    if(!Number.isInteger(user_id) || user_id < 1) {
+    const { user_id } = request.params
+    const result = uuidSchema.safeParse(user_id)
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do usuário não informado ou inválido" })
     }
     const verifyUser = await prisma.user.findUnique({
       where: {
-        id: user_id
+        id: result.data
       }
     })
     if(!verifyUser) {
@@ -74,7 +76,7 @@ export async function getUserLoans(request: Request, response: Response) {
     const userLoans = await prisma.loan.findMany({
       where: {
         user: {
-          id: user_id
+          id: result.data
         }
       },
       include: {
@@ -99,13 +101,14 @@ export async function getUserLoans(request: Request, response: Response) {
 
 export async function getLoan(request: Request, response: Response) {
   try {
-    const loan_id = Number(request.params.loan_id)
-    if(!Number.isInteger(loan_id) || loan_id < 1) {
+    const { loan_id } = request.params
+    const result = uuidSchema.safeParse(loan_id)
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
     }
     const loan = await prisma.loan.findUnique({
       where: {
-        id: loan_id
+        id: result.data
       },
       include: {
         user: true,
@@ -133,20 +136,22 @@ export async function getLoan(request: Request, response: Response) {
 export async function postLoan(request: Request, response: Response) {
   try {
     const { librarianId } = request
-    const book_id = Number(request.body.book_id)
-    const user_id = Number(request.body.user_id)
+    const result_librarian = uuidSchema.safeParse(librarianId)
+    const { book_id } = request.body
+    const result_book = uuidSchema.safeParse(book_id)
+    const { user_id } = request.body
+    const result_user = uuidSchema.safeParse(user_id)
+    if(!result_librarian.success || !result_book.success || !result_user.success) {
+      return response.status(400).json({ Mensagem: "Campos obrigatórios não enviados ou inválidos" })
+    }
+
     const loanDate = new Date()
     const dueDate = new Date(loanDate)
     dueDate.setDate(dueDate.getDate() + 15)
-    if(!librarianId || !Number.isInteger(book_id) || !Number.isInteger(user_id)) {
-      return response.status(400).json({ Mensagem: "Campos obrigatórios não preenchidos" })
-    }
-    if(librarianId < 1 || book_id < 1 || user_id < 1) {
-      return response.status(400).json({ Mensagem: "Campo(s)inválido(s)" })
-    }
+
     const verifyBook = await prisma.book.findUnique({
       where: {
-        id: book_id
+        id: result_book.data
       }
     })
     if(!verifyBook) {
@@ -157,7 +162,7 @@ export async function postLoan(request: Request, response: Response) {
     }
     const verifyUser = await prisma.user.findUnique({
       where: {
-        id: user_id
+        id: result_user.data
       }
     })
     if(!verifyUser) {
@@ -166,16 +171,16 @@ export async function postLoan(request: Request, response: Response) {
     await prisma.$transaction(async (p)=> {
       await p.loan.create({
         data: {
-          userId: user_id,
-          bookId: book_id,
-          librarianId,
+          userId: result_user.data,
+          bookId: result_book.data,
+          librarianId: result_librarian.data,
           loanDate,
           dueDate
         }
       });
       await p.book.update({
         where: {
-          id: book_id,
+          id: result_book.data,
         },
         data: {
           quantity: {
@@ -194,14 +199,15 @@ export async function postLoan(request: Request, response: Response) {
 
 export async function returnLoan(request: Request, response: Response) {
   try {
-    const loan_id = Number(request.params.loan_id)
+    const { loan_id } = request.params
+    const result = uuidSchema.safeParse(loan_id)
     const returnDate = new Date()
-    if(!Number.isInteger(loan_id) || loan_id < 1) {
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
     }
     const verifyLoan = await prisma.loan.findUnique({
       where: {
-        id: loan_id
+        id: result.data
       }
     })
     if(!verifyLoan) {
@@ -213,7 +219,7 @@ export async function returnLoan(request: Request, response: Response) {
     await prisma.$transaction(async (p)=> {
       await p.loan.update({
         where: {
-          id: loan_id
+          id: result.data
         },
         data: {
           returnDate
@@ -240,13 +246,14 @@ export async function returnLoan(request: Request, response: Response) {
 
 export async function deleteLoan(request: Request, response: Response) {
   try {
-    const loan_id = Number(request.params.loan_id)
-    if(!Number.isInteger(loan_id) || loan_id < 1 ) {
+    const { loan_id } = request.params
+    const result = uuidSchema.safeParse(loan_id)
+    if(!result.success) {
       return response.status(400).json({ Mensagem: "Id do empréstimo não informado ou inválido" })
     }
     const verifyLoan = await prisma.loan.findUnique({
       where: {
-        id: loan_id
+        id: result.data
       }
     })
     if(!verifyLoan) {
@@ -257,7 +264,7 @@ export async function deleteLoan(request: Request, response: Response) {
     }
     await prisma.loan.delete({
       where: {
-        id: loan_id
+        id: result.data
       }
     })
     return response.status(200).json({ Mensagem: "Empréstimo deletado com sucesso" })
