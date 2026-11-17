@@ -1,12 +1,9 @@
-section.user-details {
+section.user-details header h1 {
+  font-size: clamp(1.5rem, 4.9vw, 3rem);
+}
+
+section.user-details form.form-post-user {
   padding: 1rem;
-}
-
-section.user-details h1 {
-  font-size: clamp(1rem, 9vw, 2.6rem);
-}
-
-section.user-details  form.form-post-user {
   display: grid;
   gap: 0.5rem;
   max-width: 761px;
@@ -39,10 +36,11 @@ section.user-details form.form-post-user button[type="button"] {
 }
 
 section.user-details h2 {
-  margin: 1rem 0 0.5rem 0;
+  margin: 1rem 0 0 1rem;
 }
 
 section.user-details div.loans {
+  padding: 1rem;
   max-width: 1280px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -62,6 +60,9 @@ section.user-details div.loans {
 }
 
 @media screen and (max-width: 768px) {
+  section.user-details header h1 {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
   section.user-details  form.form-post-user {
     max-width: none;
   }

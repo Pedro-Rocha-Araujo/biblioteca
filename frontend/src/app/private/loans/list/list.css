@@ -1,9 +1,5 @@
-section.loan {
-  padding: 1rem;
-}
-
 section.loan div.loans {
-  margin-top: 1rem;
+  padding: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;

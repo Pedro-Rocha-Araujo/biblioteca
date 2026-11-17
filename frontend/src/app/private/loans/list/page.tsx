@@ -5,6 +5,7 @@ import { LoanInterface } from "@/interfaces/usersInterface"
 import { apiLoans } from "@/api"
 import LoanCard from "@/components/loanCard/LoanCard"
 import "./list.css"
+import Header from "@/components/header/Header"
 
 export default function ListLoans() {
 
@@ -24,7 +25,10 @@ export default function ListLoans() {
 
   return (
     <section className="loan">
-      <h1> <i className="fa-solid fa-handshake"></i> Empréstimos</h1>
+      <Header
+        icon="fa-solid fa-handshake"
+        title="Empréstimos"
+      />
       
       <div className="loans">
 

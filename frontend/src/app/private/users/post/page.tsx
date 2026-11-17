@@ -6,6 +6,7 @@ import axios from "axios"
 import { apiUsers } from "@/api"
 import { usePhoneMask } from "@/masks"
 import "./post-user.css"
+import Header from "@/components/header/Header"
 
 export default function PostUser() {
   const router = useRouter()
@@ -54,7 +55,10 @@ export default function PostUser() {
 
   return (
     <section className="post-user">
-      <h1> <i className="fa-solid fa-circle-plus"></i> Cadastrar Usuário</h1>
+      <Header 
+        icon="fa-solid fa-circle-plus"
+        title="Cadastrar Usuário"
+      />
 
       <form onSubmit={postUser} className="form-post-user">
 

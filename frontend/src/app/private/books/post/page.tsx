@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 import axios from "axios"
 import { apiBooks } from "@/api"
 import "./post-book.css"
+import Header from "@/components/header/Header"
 
 export default function PostBook() {
   const [genre, setGenre] = useState<string | null>(null)
@@ -52,7 +53,10 @@ export default function PostBook() {
 
   return (
     <section className="post-book">
-      <h1> <i className="fa-solid fa-circle-plus"></i> Cadastrar Livro</h1>
+      <Header 
+        icon="fa-solid fa-circle-plus"
+        title="Cadastrar Livro"
+      />
 
       <form onSubmit={postBook} className="form-post-book">
         

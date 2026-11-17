@@ -7,6 +7,7 @@ import axios from "axios"
 import { apiBooks } from "@/api"
 import { toast } from "react-toastify" 
 import "./book-detail.css"
+import Header from "@/components/header/Header"
 
 export default function UserDetails() {
   const router = useRouter()
@@ -116,8 +117,11 @@ export default function UserDetails() {
 
   return (
     <section className="book-details">
+      <Header 
+        icon="fa-solid fa-circle-info"
+        title="Detalhes do Livro"
+      />
 
-      <h1>Detalhes do Livro</h1>
       <form onSubmit={editBook} className="form-post-book">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
 

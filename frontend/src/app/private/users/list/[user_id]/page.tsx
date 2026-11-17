@@ -9,6 +9,7 @@ import { toast } from "react-toastify"
 import LoanCard from "@/components/loanCard/LoanCard"
 import { usePhoneMask } from "@/masks" 
 import "./user-detail.css"
+import Header from "@/components/header/Header"
 
 export default function UserDetails() {
   const router = useRouter()
@@ -117,9 +118,13 @@ export default function UserDetails() {
 
   return (
     <section className="user-details">
-      <h1>Detalhes do Usuário</h1>
+      <Header 
+        icon="fa-solid fa-circle-info"
+        title="Detalhes do Usuário"
+      />
+
+      <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
       <form onSubmit={editUserProfile} className="form-post-user">
-        <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
 
         <div className="input">
           <label htmlFor="nome">Nome do Usuário:</label>

@@ -1,9 +1,13 @@
-section.post-loan {
-  padding: 1rem;
+section.post-loan .erro {
+  max-width: none;
+}
+
+section.post-loan header h1 {
+  font-size: clamp(1rem, 7vw, 3rem);
 }
 
 section.post-loan form.form-post-loan {
-  margin-top: 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

@@ -9,6 +9,7 @@ import { UserInterface, BookInterface } from "@/interfaces/usersInterface"
 import ListBooks from "./list/Books"
 import ListUsers from "./list/Users"
 import "./post-loan.css"
+import Header from "@/components/header/Header"
 
 export default function PostLoan() {
   const [users, setUsers] = useState<UserInterface[]>([])
@@ -116,7 +117,10 @@ export default function PostLoan() {
 
   return (
     <section className="post-loan">
-      <h1> <i className="fa-solid fa-circle-plus"></i> Novo Empréstimo</h1>
+      <Header
+        icon="fa-solid fa-circle-plus"
+        title="Novo Empréstimo"
+      />
 
       <form onSubmit={cadastrarEmprestimo} className="form-post-loan">
 

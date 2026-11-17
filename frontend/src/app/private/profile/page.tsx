@@ -7,6 +7,7 @@ import { LibrarianInterface } from "@/interfaces/usersInterface"
 import Cookies from "js-cookie"
 import { toast } from "react-toastify"
 import "./profile.css"
+import Header from "@/components/header/Header"
 
 export default function Profile() {
   const token = Cookies.get("token")
@@ -72,9 +73,10 @@ export default function Profile() {
 
   return (
     <section className="profile">
-      <header>
-        <h1> <i className="fa-solid fa-circle-user"></i> Perfil</h1>
-      </header>
+      <Header 
+        icon="fa-solid fa-circle-user"
+        title="Perfil"
+      />
 
       <form onSubmit={editLibrarianProfile} className="update-user-profile">
         <div className="input">
