@@ -22,7 +22,7 @@ export default function RankingUsers() {
   }, [])
 
   return (
-    <section className="list">
+    <section className="ranking">
       <Header 
         icon="fa-solid fa-trophy"
         title="Ranking"

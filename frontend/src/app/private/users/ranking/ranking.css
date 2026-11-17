@@ -1,11 +1,11 @@
-section.list div.users {
+section.ranking div.users {
   padding: 1rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.5rem;
 }
 
-section.list div.user {
+section.ranking div.user {
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -16,11 +16,11 @@ section.list div.user {
   transition: all 0.15s;
 }
 
-section.list div.user i {
+section.ranking div.user i {
   margin-left: 5px;
 }
 
-section.list div.user h3 {
+section.ranking div.user h3 {
   font-size: clamp(0.7rem, 3vw, 1.1rem);
   white-space: nowrap;
 }

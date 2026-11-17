@@ -5,6 +5,7 @@ import { LoanInterface } from "@/interfaces/usersInterface"
 import { apiLoans } from "@/api"
 import LoanCard from "@/components/loanCard/LoanCard"
 import "./over-due.css"
+import Header from "@/components/header/Header"
 
 export default function OverDue() {
 
@@ -24,10 +25,13 @@ export default function OverDue() {
   }, [])
 
   return (
-    <section className="loan">
-      <h1> <i className="fa-solid fa-calendar-xmark"></i> Empréstimos Vencidos</h1>
+    <section className="over-due-loans">
+      <Header 
+        icon="fa-solid fa-calendar-xmark"
+        title="Empréstimos Vencidos"
+      />
       
-      <div className="loans">
+      <div className="over-due-loans">
 
         { overDueLoans.length > 0 ? (
           overDueLoans.map((loan)=> {
