@@ -8,6 +8,7 @@ import { apiLoans } from "@/api"
 import { toast } from "react-toastify" 
 import LoanCard from "@/components/loanCard/LoanCard"
 import "./loan-detail.css"
+import Header from "@/components/header/Header"
 
 export default function LoanDetails() {
   const router = useRouter()
@@ -89,28 +90,33 @@ export default function LoanDetails() {
 
   return (
     <section className="loan-details">
-      <h1>Detalhes do Empréstimo</h1>
+      <Header 
+        icon="fa-solid fa-circle-info"
+        title="Detalhes do Empréstimo"
+      />
 
-      { loan ? (
-        <LoanCard 
-          key={loan.id}
-          loan={loan}
-        />
-      ) : (
-        <span className="erro">Empréstimo não encontrado</span>
-      ) }
-
-      <form className="form-post-loan">
-        <h2> <i className="fa-regular fa-calendar"></i> Gerenciar Empréstimo</h2>
-        { !loan?.returnDate && (
-          <button onClick={returnLoan} className="green" type="button">
-            Realizar devolução
-          </button>
+      <div className="content">
+        { loan ? (
+          <LoanCard 
+            key={loan.id}
+            loan={loan}
+          />
+        ) : (
+          <span className="erro">Empréstimo não encontrado</span>
         ) }
-        <button onClick={deleteLoan} type="button">
-          Excluir Empréstimo
-        </button>
-      </form>
+
+        <form className="form-post-loan">
+          <h2> <i className="fa-regular fa-calendar"></i> Gerenciar Empréstimo</h2>
+          { !loan?.returnDate && (
+            <button onClick={returnLoan} className="blue" type="button">
+              Realizar devolução
+            </button>
+          ) }
+          <button onClick={deleteLoan} type="button">
+            Excluir Empréstimo
+          </button>
+        </form>
+      </div>
 
     </section>
   )

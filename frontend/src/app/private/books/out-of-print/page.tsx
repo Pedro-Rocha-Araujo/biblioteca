@@ -33,10 +33,12 @@ export default function ListOutOfPrintBooks() {
   }, [pesquisa])
 
   return (
-    <section className="list">
+    <section className="out-of-print">
 
       <div className="heading">
+
         <h1> <i className="fa-solid fa-address-book"></i> Livros em Falta</h1>
+        
         <div className="pesquisa">
           <input 
             placeholder="Pesquisar"
@@ -45,6 +47,7 @@ export default function ListOutOfPrintBooks() {
           />
           <i className="fa-solid fa-magnifying-glass"></i>
         </div>
+
       </div>
       
       <div className="books">

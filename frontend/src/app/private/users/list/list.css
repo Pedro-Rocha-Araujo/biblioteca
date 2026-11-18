@@ -1,11 +1,14 @@
-section.list {
-  padding: 1rem;
-}
-
 section.list div.heading {
+  color: #fff;
+  background-color: #1b252e;
+  padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+section.list div.heading h1 {
+  font-size: clamp(1.2rem, 8vw, 3rem);
 }
 
 section.list div.heading div.pesquisa {
@@ -15,21 +18,25 @@ section.list div.heading div.pesquisa {
 }
 
 section.list div.heading div.pesquisa input {
-  border: 1px solid #1c1c1c3a;
   height: 2.5rem;
   padding: 0 2rem 0 1rem;
   border-radius: 2rem;
   width: 100%;
 }
 
+section.list div.heading div.pesquisa input::placeholder {
+  color: #1b252e;
+}
+
 section.list div.heading div.pesquisa i {
+  color: #1b252e;
   position: absolute;
   right: 0.7rem;
   top: 0.8rem;
 }
 
 section.list div.users {
-  margin-top: 1rem;
+  padding: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
