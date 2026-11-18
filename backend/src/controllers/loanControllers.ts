@@ -2,8 +2,25 @@ import { Request, Response } from "express"
 import { uuidSchema } from "../schemas/uuidSchema.js"
 import prisma from "../prisma.js"
 
+async function updateOverDueLoans() {
+  const today = new Date()
+  await prisma.loan.updateMany({
+    where: {
+      returnDate: null,
+      dueDate: {
+        lt: today
+      },
+      status: "ON_TIME"
+    },
+    data: {
+      status: "OVERDUE"
+    }
+  })
+}
+
 export async function getLoans(_request: Request, response: Response) {
   try {
+    await updateOverDueLoans()
     const loans = await prisma.loan.findMany({
       where: {
         returnDate: null
@@ -30,6 +47,7 @@ export async function getLoans(_request: Request, response: Response) {
 
 export async function getOverDueLoans(_request: Request, response: Response) {
   try {
+    await updateOverDueLoans()
     const today = new Date()
     const loans = await prisma.loan.findMany({
       where: {
@@ -60,6 +78,7 @@ export async function getOverDueLoans(_request: Request, response: Response) {
 
 export async function getUserLoans(request: Request, response: Response) {
   try {
+    await updateOverDueLoans()
     const { user_id } = request.params
     const result = uuidSchema.safeParse(user_id)
     if(!result.success) {
@@ -101,6 +120,7 @@ export async function getUserLoans(request: Request, response: Response) {
 
 export async function getLoan(request: Request, response: Response) {
   try {
+    await updateOverDueLoans()
     const { loan_id } = request.params
     const result = uuidSchema.safeParse(loan_id)
     if(!result.success) {
