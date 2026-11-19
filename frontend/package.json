@@ -18,8 +18,10 @@
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "react-hook-form": "^7.92.0",
     "react-input-mask": "^2.0.4",
-    "react-toastify": "^11.1.0"
+    "react-toastify": "^11.1.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

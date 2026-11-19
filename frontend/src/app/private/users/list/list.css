@@ -1,6 +1,7 @@
 section.list div.heading {
   color: #fff;
   background-color: #1b252e;
+  border-left: 1px solid black;
   padding: 1.5rem;
   display: flex;
   align-items: center;

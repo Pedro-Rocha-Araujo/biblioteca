@@ -1,31 +1,31 @@
 'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { apiBooks } from "@/api"
-import "./post-book.css"
 import Header from "@/components/header/Header"
+import "./post-book.css"
+
+interface FormValues {
+  isbn: string,
+  title: string,
+  author: string,
+  genre: string,
+  quantity: number
+}
 
 export default function PostBook() {
-  const [genre, setGenre] = useState<string | null>(null)
-  const router = useRouter()
+  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<FormValues>({
+    defaultValues: { isbn: "", title: "", author: "", genre: "", quantity: 1 }
+  })
 
-  async function postBook(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const isbn = formData.get("isbn")
-    const title = formData.get("title")
-    const author = formData.get("author")
-    const quantity = formData.get("quantity")
-    if(!title || !author || !quantity || !genre) {
-      toast.error("Preencha todos os campos")
-      return
-    }
+  async function postBook(data:FormValues) {
+    const { isbn, title, author, genre, quantity } = data
     try {
       await apiBooks.post("/",{ isbn, title, author, quantity, genre })
-      router.push("/private/books/list")
+      reset()
+      toast.success("Livro cadastrado")
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
@@ -58,14 +58,16 @@ export default function PostBook() {
         title="Cadastrar Livro"
       />
 
-      <form onSubmit={postBook} className="form-post-book">
+      <form onSubmit={handleSubmit(postBook)} className="form-post-book">
         
         <div className="input">
           <label htmlFor="isbn">ISBN do Livro:</label>
           <input 
             type="text"
-            name="isbn"
             id="isbn"
+            {...register("isbn", {
+              setValueAs: (value: string) => value.trim()
+            })}
           />
         </div>
 
@@ -73,25 +75,39 @@ export default function PostBook() {
           <label htmlFor="titulo">Título do Livro:</label>
           <input 
             type="text"
-            name="title"
             id="titulo"
-            required
+            {...register("title", {
+              setValueAs: (value: string) => value.trim(),
+              required: "Informe o título do livro",
+              minLength: {
+                value: 2,
+                message: "O título deve ter pelo menos 2 caracteres"
+              }
+            })}
           />
+          {errors.title && <span className="span-erro">{errors.title.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="autor">Autor do Livro:</label>
           <input 
             type="text"
-            name="author"
             id="autor"
-            required
+            {...register("author", {
+              setValueAs: (value: string) => value.trim(),
+              required: "Informe o autor do livro"
+            })}
           />
+          {errors.author && <span className="span-erro">{errors.author.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="genero">Gênero:</label>
-          <select id="genero" defaultValue="" onChange={(e)=>setGenre(e.target.value)} >
+          <select
+            {...register("genre", {
+              required: "Selecione um gênero"
+            })} 
+          >
             <option value="" disabled>Selecione o Gênero</option>
             <option value="Drama">Drama</option>
             <option value="Terror">Terror</option>
@@ -101,19 +117,24 @@ export default function PostBook() {
             <option value="Educativo">Educativo</option>
             <option value="Outro">Outro</option>
           </select>
+          { errors.genre && <span className="span-erro">{errors.genre.message}</span> }
         </div>
 
         <div className="input">
           <label htmlFor="quantidade">Quantidade:</label>
           <input 
             type="number"
-            name="quantity"
+            {...register("quantity", {
+              valueAsNumber: true,
+              required: "Informe a quantidade de livros",
+              min: { value: 1, message: "Informe um valor válido" }
+            })}
             id="quantidade"
-            required
           />
+          { errors.quantity && <span className="span-erro">{errors.quantity.message}</span> }
         </div>
 
-        <button>Cadastrar</button>
+        <button disabled={isSubmitting}>{isSubmitting?"Carregando":"Cadastrar"}</button>
 
       </form>
     </section>
