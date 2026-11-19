@@ -23,7 +23,7 @@ export default function ListBooks({ books, bookSelected, setBookSelected }: List
           )
         })
       ) : (
-        <span className="erro">Nenhum livro cadastrado ainda</span>
+        <span className="erro">Nenhum livro encontrado</span>
       ) }
     </div>
   )

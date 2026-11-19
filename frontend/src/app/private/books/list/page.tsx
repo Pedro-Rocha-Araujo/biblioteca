@@ -67,7 +67,7 @@ export default function ListBooks() {
             )
           })
         ) : (
-          <span className="erro">Nenhum livro cadastrado ainda</span>
+          <span className="erro">Nenhum livro encontrado</span>
         ) }
 
       </div>

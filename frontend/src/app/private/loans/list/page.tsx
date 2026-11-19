@@ -42,7 +42,7 @@ export default function ListLoans() {
             )
           })
         ) : (
-          <span className="erro">Nenhum empréstimo em aberto</span>
+          <span className="erro">Nenhum empréstimo encontrado</span>
         ) }
 
       </div>

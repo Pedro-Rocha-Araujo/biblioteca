@@ -68,7 +68,7 @@ export default function ListUsers() {
             )
           })
         ) : (
-          <span className="erro">Nenhum usuário cadastrado ainda</span>
+          <span className="erro">Nenhum usuário encontrado</span>
         ) }
 
       </div>
