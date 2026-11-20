@@ -14,9 +14,12 @@ export default function UserDetails() {
   const router = useRouter()
   const params = useParams()
 
-  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<BookInterface>()
+  const { 
+    register, handleSubmit, reset, watch, setValue, formState: { isSubmitting, errors } 
+  } = useForm<BookInterface>()
 
   const [book, setBook] = useState<BookInterface>()
+  const quantity = watch("quantity")
 
   const book_id = params.book_id
 
@@ -25,7 +28,6 @@ export default function UserDetails() {
       try {
         const response = await apiBooks.get(`/${book_id}`)
         setBook(response.data)
-        setQuantity(response.data.quantity)
         reset({
           isbn: response.data.isbn ?? "",
           title: response.data.title,
@@ -40,23 +42,20 @@ export default function UserDetails() {
     getUser()
   }, [book_id, reset])
 
-
-  const [quantity, setQuantity] = useState<number>(0)
-
   function handleQuantity(q:boolean) {
     if(q === false) {
       if(quantity === 0) {
         toast.error("Valor inválido!")
         return
       }
-      setQuantity(quantity - 1)
+      setValue("quantity", quantity - 1)
       return
     }
-    setQuantity(quantity + 1)
+    setValue("quantity", quantity + 1)
   }
 
   async function editBook(data:BookInterface) {
-    const { isbn, title, author, genre } = data
+    const { isbn, title, author, genre, quantity } = data
     try {
       await apiBooks.put(`/${book_id}`, {
         isbn, title, author, quantity, genre
@@ -148,7 +147,7 @@ export default function UserDetails() {
             { ...register("title", {
               setValueAs: (value:string) => value.trim(),
               required: "Informe o Título do livro",
-              min: { value: 1, message: "O Título precisa ter pelo menos 2 caracteres" }
+              min: { value: 2, message: "O Título precisa ter pelo menos 2 caracteres" }
             }) }
             id="titulo"
             required
@@ -186,16 +185,17 @@ export default function UserDetails() {
           { errors.genre && <span className="span-erro">{errors.genre.message}</span> }
         </div>
 
-        <label>Quantidade</label>
-        <div className="quantity">
-          <button onClick={()=>handleQuantity(false)} type="button">-</button>
-          <span>{quantity}</span>
-          <button onClick={()=>handleQuantity(true)} type="button">+</button>
+        <div className="input">
+          <label>Quantidade</label>
+          <div className="quantity">
+            <button onClick={()=>handleQuantity(false)} type="button">-</button>
+            <span>{quantity}</span>
+            <button onClick={()=>handleQuantity(true)} type="button">+</button>
+          </div>
         </div>
-        { errors.quantity && <span className="span-erro">{errors.quantity.message}</span> }
 
-        <button disabled={isSubmitting} type="submit">{isSubmitting?"Salvando":"Salvar"}</button>
-        <button onClick={deleteBook} type="button">Excluir Livro</button>
+          <button disabled={isSubmitting} type="submit">{isSubmitting?"Salvando":"Salvar"}</button>
+          <button onClick={deleteBook} type="button">Excluir Livro</button>
       </form>
 
     </section>
