@@ -39,3 +39,19 @@ section.post-book form.form-post-book button {
   color: #fff;
   background-color: #1b252e;
 }
+
+section.post-book div.quantity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+section.post-book div.quantity button[type="button"] {
+  background-color: #1c1c1c;
+  height: 1.8rem;
+  width: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}

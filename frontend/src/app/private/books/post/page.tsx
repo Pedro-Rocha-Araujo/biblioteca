@@ -9,9 +9,13 @@ import Header from "@/components/header/Header"
 import "./post-book.css"
 
 export default function PostBook() {
-  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<BookInterface>({
+  const { 
+    register, handleSubmit, reset, watch, setValue, formState: { isSubmitting, errors } 
+  } = useForm<BookInterface>({
     defaultValues: { isbn: "", title: "", author: "", genre: "", quantity: 1 }
   })
+
+  const quantity = watch("quantity")
 
   async function postBook(data:BookInterface) {
     const { isbn, title, author, genre, quantity } = data
@@ -42,6 +46,18 @@ export default function PostBook() {
         toast.error("Erro inesperado")
       }
     }
+  }
+
+  function handleQuantity(q:boolean) {
+    if(q === false) {
+      if(quantity === 0) {
+        toast.error("Valor inválido!")
+        return
+      }
+      setValue("quantity", quantity - 1)
+      return
+    }
+    setValue("quantity", quantity + 1)
   }
 
   return (
@@ -114,17 +130,12 @@ export default function PostBook() {
         </div>
 
         <div className="input">
-          <label htmlFor="quantidade">Quantidade:</label>
-          <input 
-            type="number"
-            {...register("quantity", {
-              valueAsNumber: true,
-              required: "Informe a quantidade de livros",
-              min: { value: 1, message: "Informe um valor válido" }
-            })}
-            id="quantidade"
-          />
-          { errors.quantity && <span className="span-erro">{errors.quantity.message}</span> }
+          <label>Quantidade:</label>
+          <div className="quantity">
+            <button onClick={()=>handleQuantity(false)} type="button">-</button>
+            <span>{quantity}</span>
+            <button onClick={()=>handleQuantity(true)} type="button">+</button>
+          </div>
         </div>
 
         <button disabled={isSubmitting}>{isSubmitting?"Carregando":"Cadastrar"}</button>

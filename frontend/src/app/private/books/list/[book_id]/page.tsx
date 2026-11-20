@@ -186,7 +186,7 @@ export default function UserDetails() {
         </div>
 
         <div className="input">
-          <label>Quantidade</label>
+          <label>Quantidade:</label>
           <div className="quantity">
             <button onClick={()=>handleQuantity(false)} type="button">-</button>
             <span>{quantity}</span>

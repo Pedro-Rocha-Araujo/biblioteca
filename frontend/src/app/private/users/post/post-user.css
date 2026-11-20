@@ -21,7 +21,7 @@ form.form-post-user div.input label {
 
 section.post-user form.form-post-user input {
   font-size: clamp(0.8rem, 3vw, 1.05rem);
-  padding: 0.9rem 0.5rem;
+  padding: 0.8rem 0.5rem;
   border: 1px solid #1c1c1c73;
 }
 
