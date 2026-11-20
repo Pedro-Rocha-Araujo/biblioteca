@@ -4,23 +4,16 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { apiBooks } from "@/api"
+import { BookInterface } from "@/interfaces/usersInterface"
 import Header from "@/components/header/Header"
 import "./post-book.css"
 
-interface FormValues {
-  isbn: string,
-  title: string,
-  author: string,
-  genre: string,
-  quantity: number
-}
-
 export default function PostBook() {
-  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<FormValues>({
+  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<BookInterface>({
     defaultValues: { isbn: "", title: "", author: "", genre: "", quantity: 1 }
   })
 
-  async function postBook(data:FormValues) {
+  async function postBook(data:BookInterface) {
     const { isbn, title, author, genre, quantity } = data
     try {
       await apiBooks.post("/",{ isbn, title, author, quantity, genre })

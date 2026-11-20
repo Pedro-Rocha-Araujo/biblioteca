@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
 import { BookInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiBooks } from "@/api"
@@ -13,24 +14,34 @@ export default function UserDetails() {
   const router = useRouter()
   const params = useParams()
 
+  const { register, handleSubmit, reset, formState: { isSubmitting, errors } } = useForm<BookInterface>()
+
   const [book, setBook] = useState<BookInterface>()
-  const [genre, setGenre] = useState<string>()
-  const [quantity, setQuantity] = useState<number>(0)
 
   const book_id = params.book_id
+
   useEffect(()=> {
     async function getUser() {
       try {
         const response = await apiBooks.get(`/${book_id}`)
         setBook(response.data)
         setQuantity(response.data.quantity)
-        setGenre(response.data.genre)
+        reset({
+          isbn: response.data.isbn ?? "",
+          title: response.data.title,
+          author: response.data.author,
+          genre: response.data.genre,
+          quantity: response.data.quantity,
+        })
       } catch(erro) {
         console.log(erro)
       }
     }
     getUser()
-  }, [book_id])
+  }, [book_id, reset])
+
+
+  const [quantity, setQuantity] = useState<number>(0)
 
   function handleQuantity(q:boolean) {
     if(q === false) {
@@ -44,15 +55,8 @@ export default function UserDetails() {
     setQuantity(quantity + 1)
   }
 
-  async function editBook(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget);
-    const isbn = formData.get("isbn")
-    const title = formData.get("title")
-    const author = formData.get("author")
-    if(!title || !author || !genre) {
-      return toast.error("Preencha todos os campos")
-    }
+  async function editBook(data:BookInterface) {
+    const { isbn, title, author, genre } = data
     try {
       await apiBooks.put(`/${book_id}`, {
         isbn, title, author, quantity, genre
@@ -122,44 +126,54 @@ export default function UserDetails() {
         title="Detalhes do Livro"
       />
 
-      <form onSubmit={editBook} className="form-post-book">
+      <form onSubmit={handleSubmit(editBook)} className="form-post-book">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
 
         <div className="input">
           <label htmlFor="isbn">ISBN do Livro:</label>
           <input 
             type="text"
-            name="isbn"
             id="isbn"
-            defaultValue={book?.isbn}
+            { ...register("isbn", { 
+              setValueAs: (value:string)=>value.trim() 
+             }) }
           />
+          { errors.isbn && <span className="span-erro">{errors.isbn.message}</span> }
         </div>
 
         <div className="input">
           <label htmlFor="titulo">Título do Livro:</label>
           <input 
             type="text"
-            name="title"
-            defaultValue={book?.title}
+            { ...register("title", {
+              setValueAs: (value:string) => value.trim(),
+              required: "Informe o Título do livro",
+              min: { value: 1, message: "O Título precisa ter pelo menos 2 caracteres" }
+            }) }
             id="titulo"
             required
           />
+          { errors.title && <span className="span-erro">{errors.title.message}</span> }
         </div>
 
         <div className="input">
           <label htmlFor="autor">Autor do Livro:</label>
           <input 
             type="text"
-            name="author"
-            defaultValue={book?.author}
+            { ...register("author", {
+              setValueAs: (value:string) => value.trim(),
+              required: "Informe o Autor do Livro",
+              min: { value: 2, message: "O nome do autor precisa ter pelo menos 2 caracteres " }
+            }) }
             id="autor"
             required
           />
+          { errors.author && <span className="span-erro">{errors.author.message}</span> }
         </div>
 
         <div className="input">
           <label htmlFor="genero">Gênero:</label>
-          <select id="genero" value={genre} onChange={(e)=>setGenre(e.target.value)} >
+          <select id="genero" { ...register("genre") } >
             <option value="" disabled>Selecione o Gênero</option>
             <option value="Drama">Drama</option>
             <option value="Terror">Terror</option>
@@ -169,6 +183,7 @@ export default function UserDetails() {
             <option value="Educativo">Educativo</option>
             <option value="Outro">Outro</option>
           </select>
+          { errors.genre && <span className="span-erro">{errors.genre.message}</span> }
         </div>
 
         <label>Quantidade</label>
@@ -177,8 +192,9 @@ export default function UserDetails() {
           <span>{quantity}</span>
           <button onClick={()=>handleQuantity(true)} type="button">+</button>
         </div>
+        { errors.quantity && <span className="span-erro">{errors.quantity.message}</span> }
 
-        <button type="submit">Salvar</button>
+        <button disabled={isSubmitting} type="submit">{isSubmitting?"Salvando":"Salvar"}</button>
         <button onClick={deleteBook} type="button">Excluir Livro</button>
       </form>
 
