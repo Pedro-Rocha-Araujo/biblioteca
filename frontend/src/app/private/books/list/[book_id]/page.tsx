@@ -7,6 +7,7 @@ import { BookInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiBooks } from "@/api"
 import { toast } from "react-toastify" 
+import "@/app/form-style.css"
 import "./book-detail.css"
 import Header from "@/components/header/Header"
 
@@ -125,7 +126,7 @@ export default function UserDetails() {
         title="Detalhes do Livro"
       />
 
-      <form onSubmit={handleSubmit(editBook)} className="form-post-book">
+      <form onSubmit={handleSubmit(editBook)} className="post">
         <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
 
         <div className="input">
@@ -194,8 +195,13 @@ export default function UserDetails() {
           </div>
         </div>
 
-          <button disabled={isSubmitting} type="submit">{isSubmitting?"Salvando":"Salvar"}</button>
-          <button onClick={deleteBook} type="button">Excluir Livro</button>
+          <button id="blue" disabled={isSubmitting} type="submit">
+            {isSubmitting?"Salvando":"Salvar"}
+          </button>
+
+          <button id="red" onClick={deleteBook} type="button">
+            Excluir Livro
+          </button>
       </form>
 
     </section>

@@ -6,6 +6,7 @@ import axios from "axios"
 import { apiBooks } from "@/api"
 import { BookInterface } from "@/interfaces/usersInterface"
 import Header from "@/components/header/Header"
+import "@/app/form-style.css"
 import "./post-book.css"
 
 export default function PostBook() {
@@ -67,7 +68,7 @@ export default function PostBook() {
         title="Cadastrar Livro"
       />
 
-      <form onSubmit={handleSubmit(postBook)} className="form-post-book">
+      <form onSubmit={handleSubmit(postBook)} className="form-post-book post">
         
         <div className="input">
           <label htmlFor="isbn">ISBN do Livro:</label>

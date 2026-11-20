@@ -2,48 +2,8 @@ section.book-details header h1 {
   font-size: clamp(1rem, 6vw, 3rem);
 }
 
-section.book-details form.form-post-book {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  max-width: 768px;
-}
-
-section.book-details  form.form-post-book label {
-  font-size: clamp(0.8rem, 3vw, 1.05rem);
-}
-
-form.form-post-book div.input {
-  display: grid;
-  gap: 0.3rem;
-}
-
 section.book-details form.form-post-book label {
   margin: 0.5rem 0 0 0;
-}
-
-section.book-details form.form-post-book input {
-  font-size: clamp(0.8rem, 3vw, 1.05rem);
-  padding: 0.8rem 0.5rem;
-  border: 1px solid #1c1c1c73;
-}
-
-section.book-details form.form-post-book select {
-  font-size: clamp(0.8rem, 3vw, 1.05rem);
-  padding: 0.8rem 0.2rem;
-  border: 1px solid #1c1c1c73;
-}
-
-section.book-details form.form-post-book button {
-  font-size: clamp(0.8rem, 3vw, 1.1rem);
-  padding: 1rem 0;
-  color: #fff;
-  background-color: #22f;
-}
-
-section.book-details form.form-post-book button[type="button"] {
-  background-color: #f33;
 }
 
 section.book-details div.quantity {
@@ -59,11 +19,11 @@ section.book-details div.quantity button[type="button"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 @media screen and (max-width: 768px) {
-  section.book-details  form.form-post-book {
-    max-width: none;
+  section.book-details h2 {
+    text-align: center;
   }
 }
