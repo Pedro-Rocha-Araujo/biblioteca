@@ -2,40 +2,8 @@ section.user-details header h1 {
   font-size: clamp(1.5rem, 5.3vw, 3rem);
 }
 
-section.user-details form.form-post-user {
-  padding: 1rem;
-  display: grid;
-  gap: 0.5rem;
-  max-width: 761px;
-}
-
-form.form-post-user label {
-  font-size: clamp(0.8rem, 3vw, 1.05rem);
-}
-
-form.form-post-user div.input {
-  display: grid;
-  gap: 0.3rem;
-}
-
-section.user-details form.form-post-user input {
-  font-size: clamp(0.8rem, 3vw, 1.05rem);
-  padding: 0.8rem 0.5rem;
-  border: 1px solid #1c1c1c73;
-}
-
-section.user-details form.form-post-user button {
-  font-size: clamp(0.8rem, 3vw, 1.1rem);
-  padding: 1rem 0;
-  color: #fff;
-  background-color: #22f;
-}
-
-section.user-details form.form-post-user button[type="button"] {
-  background-color: #f33;
-}
-
 section.user-details h2 {
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
   margin: 1rem 0 0 1rem;
 }
 
@@ -63,8 +31,8 @@ section.user-details div.loans {
   section.user-details header h1 {
     font-size: clamp(1.5rem, 6vw, 3rem);
   }
-  section.user-details  form.form-post-user {
-    max-width: none;
+  section.user-details h2 {
+    text-align: center;
   }
   section.user-details div.loan {
     max-width: none;

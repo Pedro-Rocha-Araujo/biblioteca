@@ -5,6 +5,7 @@ import { toast } from "react-toastify"
 import axios from "axios"
 import { apiUsers } from "@/api"
 import { usePhoneMask } from "@/masks"
+import "@/app/form-style.css"
 import "./post-user.css"
 import Header from "@/components/header/Header"
 
@@ -60,7 +61,7 @@ export default function PostUser() {
         title="Cadastrar Usuário"
       />
 
-      <form onSubmit={postUser} className="form-post-user">
+      <form onSubmit={postUser} className="post">
 
         <div className="input">
           <label htmlFor="nome">Nome do Usuário:</label>

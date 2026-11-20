@@ -8,6 +8,7 @@ import { apiLoans, apiUsers } from "@/api"
 import { toast } from "react-toastify" 
 import LoanCard from "@/components/loanCard/LoanCard"
 import { usePhoneMask } from "@/masks" 
+import "@/app/form-style.css"
 import "./user-detail.css"
 import Header from "@/components/header/Header"
 
@@ -124,7 +125,7 @@ export default function UserDetails() {
       />
 
       <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
-      <form onSubmit={editUserProfile} className="form-post-user">
+      <form onSubmit={editUserProfile} className="post">
 
         <div className="input">
           <label htmlFor="nome">Nome do Usuário:</label>
@@ -160,8 +161,13 @@ export default function UserDetails() {
           />
         </div>
         
-        <button type="submit">Salvar</button>
-        <button onClick={deleteUserProfile} type="button">Excluir usuário</button>
+        <button id="blue" type="submit">
+          Salvar
+        </button>
+
+        <button id="red" onClick={deleteUserProfile} type="button">
+          Excluir usuário
+        </button>
 
       </form>
 
