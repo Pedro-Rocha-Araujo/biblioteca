@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { LoanInterface } from "@/interfaces/usersInterface"
+import { LoanInterface, UserInterface } from "@/interfaces/usersInterface"
 import axios from "axios"
 import { apiLoans, apiUsers } from "@/api"
+import { useForm, useController } from "react-hook-form"
 import { toast } from "react-toastify" 
 import LoanCard from "@/components/loanCard/LoanCard"
 import { usePhoneMask } from "@/masks" 
@@ -13,13 +14,24 @@ import "./user-detail.css"
 import Header from "@/components/header/Header"
 
 export default function UserDetails() {
+  const { 
+    register, handleSubmit, control, reset, formState: { isSubmitting, errors  } 
+  } = useForm<UserInterface>({ defaultValues: { name: "", email: "", phone: "" } })
+
+  const { field: phoneField } = useController({
+      name: "phone",
+      control,
+      rules: {
+        required: "Informe o telefone do usuário",
+        minLength: {value: 16, message: "O telefone precisa ter 16 dígitos"},
+        maxLength: {value: 16, message: "O telefone precisa ter 16 dígitos"}
+      }
+    })
+
   const router = useRouter()
   const params = useParams()
   const phoneMask = usePhoneMask()
 
-  const [name, setName] = useState<string>("")
-  const [email, setEmail] = useState<string>("")
-  const [phone, setPhone] = useState<string>("")
   const [userLoans, setUserLoans] = useState<LoanInterface[]>([])
 
   const user_id = params.user_id
@@ -28,9 +40,11 @@ export default function UserDetails() {
     async function getUser() {
       try {
         const response = await apiUsers.get(`/${user_id}`)
-        setName(response.data.name)
-        setEmail(response.data.email)
-        setPhone(response.data.phone)
+        reset({
+          name: response.data.name ?? "",
+          email: response.data.email ?? "",
+          phone: response.data.phone ?? ""
+        })
       } catch(erro) {
         console.log(erro)
       }
@@ -45,13 +59,10 @@ export default function UserDetails() {
     }
     getUser()
     getUserLoans()
-  }, [user_id])
+  }, [])
 
-  async function editUserProfile(e: React.FormEvent) {
-    e.preventDefault()
-    if(!name || !email || !phone) {
-      return toast.error("Preencha todos os campos")
-    }
+  async function editUserProfile(data: UserInterface) {
+    const { name, email, phone } = data
     try {
       await apiUsers.put(`/${user_id}`, {
         name, email, phone
@@ -125,44 +136,44 @@ export default function UserDetails() {
       />
 
       <h2> <i className="fa-solid fa-pen-to-square"></i> Editar informações</h2>
-      <form onSubmit={editUserProfile} className="post">
+      <form onSubmit={handleSubmit(editUserProfile)} className="post">
 
         <div className="input">
           <label htmlFor="nome">Nome do Usuário:</label>
           <input 
             type="text"
-            value={name}
-            onChange={(e)=>setName(e.target.value)}
+            { ...register("name", {
+              setValueAs: (value:string) => value.trim(),
+              minLength: {value: 2, message: "O nome precisa ter pelo menos 2 caracteres"}
+            }) }
             id="nome"
-            required
           />
+          { errors.name && <span className="span-erro">{errors.name.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="email">E-mail do Usuário</label>
           <input 
             type="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            { ...register("email") }
             id="email"
-            required
           />
+          { errors.email && <span className="span-erro">{errors.email.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="email">Telefone do Usuário</label>
           <input 
             type="text"
-            value={phone}
+            { ...phoneField }
             ref={phoneMask}
-            onChange={(e)=>setPhone(e.target.value)}
             id="telefone"
-            required
           />
+          { errors.phone && <span className="span-erro">{errors.phone.message}</span>}
         </div>
         
-        <button id="blue" type="submit">
-          Salvar
+        <button disabled={isSubmitting} id="blue" type="submit">
+          {isSubmitting?"Salvando":"Salvar"}
         </button>
 
         <button id="red" onClick={deleteUserProfile} type="button">

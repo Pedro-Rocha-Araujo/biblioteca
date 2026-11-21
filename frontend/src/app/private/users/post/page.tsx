@@ -29,7 +29,6 @@ export default function PostUser() {
 
   async function postUser(data: UserInterface) {
     const { name, email, phone } = data
-    console.log(name, email, phone)
     try {
       await apiUsers.post("/",{ name, email, phone })
       reset()
@@ -78,7 +77,7 @@ export default function PostUser() {
             {...register("name", {
               setValueAs: (value:string)=> value.trim(),
               required: "Informe o nome do usuário",
-              min: { value: 2, message: "O nome precisa ter pelo menos 2 dígitos" },
+              min: { value: 2, message: "O nome precisa ter pelo menos 2 caracteres" },
             })}
             id="nome"
           />
@@ -109,8 +108,8 @@ export default function PostUser() {
           { errors.phone && <span className="span-erro">{errors.phone.message}</span>}
         </div>
 
-        <button >
-          Cadastrar
+        <button disabled={isSubmitting} >
+          {isSubmitting?"Carregando":"Cadastrar"}
         </button>
 
       </form>
