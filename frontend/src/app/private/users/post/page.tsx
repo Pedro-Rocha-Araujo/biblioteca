@@ -77,7 +77,7 @@ export default function PostUser() {
             {...register("name", {
               setValueAs: (value:string)=> value.trim(),
               required: "Informe o nome do usuário",
-              min: { value: 2, message: "O nome precisa ter pelo menos 2 caracteres" },
+              minLength: { value: 2, message: "O nome precisa ter pelo menos 2 caracteres" },
             })}
             id="nome"
           />

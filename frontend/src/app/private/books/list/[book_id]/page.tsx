@@ -147,8 +147,8 @@ export default function UserDetails() {
             type="text"
             { ...register("title", {
               setValueAs: (value:string) => value.trim(),
-              required: "Informe o Título do livro",
-              min: { value: 2, message: "O Título precisa ter pelo menos 2 caracteres" }
+              required: "Informe o título do livro",
+              minLength: { value: 2, message: "O título precisa ter pelo menos 2 caracteres" }
             }) }
             id="titulo"
             required
@@ -163,7 +163,7 @@ export default function UserDetails() {
             { ...register("author", {
               setValueAs: (value:string) => value.trim(),
               required: "Informe o Autor do Livro",
-              min: { value: 2, message: "O nome do autor precisa ter pelo menos 2 caracteres " }
+              minLength: { value: 2, message: "O nome do autor precisa ter pelo menos 2 caracteres " }
             }) }
             id="autor"
             required

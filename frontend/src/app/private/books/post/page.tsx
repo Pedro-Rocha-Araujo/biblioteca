@@ -106,7 +106,7 @@ export default function PostBook() {
             {...register("author", {
               setValueAs: (value: string) => value.trim(),
               required: "Informe o autor do livro",
-              min: { value: 2, message: "O nome do autor precisa ter pelo menos 2 caracteres." }
+              minLength: { value: 2, message: "O nome do autor precisa ter pelo menos 2 caracteres." }
             })}
           />
           {errors.author && <span className="span-erro">{errors.author.message}</span>}
