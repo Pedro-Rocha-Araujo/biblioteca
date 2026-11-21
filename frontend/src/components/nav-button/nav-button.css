@@ -29,60 +29,60 @@ button.navegacao span {
   color: #1c1c1c;
 }
 
-button#green {
+nav button#green {
   border-left: 0.5rem solid #589086;
   text-align: left;
 }
 
-button#green div {
+nav button#green div {
   background-color: #589086;
 }
 
-button#yellow {
+nav button#yellow {
   border-left: 0.5rem solid #e0a028;
   text-align: left;
 }
 
-button#yellow div {
+nav button#yellow div {
   background-color: #e0a028;
 }
 
-button#red {
+nav button#red {
   border-left: 0.5rem solid #e04343;
   text-align: left;
 }
 
-button#red div {
+nav button#red div {
   background-color: #e04343;
 }
 
-button#blue {
+nav button#blue {
   border-left: 0.5rem solid #3333b4;  
   text-align: left;
 }
 
-button#blue div {
+nav button#blue div {
   background-color: #3333b4;
 }
 
 @media screen and (max-width: 1120px) {
-  button.navegacao {
+  nav button.navegacao {
     justify-items: center;
     padding: 1rem 1rem 1.5rem 1rem;
   }
-  button#green {
+  nav button#green {
     border-left: none;
     border-top: 0.5rem solid #589086;
   }
-  button#yellow {
+  nav button#yellow {
     border-left: none;
     border-top: 0.5rem solid #e0a028;
   }
-  button#red {
+  nav button#red {
     border-left: none;
     border-top: 0.5rem solid #e04343;
   }
-  button#blue {
+  nav button#blue {
     border-left: none;
     border-top: 0.5rem solid #3333b4;
   }

@@ -13,7 +13,6 @@ export default function ListUsers() {
   const [users, setUsers] = useState<UserInterface[]>([])
   const [listagem, setListagem] = useState<UserInterface[]>([])
   const [pesquisa, setpesquisa] = useState<string>("")
-  
   const token = Cookies.get("token")
 
   useEffect(()=> {

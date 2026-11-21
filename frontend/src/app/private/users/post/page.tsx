@@ -1,31 +1,39 @@
 'use client'
 
-import { useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 import axios from "axios"
 import { apiUsers } from "@/api"
+import { useForm, useController } from "react-hook-form"
+import { UserInterface } from "@/interfaces/usersInterface"
 import { usePhoneMask } from "@/masks"
 import "@/app/form-style.css"
 import "./post-user.css"
 import Header from "@/components/header/Header"
 
 export default function PostUser() {
-  const router = useRouter()
+  const { 
+    register, handleSubmit, control, reset, formState: { isSubmitting, errors }
+  } = useForm<UserInterface>({ defaultValues: { name: "", email: "",  phone: "" } })
+
+  const { field: phoneField } = useController({
+    name: "phone",
+    control,
+    rules: {
+      required: "Informe o telefone do usuário",
+      minLength: {value: 16, message: "O telefone precisa ter 16 dígitos"},
+      maxLength: {value: 16, message: "O telefone precisa ter 16 dígitos"}
+    }
+  })
 
   const phoneMask = usePhoneMask()
 
-  async function postUser(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const name = formData.get("name")
-    const email = formData.get("email")
-    const phone = formData.get("phone")
-    if(!name || !email || !phone) {
-      toast.error("Preencha todos os campos")
-    }
+  async function postUser(data: UserInterface) {
+    const { name, email, phone } = data
+    console.log(name, email, phone)
     try {
       await apiUsers.post("/",{ name, email, phone })
-      router.push("/private/users/list")
+      reset()
+      toast.success("Usuário(a) cadastrado(a)")
     } catch(erro) {
       if(axios.isAxiosError(erro)) {
         if (!erro.response) {
@@ -61,40 +69,49 @@ export default function PostUser() {
         title="Cadastrar Usuário"
       />
 
-      <form onSubmit={postUser} className="post">
+      <form onSubmit={handleSubmit(postUser)} className="post">
 
         <div className="input">
           <label htmlFor="nome">Nome do Usuário:</label>
           <input 
             type="text"
-            name="name"
+            {...register("name", {
+              setValueAs: (value:string)=> value.trim(),
+              required: "Informe o nome do usuário",
+              min: { value: 2, message: "O nome precisa ter pelo menos 2 dígitos" },
+            })}
             id="nome"
-            required
           />
+          { errors.name && <span className="span-erro">{errors.name.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="email">Email do Usuário:</label>
           <input 
             type="email"
-            name="email"
+            {...register("email", {
+              setValueAs: (value:String)=> value.trim(),
+              required: "Informe o e-mail do usuário",
+            })}
             id="email"
-            required
           />
+          { errors.email && <span className="span-erro">{errors.email.message}</span>}
         </div>
 
         <div className="input">
           <label htmlFor="telefone">Telefone do Usuário:</label>
           <input 
             type="text"
-            name="phone"
+            {...phoneField}
             ref={phoneMask}
             id="telefone"
-            required
           />
+          { errors.phone && <span className="span-erro">{errors.phone.message}</span>}
         </div>
 
-        <button>Cadastrar</button>
+        <button >
+          Cadastrar
+        </button>
 
       </form>
     </section>
