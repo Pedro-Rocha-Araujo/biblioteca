@@ -48,7 +48,7 @@ div.auth-form div.input-icon {
 }
 
 div.auth-form div.input-icon i {
-  color: #555;
+  color: #666;
   position: absolute;
   top: 1.1rem;
   right: 0.5rem;
@@ -62,7 +62,7 @@ div.auth-form input {
   font-size: clamp(0.7rem, 3.5vw, 1rem);
   width: 100%;
   padding: .6em 2rem 0.6rem 0.5rem;
-  border-bottom: 2px solid #333333ad;
+  border-bottom: 2px solid #666666ad;
   transition: all 0.3s;
 }
 
