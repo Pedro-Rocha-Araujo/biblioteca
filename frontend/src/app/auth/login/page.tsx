@@ -94,7 +94,10 @@ export default function Login() {
               { errors.password && <span className="span-erro">{errors.password.message}</span>}
             </div>
 
-            <button>Entrar</button>
+            <button disabled={isSubmitting}>
+              { isSubmitting ? "Carregando" : "Entrar" }
+            </button>
+
           </form>
           <p>Não possui uma conta? <Link href={`/auth/cadastro`}>Cadastrar</Link>.</p>
         </div>
